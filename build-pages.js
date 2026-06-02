@@ -1134,6 +1134,25 @@ const nppLoyaltyCss = `
   color:#64748B; cursor:pointer; transition:background .12s, border-color .12s;
 }
 .hf-reset-btn:hover{ background:#FEF2F2; border-color:#FECACA; color:#C8102E; }
+
+/* Desktop/Mobile view toggle in Loyalty CMS topbar */
+.loy-view-toggle{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:6px 12px;
+  background:#fff; border:1px solid #E2E8F0; border-radius:8px;
+  font:600 12px/1 var(--w-font); color:#475569;
+  cursor:pointer;
+  transition:background .12s, border-color .12s, color .12s, box-shadow .12s;
+}
+.loy-view-toggle:hover{
+  background:#FFF5F6; border-color:#FECDD3; color:#C8102E;
+}
+.loy-view-toggle.active{
+  background:linear-gradient(135deg, #C8102E, #A30E22);
+  border-color:transparent; color:#fff;
+  box-shadow:0 2px 8px rgba(200,16,46,.30);
+}
+.loy-view-toggle.active:hover{ background:linear-gradient(135deg, #B30E29, #8C0C1D); }
 `;
 
 const nppLoyaltyJs = `
@@ -1403,16 +1422,41 @@ function LoyalChromeMobile({ title, active, back, body }) {
   );
 }
 
-/* ----- Loyalty now renders inside the CMS shell -----
- * Previously nLoy() returned a standalone Browser + Phone dual view
- * which dropped the NPP_NAV sidebar. We replace nLoy with nLoyCms so
- * Loyalty screens (Trang chủ / Quét QR / Lịch sử điểm) keep the CMS
- * menu visible — the dual-preview is gone; the loyalty page just
- * lives inside the CMS content area like any other CMS section.
- * Inner tab nav stays for navigating between the 3 loyalty pages. */
+/* ----- Loyalty inside CMS shell with desktop/mobile view toggle -----
+ * Default: desktop view — Loyalty page lives inside the CMS content area
+ * with NPP_NAV sidebar + inner tab nav.
+ * Toggle "📱 Xem trên mobile" in the CMS topbar swaps to the old mobile
+ * preview (Phone frame with browser address bar + app header + bottom
+ * tab nav) so designers can demo the responsive layout side-by-side
+ * with the CMS view. Choice persists in localStorage. */
+
+const LOY_VIEW_KEY = 'idemitsu-loy-view-mode';
+
 function nLoyCms(title, active, back, body) {
   const state = useLoyaltyState();
   const pts = (typeof fmtNum === 'function') ? fmtNum(state.nppPoints) : String(state.nppPoints);
+  const [viewMode, setViewMode] = useState(() => {
+    try { return localStorage.getItem(LOY_VIEW_KEY) || 'desktop'; } catch (e) { return 'desktop'; }
+  });
+  const toggleView = () => {
+    const next = viewMode === 'desktop' ? 'mobile' : 'desktop';
+    setViewMode(next);
+    try { localStorage.setItem(LOY_VIEW_KEY, next); } catch (e) {}
+  };
+
+  const PhoneIcon = (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>
+    </svg>
+  );
+  const DesktopIcon = (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8 M12 17v4"/>
+    </svg>
+  );
+
   return (
     <Browser url="reward-hub.gotit.vn/npp" wide>
       <Cms
@@ -1422,37 +1466,53 @@ function nLoyCms(title, active, back, body) {
         breadcrumb={
           <><Hot to="npp-rewards"><span data-hot style={{color:'var(--w-ink-2)', cursor:'pointer'}}>Loyalty</span></Hot> · <b>{title}</b></>
         }
-        topRight={<span className="w-chip solid" style={{height:26, fontSize:12, padding:'0 12px'}}>◆ {pts} điểm</span>}
+        topRight={
+          <>
+            <button onClick={toggleView}
+                    className={cx('loy-view-toggle', viewMode === 'mobile' && 'active')}
+                    title={viewMode === 'desktop' ? 'Xem layout mobile' : 'Quay về desktop'}>
+              {viewMode === 'desktop' ? PhoneIcon : DesktopIcon}
+              <span>{viewMode === 'desktop' ? 'Xem trên mobile' : 'Xem trên desktop'}</span>
+            </button>
+            <span className="w-chip solid" style={{height:26, fontSize:12, padding:'0 12px'}}>◆ {pts} điểm</span>
+          </>
+        }
       >
-        {/* Inner sub-nav (3 loyalty tabs) — hidden on sub-screens where active=null */}
-        {active != null && (
-          <div className="r" style={{borderBottom:'1px solid var(--w-line)', marginBottom:18, marginTop:-12, gap:0}}>
-            {NPP_LOY_NAV.map((n, i) => (
-              <span key={i} data-hot onClick={() => WF.go(n.to)}
-                style={{
-                  padding:'12px 18px', cursor:'pointer',
-                  fontSize:13, fontWeight: i === active ? 700 : 500,
-                  color: i === active ? 'var(--w-ink)' : 'var(--w-ink-3)',
-                  borderBottom: i === active ? '2px solid var(--w-brand)' : '2px solid transparent',
-                  marginBottom:-1, transition:'color .12s, border-color .12s'
-                }}>
-                {n.label}
-              </span>
-            ))}
+        {viewMode === 'desktop' ? (
+          /* === DESKTOP === Loyalty inside CMS content area === */
+          <>
+            {active != null && (
+              <div className="r" style={{borderBottom:'1px solid var(--w-line)', marginBottom:18, marginTop:-12, gap:0}}>
+                {NPP_LOY_NAV.map((n, i) => (
+                  <span key={i} data-hot onClick={() => WF.go(n.to)}
+                    style={{
+                      padding:'12px 18px', cursor:'pointer',
+                      fontSize:13, fontWeight: i === active ? 700 : 500,
+                      color: i === active ? 'var(--w-ink)' : 'var(--w-ink-3)',
+                      borderBottom: i === active ? '2px solid var(--w-brand)' : '2px solid transparent',
+                      marginBottom:-1, transition:'color .12s, border-color .12s'
+                    }}>
+                    {n.label}
+                  </span>
+                ))}
+              </div>
+            )}
+            {active == null && back && (
+              <div className="r g6" style={{marginBottom:14, marginTop:-8}}>
+                <span data-hot onClick={() => WF.go(back)}
+                  style={{cursor:'pointer', fontSize:13, color:'var(--w-ink-2)'}}>
+                  ‹ Quay lại
+                </span>
+              </div>
+            )}
+            <div>{body}</div>
+          </>
+        ) : (
+          /* === MOBILE PREVIEW === Phone frame centered in CMS content === */
+          <div style={{display:'flex', justifyContent:'center', padding:'20px 0 40px'}}>
+            <LoyalChromeMobile title={title} active={active} back={back} body={body} />
           </div>
         )}
-
-        {/* Sub-screens: show back link instead of tabs */}
-        {active == null && back && (
-          <div className="r g6" style={{marginBottom:14, marginTop:-8}}>
-            <span data-hot onClick={() => WF.go(back)}
-              style={{cursor:'pointer', fontSize:13, color:'var(--w-ink-2)'}}>
-              ‹ Quay lại
-            </span>
-          </div>
-        )}
-
-        <div>{body}</div>
       </Cms>
     </Browser>
   );
