@@ -2357,10 +2357,61 @@ function LoyalChromeMobile({ title, active, back, body }) {
   );
 }
 
-// Reassign the original loyWeb / loyMobile so nLoy(...) picks up the live
-// versions. Function declarations in non-strict script mode are reassignable.
-loyWeb    = (title, active, back, body) => <LoyalChromeWeb    title={title} active={active} back={back} body={body} />;
-loyMobile = (title, active, back, body) => <LoyalChromeMobile title={title} active={active} back={back} body={body} />;
+/* ----- Loyalty now renders inside the CMS shell -----
+ * Previously nLoy() returned a standalone Browser + Phone dual view
+ * which dropped the NPP_NAV sidebar. We replace nLoy with nLoyCms so
+ * Loyalty screens (Trang chủ / Quét QR / Lịch sử điểm) keep the CMS
+ * menu visible — the dual-preview is gone; the loyalty page just
+ * lives inside the CMS content area like any other CMS section.
+ * Inner tab nav stays for navigating between the 3 loyalty pages. */
+function nLoyCms(title, active, back, body) {
+  const state = useLoyaltyState();
+  const pts = (typeof fmtNum === 'function') ? fmtNum(state.nppPoints) : String(state.nppPoints);
+  return (
+    <Browser url="reward-hub.gotit.vn/npp" wide>
+      <Cms
+        nav={NPP_NAV}
+        active="loy"
+        title={title}
+        breadcrumb={
+          <><Hot to="npp-rewards"><span data-hot style={{color:'var(--w-ink-2)', cursor:'pointer'}}>Loyalty</span></Hot> · <b>{title}</b></>
+        }
+        topRight={<span className="w-chip solid" style={{height:26, fontSize:12, padding:'0 12px'}}>◆ {pts} điểm</span>}
+      >
+        {/* Inner sub-nav (3 loyalty tabs) — hidden on sub-screens where active=null */}
+        {active != null && (
+          <div className="r" style={{borderBottom:'1px solid var(--w-line)', marginBottom:18, marginTop:-12, gap:0}}>
+            {NPP_LOY_NAV.map((n, i) => (
+              <span key={i} data-hot onClick={() => WF.go(n.to)}
+                style={{
+                  padding:'12px 18px', cursor:'pointer',
+                  fontSize:13, fontWeight: i === active ? 700 : 500,
+                  color: i === active ? 'var(--w-ink)' : 'var(--w-ink-3)',
+                  borderBottom: i === active ? '2px solid var(--w-brand)' : '2px solid transparent',
+                  marginBottom:-1, transition:'color .12s, border-color .12s'
+                }}>
+                {n.label}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Sub-screens: show back link instead of tabs */}
+        {active == null && back && (
+          <div className="r g6" style={{marginBottom:14, marginTop:-8}}>
+            <span data-hot onClick={() => WF.go(back)}
+              style={{cursor:'pointer', fontSize:13, color:'var(--w-ink-2)'}}>
+              ‹ Quay lại
+            </span>
+          </div>
+        )}
+
+        <div>{body}</div>
+      </Cms>
+    </Browser>
+  );
+}
+nLoy = nLoyCms;
 
 /* mutate NPP_SCREENS to use live versions */
 (function(){
