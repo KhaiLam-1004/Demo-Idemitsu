@@ -2372,6 +2372,79 @@ function sProfileHiFi() {
 }
 SHOP_SCREENS.find(s => s.id === 'shop-profile').render = sProfileHiFi;
 
+/* ----- Shop permission: gate "Đồng ý & tiếp tục" on both checkboxes ----- */
+function PermCheckbox({checked}) {
+  return (
+    <span style={{
+      width:22, height:22, flex:'none', borderRadius:6,
+      border: checked ? 'none' : '1.5px solid #CBD5E1',
+      background: checked ? 'linear-gradient(135deg, #DA1B3A, #C8102E)' : '#fff',
+      display:'flex', alignItems:'center', justifyContent:'center',
+      transition: 'background .12s, border .12s',
+      boxShadow: checked ? '0 2px 6px rgba(200,16,46,.30)' : 'none',
+    }}>
+      {checked && (
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none"
+             stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M5 13l4 4L19 7"/>
+        </svg>
+      )}
+    </span>
+  );
+}
+
+function sPermissionHiFi() {
+  const [name, setName] = useState(false);
+  const [phone, setPhone] = useState(false);
+  const enabled = name && phone;
+  return (
+    <div className="c g16" style={{alignItems:'center'}}>
+      <Phone>
+        <Screen scroll={false}>
+          <ZaloBar title="Loyalty Idemitsu" />
+          <div className="w-screen-body" style={{display:'flex', flexDirection:'column', justifyContent:'flex-end'}}>
+            <div className="grow" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+              <div className="c g10" style={{alignItems:'center'}}>
+                <span style={{width:64, height:64, borderRadius:16, background:'linear-gradient(135deg, #FF8A3D, #C8102E)', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 8px 20px rgba(200,16,46,.28)'}}>
+                  <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/>
+                    <path d="M9 12l2 2 4-4"/>
+                  </svg>
+                </span>
+                <div className="h3" style={{marginTop:4}}>Loyalty Idemitsu</div>
+                <span className="t11 muted">Phiên bản 1.0 · Got It</span>
+              </div>
+            </div>
+            <div className="w-card" style={{borderRadius:'18px 18px 0 0', padding:20, boxShadow:'0 -4px 24px rgba(0,0,0,.10)'}}>
+              <div className="h3" style={{marginBottom:6}}>Cho phép truy cập</div>
+              <div className="t12 muted" style={{marginBottom:16}}>Mini App muốn sử dụng thông tin Zalo của bạn:</div>
+              <div className="c g12" style={{marginBottom:18}}>
+                <label className="r g12" style={{cursor:'pointer', alignItems:'center', userSelect:'none'}}
+                       onClick={() => setName(v => !v)}>
+                  <PermCheckbox checked={name} />
+                  <span className="t13" style={{color:'#0F172A'}}>Tên hiển thị Zalo</span>
+                </label>
+                <label className="r g12" style={{cursor:'pointer', alignItems:'center', userSelect:'none'}}
+                       onClick={() => setPhone(v => !v)}>
+                  <PermCheckbox checked={phone} />
+                  <span className="t13" style={{color:'#0F172A'}}>Số điện thoại</span>
+                </label>
+              </div>
+              <div className="c g10">
+                {enabled
+                  ? <Btn block to="shop-home">Đồng ý &amp; tiếp tục</Btn>
+                  : <Btn block disabled>Đồng ý &amp; tiếp tục</Btn>}
+                <Btn block ghost>Từ chối</Btn>
+              </div>
+            </div>
+          </div>
+        </Screen>
+      </Phone>
+    </div>
+  );
+}
+SHOP_SCREENS.find(s => s.id === 'shop-permission').render = sPermissionHiFi;
+
 
 
 function HiFiApp({ mode, role, title, sub, screens, defaultId }){
