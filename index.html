@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Idemitsu Loyalty — Demo</title>
+<meta name="description" content="Got It × Idemitsu · 4 role · /admin · /npp · /shop · /sales">
+<meta name="theme-color" content="#C8102E">
+<meta property="og:title" content="Idemitsu Loyalty — Demo">
+<meta property="og:description" content="Got It × Idemitsu · 4 role · /admin · /npp · /shop · /sales">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23C8102E%22/><text x=%2250%22 y=%2266%22 font-size=%2244%22 font-family=%22Inter,sans-serif%22 font-weight=%22700%22 fill=%22%23fff%22 text-anchor=%22middle%22>IL</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>/* =====================================================================
+ * Idemitsu Loyalty — Wireframe Kit
+ * Low-fi grayscale. Structure-first. One restrained "annotation" amber
+ * and one "hotspot" blue are the only non-gray hues.
+ * ===================================================================== */
+
+:root{
+  --w-ink:      #2E2E2E;   /* primary text */
+  --w-ink-2:    #6B6B6B;   /* secondary text */
+  --w-ink-3:    #9A9A9A;   /* meta / hint */
+  --w-line:     #C9C9C9;   /* borders */
+  --w-line-2:   #B0B0B0;   /* stronger borders */
+  --w-fill:     #ECECEC;   /* placeholder block */
+  --w-fill-2:   #E0E0E0;   /* darker placeholder */
+  --w-fill-3:   #F4F4F4;   /* subtle wash */
+  --w-paper:    #FFFFFF;
+  --w-canvas:   #D8DAde;   /* stage behind frames */
+  --w-solid:    #C8102E;   /* Idemitsu red — primary filled control */
+  --w-brand:    #C8102E;   /* Idemitsu red */
+  --w-brand-2:  #EF7D00;   /* Apollo orange accent */
+  --w-brand-bg: #FBE9EB;   /* red tint wash */
+  --w-hot:      #3F6CFF;   /* clickable affordance */
+  --w-hot-bg:   #EAF0FF;
+  --w-note:     #B5781A;   /* annotation ink */
+  --w-note-bg:  #FFF6E2;
+  --w-note-line:#EAD4A0;
+  --w-bar:      #DBDBDB;   /* text-line bars */
+  --w-r:        6px;
+  --w-r-lg:     10px;
+  --w-font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  font-family:var(--w-font);
+  color:var(--w-ink);
+  background:#F0F1F3;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- App shell (per-role page) ---------- */
+.wf-shell{ display:flex; height:100vh; overflow:hidden; }
+
+.wf-rail{
+  width:248px; flex:none; background:#fff; border-right:1px solid var(--w-line);
+  display:flex; flex-direction:column; height:100vh;
+}
+.wf-rail-head{ padding:16px 16px 12px; border-bottom:1px solid var(--w-line); }
+.wf-rail-role{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--w-brand); font-weight:700; }
+.wf-rail-title{ font-size:16px; font-weight:700; margin-top:3px; color:var(--w-ink); }
+.wf-rail-sub{ font-size:11px; color:var(--w-ink-3); margin-top:2px; }
+.wf-rail-scroll{ overflow-y:auto; flex:1; padding:8px 8px 24px; }
+.wf-group{ font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--w-ink-3); font-weight:700; padding:14px 10px 6px; }
+.wf-navitem{
+  display:flex; align-items:center; gap:8px; padding:7px 10px; border-radius:6px;
+  font-size:12.5px; color:var(--w-ink-2); cursor:pointer; user-select:none; line-height:1.3;
+}
+.wf-navitem:hover{ background:var(--w-fill-3); color:var(--w-ink); }
+.wf-navitem.active{ background:var(--w-brand); color:#fff; }
+.wf-navitem.active .wf-navnum{ color:#fff; border-color:#fff; }
+.wf-navnum{
+  flex:none; width:18px; height:18px; border:1px solid var(--w-line-2); border-radius:50%;
+  font-size:10px; display:flex; align-items:center; justify-content:center; color:var(--w-ink-3);
+}
+
+.wf-main{ flex:1; display:flex; flex-direction:column; min-width:0; }
+.wf-topbar{
+  height:46px; flex:none; background:#fff; border-bottom:1px solid var(--w-line);
+  display:flex; align-items:center; gap:14px; padding:0 16px;
+}
+.wf-topbar a.wf-back{ font-size:12.5px; color:var(--w-ink-2); text-decoration:none; display:flex; align-items:center; gap:5px; }
+.wf-topbar a.wf-back:hover{ color:var(--w-ink); }
+.wf-crumbs{ font-size:12.5px; color:var(--w-ink-3); }
+.wf-crumbs b{ color:var(--w-ink); font-weight:600; }
+.wf-top-spacer{ flex:1; }
+.wf-toggle{
+  display:flex; align-items:center; gap:7px; font-size:12px; color:var(--w-ink-2); cursor:pointer; user-select:none;
+}
+.wf-toggle .dot{ width:30px; height:17px; border-radius:9px; background:var(--w-line); position:relative; transition:.15s; }
+.wf-toggle .dot::after{ content:""; position:absolute; top:2px; left:2px; width:13px; height:13px; border-radius:50%; background:#fff; transition:.15s; }
+.wf-toggle.on .dot{ background:var(--w-note); }
+.wf-toggle.on .dot::after{ left:15px; }
+
+.wf-stage{ flex:1; overflow:auto; background:var(--w-canvas); }
+.wf-stage-pad{ min-height:100%; display:flex; align-items:flex-start; justify-content:center; padding:28px; }
+
+/* ---------- Browser chrome (CMS desktop) ---------- */
+.w-browser{ flex:none; width:1180px; background:#fff; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,.14); overflow:hidden; }
+.w-browser.wide{ width:1280px; }
+.w-browser-bar{ height:38px; background:#E9E9EC; border-bottom:1px solid var(--w-line); display:flex; align-items:center; gap:8px; padding:0 12px; }
+.w-dots{ display:flex; gap:6px; }
+.w-dots i{ width:11px; height:11px; border-radius:50%; background:#CFCFD3; display:block; }
+.w-url{ flex:1; height:22px; background:#fff; border:1px solid var(--w-line); border-radius:11px; display:flex; align-items:center; padding:0 12px; font-size:11px; color:var(--w-ink-3); max-width:520px; margin:0 auto; }
+
+/* ---------- Phone frame (mobile / Zalo) ---------- */
+.w-phone{ flex:none; width:375px; background:#fff; border-radius:30px; box-shadow:0 10px 36px rgba(0,0,0,.20); border:8px solid #2A2A2A; overflow:hidden; position:relative; }
+.w-phone.tablet{ width:620px; border-radius:22px; }
+.w-statusbar{ height:30px; display:flex; align-items:center; justify-content:space-between; padding:0 18px; font-size:11px; font-weight:600; color:var(--w-ink); }
+.w-statusbar .sb-r{ display:flex; gap:5px; align-items:center; }
+.w-statusbar .sb-r i{ width:15px; height:9px; border:1px solid var(--w-ink-2); border-radius:2px; display:block; }
+.w-screen{ display:flex; flex-direction:column; height:720px; overflow:hidden; }
+.w-screen.scroll .w-screen-body{ overflow-y:auto; }
+.w-screen-body{ flex:1; min-height:0; }
+
+/* Zalo mini-app top bar */
+.w-zalo-bar{ height:44px; display:flex; align-items:center; gap:10px; padding:0 12px; border-bottom:1px solid var(--w-line); background:#fff; }
+.w-zalo-bar .ztitle{ font-size:14px; font-weight:700; flex:1; text-align:center; }
+.w-zalo-cluster{ display:flex; align-items:center; gap:2px; border:1px solid var(--w-line); border-radius:14px; padding:2px 4px; }
+.w-zalo-cluster i{ width:5px; height:5px; border-radius:50%; background:var(--w-ink-2); display:block; }
+.w-zalo-divider{ width:1px; height:14px; background:var(--w-line); }
+
+/* mobile bottom nav */
+.w-botnav{ height:58px; flex:none; border-top:1px solid var(--w-line); display:flex; background:#fff; }
+.w-botnav .nav-i{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; font-size:9.5px; color:var(--w-ink-3); cursor:pointer; }
+.w-botnav .nav-i .gi{ width:20px; height:20px; border:1.5px solid var(--w-line-2); border-radius:5px; }
+.w-botnav .nav-i.active{ color:var(--w-ink); }
+.w-botnav .nav-i.active .gi{ border-color:var(--w-ink); background:var(--w-fill); }
+
+/* ---------- Wire primitives ---------- */
+.w-box{ background:var(--w-paper); border:1.5px solid var(--w-line); border-radius:var(--w-r); }
+.w-card{ background:var(--w-paper); border:1.5px solid var(--w-line); border-radius:var(--w-r-lg); padding:14px; }
+.w-fill{ background:var(--w-fill); border-radius:var(--w-r); }
+.w-img{
+  background:var(--w-fill); border:1.5px solid var(--w-line); border-radius:var(--w-r);
+  position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center;
+  color:var(--w-ink-3); font-size:11px;
+}
+.w-img::before, .w-img::after{ content:""; position:absolute; top:0; left:0; width:100%; height:100%;
+  background:linear-gradient(to top right, transparent calc(50% - 1px), var(--w-line) 50%, transparent calc(50% + 1px)); }
+.w-img::after{ background:linear-gradient(to top left, transparent calc(50% - 1px), var(--w-line) 50%, transparent calc(50% + 1px)); }
+.w-img > span{ position:relative; z-index:1; background:var(--w-fill); padding:2px 6px; border-radius:4px; }
+.w-img.plain::before, .w-img.plain::after{ display:none; }
+
+.w-line{ height:9px; background:var(--w-bar); border-radius:5px; }
+.w-line.sm{ height:7px; }
+.w-line.dk{ background:var(--w-fill-2); }
+
+.w-btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:7px;
+  height:38px; padding:0 18px; border-radius:var(--w-r); font-size:13px; font-weight:600;
+  background:var(--w-solid); color:#fff; border:1.5px solid var(--w-solid); cursor:pointer; white-space:nowrap;
+}
+.w-btn.lg{ height:46px; font-size:14px; padding:0 22px; }
+.w-btn.sm{ height:30px; font-size:12px; padding:0 12px; }
+.w-btn.block{ width:100%; }
+.w-btn.ghost{ background:#fff; color:var(--w-ink); border-color:var(--w-line-2); }
+.w-btn.disabled{ background:var(--w-fill-2); color:var(--w-ink-3); border-color:var(--w-fill-2); cursor:not-allowed; }
+
+.w-input{
+  height:38px; border:1.5px solid var(--w-line); border-radius:var(--w-r); background:#fff;
+  display:flex; align-items:center; padding:0 12px; font-size:12.5px; color:var(--w-ink-3); width:100%;
+}
+.w-input.lg{ height:44px; }
+.w-input.area{ height:auto; min-height:74px; align-items:flex-start; padding:10px 12px; }
+.w-label{ font-size:12px; color:var(--w-ink-2); font-weight:600; margin-bottom:6px; display:block; }
+.w-label .req{ color:#C0392B; }
+
+.w-chip{ display:inline-flex; align-items:center; gap:6px; height:28px; padding:0 12px; border:1.5px solid var(--w-line); border-radius:1000px; font-size:12px; color:var(--w-ink-2); background:#fff; }
+.w-chip.solid{ background:var(--w-brand-bg); color:var(--w-brand); border-color:var(--w-brand-bg); }
+
+.w-badge{ display:inline-flex; align-items:center; gap:5px; padding:2px 9px; border-radius:1000px; font-size:11px; font-weight:600; background:var(--w-fill); color:var(--w-ink-2); border:1px solid var(--w-line); }
+.w-badge .led{ width:7px; height:7px; border-radius:50%; background:var(--w-ink-3); }
+.w-badge.ok .led{ background:#3FA34D; }
+.w-badge.warn .led{ background:#D08A1E; }
+.w-badge.err .led{ background:#C0392B; }
+
+.w-icon{ width:22px; height:22px; border:1.5px solid var(--w-line-2); border-radius:5px; flex:none; display:inline-block; }
+.w-icon.circle{ border-radius:50%; }
+.w-avatar{ width:34px; height:34px; border-radius:50%; background:var(--w-fill); border:1.5px solid var(--w-line); flex:none; }
+
+/* tables */
+.w-table{ width:100%; border-collapse:collapse; font-size:12.5px; }
+.w-table th{ text-align:left; font-weight:700; color:var(--w-ink-2); font-size:11px; letter-spacing:.04em; text-transform:uppercase; padding:10px 12px; border-bottom:1.5px solid var(--w-line-2); background:var(--w-fill-3); }
+.w-table td{ padding:11px 12px; border-bottom:1px solid var(--w-line); color:var(--w-ink); vertical-align:middle; }
+.w-table tr:hover td{ background:var(--w-fill-3); }
+
+/* annotation pins + notes */
+.w-note{
+  background:var(--w-note-bg); border:1px solid var(--w-note-line); border-left:3px solid var(--w-note);
+  border-radius:6px; padding:9px 11px; font-size:11.5px; color:#7A5410; line-height:1.45;
+}
+.w-note b{ color:var(--w-note); }
+.w-pin{
+  display:inline-flex; align-items:center; justify-content:center; min-width:18px; height:18px; padding:0 5px;
+  border-radius:9px; background:var(--w-note); color:#fff; font-size:10.5px; font-weight:700; vertical-align:middle;
+}
+.anno-hidden .w-note, .anno-hidden .w-pin, .anno-hidden .w-anno{ display:none !important; }
+
+/* hotspot affordance */
+[data-hot]{ cursor:pointer; position:relative; transition:box-shadow .12s, background .12s; }
+[data-hot]:hover{ box-shadow:0 0 0 2px var(--w-hot); }
+.show-hot [data-hot]{ box-shadow:0 0 0 1.5px rgba(63,108,255,.45); }
+.show-hot [data-hot]:hover{ box-shadow:0 0 0 2px var(--w-hot); background:var(--w-hot-bg); }
+
+/* utility */
+.r{ display:flex; align-items:center; }
+.r.g6{ gap:6px; } .r.g8{ gap:8px; } .r.g10{ gap:10px; } .r.g12{ gap:12px; } .r.g16{ gap:16px; } .r.g20{ gap:20px; }
+.r.between{ justify-content:space-between; }
+.r.center{ justify-content:center; }
+.r.start{ align-items:flex-start; }
+.r.wrap{ flex-wrap:wrap; }
+.c{ display:flex; flex-direction:column; }
+.c.g4{ gap:4px; } .c.g6{ gap:6px; } .c.g8{ gap:8px; } .c.g10{ gap:10px; } .c.g12{ gap:12px; } .c.g16{ gap:16px; } .c.g20{ gap:20px; } .c.g24{ gap:24px; }
+.grow{ flex:1; min-width:0; }
+.r.g12 > .c, .r.g16 > .c.eq{ flex:1 1 0; min-width:0; }
+.muted{ color:var(--w-ink-3); }
+.sec{ color:var(--w-ink-2); }
+.tt{ font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--w-ink-3); font-weight:700; }
+.h1{ font-size:22px; font-weight:700; }
+.h2{ font-size:17px; font-weight:700; }
+.h3{ font-size:14px; font-weight:700; }
+.t13{ font-size:13px; } .t12{ font-size:12px; } .t11{ font-size:11px; }
+.center-text{ text-align:center; }
+.divider{ height:1px; background:var(--w-line); }
+.divider.dash{ height:0; border-top:1.5px dashed var(--w-line); background:none; }
+.fill-w{ width:100%; }
+
+/* CMS layout helpers */
+.cms{ display:flex; height:760px; }
+.cms-side{ width:208px; flex:none; background:#fff; border-right:1px solid var(--w-line); padding:14px 10px; }
+.cms-side .logo{ display:flex; align-items:center; gap:8px; padding:6px 8px 14px; }
+.cms-side .logo .mk{ width:26px; height:26px; border-radius:6px; background:var(--w-brand); border:1.5px solid var(--w-brand); }
+.cms-nav{ display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:7px; font-size:12.5px; color:var(--w-ink-2); cursor:pointer; }
+.cms-nav .ci{ width:18px; height:18px; border:1.5px solid var(--w-line-2); border-radius:5px; flex:none; }
+.cms-nav:hover{ background:var(--w-fill-3); }
+.cms-nav.active{ background:var(--w-brand-bg); color:var(--w-brand); font-weight:600; box-shadow:inset 2px 0 0 var(--w-brand); }
+.cms-nav.active .ci{ border-color:var(--w-brand); background:#fff; }
+.cms-body{ flex:1; display:flex; flex-direction:column; min-width:0; background:#FBFBFC; }
+.cms-topbar{ height:54px; flex:none; border-bottom:1px solid var(--w-line); display:flex; align-items:center; gap:14px; padding:0 22px; background:#fff; }
+.cms-content{ flex:1; overflow-y:auto; padding:22px; }
+.cms-pagetitle{ font-size:18px; font-weight:700; }
+
+/* mini cards / stats */
+.w-stat{ border:1.5px solid var(--w-line); border-radius:8px; padding:13px 14px; background:#fff; flex:1; }
+.w-stat .num{ font-size:22px; font-weight:700; }
+.w-stat .lbl{ font-size:11px; color:var(--w-ink-3); margin-top:2px; }
+
+/* bar chart placeholder */
+.w-chart{ display:flex; align-items:flex-end; gap:10px; height:160px; padding:10px; border:1.5px solid var(--w-line); border-radius:8px; background:#fff; }
+.w-chart .bar{ flex:1; background:var(--w-fill-2); border-radius:4px 4px 0 0; }
+
+/* action card (NPP home) */
+.w-actioncard{ border:1.5px solid var(--w-line); border-radius:12px; padding:22px; background:#fff; cursor:pointer; }
+.w-actioncard .ico{ width:46px; height:46px; border:1.5px solid var(--w-line-2); border-radius:10px; background:var(--w-fill-3); }
+
+/* phone scan viewport */
+.w-scanview{ background:#1E1E1E; border-radius:8px; position:relative; display:flex; align-items:center; justify-content:center; }
+.w-scanframe{ width:62%; aspect-ratio:1; border:2px solid #fff; border-radius:14px; position:relative; }
+.w-scanframe::before,.w-scanframe::after{ content:""; position:absolute; width:22px; height:22px; border:3px solid #fff; }
+.w-scanframe::before{ top:-2px; left:-2px; border-right:none; border-bottom:none; border-radius:14px 0 0 0; }
+.w-scanframe::after{ bottom:-2px; right:-2px; border-left:none; border-top:none; border-radius:0 0 14px 0; }
+
+/* progress meter (quota) */
+.w-meter{ height:9px; border-radius:5px; background:var(--w-fill-2); overflow:hidden; }
+.w-meter > i{ display:block; height:100%; background:var(--w-ink-3); }
+.w-meter.warn > i{ background:#D08A1E; }
+.w-meter.full > i{ background:#C0392B; }
+
+/* hub */
+.hub{ max-width:1080px; margin:0 auto; padding:48px 28px 80px; }
+</style>
+<style>
+  body{ background:#F0F1F3; }
+  .hub-head{ border-bottom:1px solid var(--w-line); background:#fff; }
+  .hub-head .in{ max-width:1080px; margin:0 auto; padding:26px 28px; }
+  .kicker{ font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--w-ink-3); font-weight:700; }
+  .hub-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .role-card{ background:#fff; border:1.5px solid var(--w-line); border-radius:12px; padding:22px; text-decoration:none; color:inherit; display:block; transition:box-shadow .14s, transform .14s; }
+  .role-card:hover{ box-shadow:0 8px 26px rgba(0,0,0,.10); transform:translateY(-2px); }
+  .role-card.soon{ opacity:.92; }
+  .rc-top{ display:flex; align-items:center; gap:13px; margin-bottom:14px; }
+  .rc-mk{ width:46px; height:46px; border-radius:11px; background:var(--w-fill); border:1.5px solid var(--w-line); flex:none; }
+  .rc-flow{ display:flex; flex-wrap:wrap; gap:6px; margin-top:14px; }
+  .step-col{ background:#fff; border:1.5px solid var(--w-line); border-radius:12px; padding:18px 20px; }
+  .step{ display:flex; gap:12px; padding:7px 0; font-size:12.5px; color:var(--w-ink-2); line-height:1.45; }
+  .step .n{ flex:none; width:20px; height:20px; border-radius:50%; background:var(--w-fill); border:1px solid var(--w-line); font-size:10.5px; display:flex; align-items:center; justify-content:center; color:var(--w-ink-3); font-weight:700; margin-top:1px; }
+  .legend{ display:flex; gap:18px; flex-wrap:wrap; font-size:11.5px; color:var(--w-ink-2); }
+  .legend .sw{ display:inline-flex; align-items:center; gap:7px; }
+  .legend .box{ width:24px; height:14px; border-radius:4px; }
+</style>
+</head>
+<body>
+<div class="hub-head">
+  <div class="in">
+    <div class="r between wrap g16">
+      <div class="c g6">
+        <span class="kicker">Got It × Idemitsu · Loyalty Platform</span>
+        <div style="font-size:26px; font-weight:700;">Wireframe — Phase 1</div>
+        <div class="t13 muted">Low-fi · bấm được theo flow · go-live dự kiến 10/2026</div>
+      </div>
+      <div class="legend">
+        <span class="sw"><span class="box" style="background:var(--w-note-bg); border:1px solid var(--w-note-line);"></span> Chú thích flow</span>
+        <span class="sw"><span class="box" style="background:#EAF0FF; border:1px solid #B9CCFF;"></span> Vùng bấm</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hub">
+  <div class="kicker" style="margin-bottom:12px;">Chọn role để xem các màn hình</div>
+  <div class="hub-grid" style="margin-bottom:34px;">
+
+    <a class="role-card" href="admin/">
+      <div class="rc-top">
+        <span class="rc-mk"></span>
+        <div class="c g4 grow"><div class="h2">Admin · Got It</div><div class="t12 muted">CMS web · desktop</div></div>
+        <span class="w-badge">7 màn</span>
+      </div>
+      <div class="t13 sec">Quản trị nền tảng: tạo &amp; bàn giao tài khoản NPP, cấu hình tin ZNS &amp; SMS mời shop, theo dõi tổng quan &amp; cảnh báo anti-fraud.</div>
+      <div class="rc-flow">
+        <span class="w-chip">Tạo NPP</span><span class="w-chip">Bàn giao user/pass</span><span class="w-chip">Cấu hình ZNS &amp; SMS</span><span class="w-chip">Cảnh báo</span>
+      </div>
+    </a>
+
+    <a class="role-card" href="npp/">
+      <div class="rc-top">
+        <span class="rc-mk"></span>
+        <div class="c g4 grow"><div class="h2">NPP · Nhà phân phối</div><div class="t12 muted">CMS web · responsive (scan mobile)</div></div>
+        <span class="w-badge">14 màn</span>
+      </div>
+      <div class="t13 sec">Đăng nhập &amp; đổi MK, whitelist shop (đơn lẻ/Excel), gửi ZNS mời; trang Loyalty (web view mở từ CMS) chỉ lưu điểm + lịch sử (+/−) &amp; quét QR tích điểm — không đổi quà.</div>
+      <div class="rc-flow">
+        <span class="w-chip">Whitelist</span><span class="w-chip">ZNS mời</span><span class="w-chip">Loyalty web view</span><span class="w-chip">Quét QR</span><span class="w-chip">Lịch sử điểm</span><span class="w-chip">Cashback</span>
+      </div>
+    </a>
+
+    <a class="role-card" href="shop/">
+      <div class="rc-top">
+        <span class="rc-mk"></span>
+        <div class="c g4 grow"><div class="h2">Repair Shop</div><div class="t12 muted">Zalo Mini App · mobile</div></div>
+        <span class="w-badge">15 màn</span>
+      </div>
+      <div class="t13 sec">Nhận ZNS → mở Mini App → cấp quyền Zalo → quét QR nhận điểm → đổi voucher / quà vật lý → quà của tôi.</div>
+      <div class="rc-flow">
+        <span class="w-chip">ZNS link</span><span class="w-chip">Cấp quyền</span><span class="w-chip">Quét QR</span><span class="w-chip">Kho quà</span><span class="w-chip">Đổi quà</span>
+      </div>
+    </a>
+
+    <a class="role-card soon" href="sales/">
+      <div class="rc-top">
+        <span class="rc-mk"></span>
+        <div class="c g4 grow"><div class="h2">Sales</div><div class="t12 muted">Field app · Phase 2</div></div>
+        <span class="w-badge warn"><i class="led"></i>Phase 2</span>
+      </div>
+      <div class="t13 sec">App cho ~100 nhân viên Sale: check-in thăm viếng cửa hàng, lịch sử chăm sóc, theo dõi tăng trưởng + tích điểm (liên kết DB Loyalty), phân quyền theo khu vực.</div>
+      <div class="rc-flow">
+        <span class="w-chip">Check-in</span><span class="w-chip">Hiệu quả thăm</span><span class="w-chip">Kinh doanh &amp; điểm</span><span class="w-chip">Phân quyền khu vực</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="kicker" style="margin-bottom:12px;">User flow — Phase 1</div>
+  <div class="hub-grid">
+    <div class="step-col">
+      <div class="r between" style="margin-bottom:6px;"><div class="h3">NPP (CMS Web)</div><span class="t11 muted">7 bước</span></div>
+      <div class="step"><span class="n">1</span><span>Admin tạo tài khoản → bàn giao user/pass thủ công</span></div>
+      <div class="step"><span class="n">2</span><span>NPP login lần đầu → buộc đổi mật khẩu</span></div>
+      <div class="step"><span class="n">3</span><span>Vào thẳng Quản lý Shop (whitelist)</span></div>
+      <div class="step"><span class="n">4</span><span>Add shop vào whitelist (đơn lẻ / Excel)</span></div>
+      <div class="step"><span class="n">5</span><span>Hệ thống auto gửi ZNS link mời tới shop</span></div>
+      <div class="step"><span class="n">6</span><span>Mở trang Loyalty (web view từ CMS) — quét QR tích điểm bằng camera</span></div>
+      <div class="step"><span class="n">7</span><span>Nhận điểm cross-award khi shop quét; xem lịch sử điểm (+/−) — không đổi quà</span></div>
+    </div>
+    <div class="step-col">
+      <div class="r between" style="margin-bottom:6px;"><div class="h3">Repair Shop (Zalo Mini App)</div><span class="t11 muted">10 bước</span></div>
+      <div class="step"><span class="n">1</span><span>Nhận ZNS link mời từ Got It</span></div>
+      <div class="step"><span class="n">2</span><span>Click link → mở Zalo Mini App Loyalty Idemitsu</span></div>
+      <div class="step"><span class="n">3</span><span>Mini App xin quyền Tên + SĐT Zalo</span></div>
+      <div class="step"><span class="n">4</span><span>Trang chủ: điểm, CTA quét QR, menu danh mục</span></div>
+      <div class="step"><span class="n">5</span><span>Quét QR (camera Zalo) → award + cross-award NPP</span></div>
+      <div class="step"><span class="n">6</span><span>Lịch sử quét (tên SP, mã QR, điểm, thời gian)</span></div>
+      <div class="step"><span class="n">7</span><span>Browse kho quà (catalog Campaign tool)</span></div>
+      <div class="step"><span class="n">8</span><span>Đổi quà: voucher (mã unique) / quà vật lý (form)</span></div>
+      <div class="step"><span class="n">9</span><span>Quà của tôi</span></div>
+      <div class="step"><span class="n">10</span><span>Giới hạn quét anti-fraud · trạng thái lỗi</span></div>
+    </div>
+  </div>
+
+  <div class="step-col" style="margin-top:18px;">
+    <div class="h3" style="margin-bottom:6px;">Tích hợp Campaign tool</div>
+    <div class="rc-flow" style="margin-top:6px;">
+      <span class="w-chip solid">Reuse · Reward catalog</span>
+      <span class="w-chip solid">Reuse · Voucher pool</span>
+      <span class="w-chip solid">Reuse · Point engine</span>
+      <span class="w-chip solid">Reuse · Audit logs</span>
+      <span class="w-chip">Build mới · QR Batch</span>
+      <span class="w-chip">Build mới · Whitelist</span>
+      <span class="w-chip">Build mới · NPP CMS</span>
+      <span class="w-chip">Build mới · Mini App Shop</span>
+      <span class="w-chip">Build mới · Dashboard khu vực</span>
+    </div>
+  </div>
+
+  <div class="t11 muted" style="margin-top:28px; text-align:center;">Wireframe low-fi — tập trung cấu trúc &amp; luồng, chưa phải thiết kế hi-fi. Bật <b>Chú thích</b> trong mỗi role để xem ghi chú flow.</div>
+</div>
+</body>
+</html>

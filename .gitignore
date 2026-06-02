@@ -1,0 +1,12 @@
+# Claude local settings
+.claude/
+
+# Build / editor / OS noise
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+_babel-source.js

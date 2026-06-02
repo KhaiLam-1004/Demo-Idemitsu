@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin · Got It — Idemitsu Loyalty</title>
+<meta name="description" content="Admin CMS · Tạo NPP · Tích điểm · Quản trị">
+<meta name="theme-color" content="#C8102E">
+<meta property="og:title" content="Admin · Got It — Idemitsu Loyalty">
+<meta property="og:description" content="Admin CMS · Tạo NPP · Tích điểm · Quản trị">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23C8102E%22/><text x=%2250%22 y=%2266%22 font-size=%2244%22 font-family=%22Inter,sans-serif%22 font-weight=%22700%22 fill=%22%23fff%22 text-anchor=%22middle%22>IL</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>/* =====================================================================
+ * Idemitsu Loyalty — Wireframe Kit
+ * Low-fi grayscale. Structure-first. One restrained "annotation" amber
+ * and one "hotspot" blue are the only non-gray hues.
+ * ===================================================================== */
+
+:root{
+  --w-ink:      #2E2E2E;   /* primary text */
+  --w-ink-2:    #6B6B6B;   /* secondary text */
+  --w-ink-3:    #9A9A9A;   /* meta / hint */
+  --w-line:     #C9C9C9;   /* borders */
+  --w-line-2:   #B0B0B0;   /* stronger borders */
+  --w-fill:     #ECECEC;   /* placeholder block */
+  --w-fill-2:   #E0E0E0;   /* darker placeholder */
+  --w-fill-3:   #F4F4F4;   /* subtle wash */
+  --w-paper:    #FFFFFF;
+  --w-canvas:   #D8DAde;   /* stage behind frames */
+  --w-solid:    #C8102E;   /* Idemitsu red — primary filled control */
+  --w-brand:    #C8102E;   /* Idemitsu red */
+  --w-brand-2:  #EF7D00;   /* Apollo orange accent */
+  --w-brand-bg: #FBE9EB;   /* red tint wash */
+  --w-hot:      #3F6CFF;   /* clickable affordance */
+  --w-hot-bg:   #EAF0FF;
+  --w-note:     #B5781A;   /* annotation ink */
+  --w-note-bg:  #FFF6E2;
+  --w-note-line:#EAD4A0;
+  --w-bar:      #DBDBDB;   /* text-line bars */
+  --w-r:        6px;
+  --w-r-lg:     10px;
+  --w-font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  font-family:var(--w-font);
+  color:var(--w-ink);
+  background:#F0F1F3;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- App shell (per-role page) ---------- */
+.wf-shell{ display:flex; height:100vh; overflow:hidden; }
+
+.wf-rail{
+  width:248px; flex:none; background:#fff; border-right:1px solid var(--w-line);
+  display:flex; flex-direction:column; height:100vh;
+}
+.wf-rail-head{ padding:16px 16px 12px; border-bottom:1px solid var(--w-line); }
+.wf-rail-role{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--w-brand); font-weight:700; }
+.wf-rail-title{ font-size:16px; font-weight:700; margin-top:3px; color:var(--w-ink); }
+.wf-rail-sub{ font-size:11px; color:var(--w-ink-3); margin-top:2px; }
+.wf-rail-scroll{ overflow-y:auto; flex:1; padding:8px 8px 24px; }
+.wf-group{ font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--w-ink-3); font-weight:700; padding:14px 10px 6px; }
+.wf-navitem{
+  display:flex; align-items:center; gap:8px; padding:7px 10px; border-radius:6px;
+  font-size:12.5px; color:var(--w-ink-2); cursor:pointer; user-select:none; line-height:1.3;
+}
+.wf-navitem:hover{ background:var(--w-fill-3); color:var(--w-ink); }
+.wf-navitem.active{ background:var(--w-brand); color:#fff; }
+.wf-navitem.active .wf-navnum{ color:#fff; border-color:#fff; }
+.wf-navnum{
+  flex:none; width:18px; height:18px; border:1px solid var(--w-line-2); border-radius:50%;
+  font-size:10px; display:flex; align-items:center; justify-content:center; color:var(--w-ink-3);
+}
+
+.wf-main{ flex:1; display:flex; flex-direction:column; min-width:0; }
+.wf-topbar{
+  height:46px; flex:none; background:#fff; border-bottom:1px solid var(--w-line);
+  display:flex; align-items:center; gap:14px; padding:0 16px;
+}
+.wf-topbar a.wf-back{ font-size:12.5px; color:var(--w-ink-2); text-decoration:none; display:flex; align-items:center; gap:5px; }
+.wf-topbar a.wf-back:hover{ color:var(--w-ink); }
+.wf-crumbs{ font-size:12.5px; color:var(--w-ink-3); }
+.wf-crumbs b{ color:var(--w-ink); font-weight:600; }
+.wf-top-spacer{ flex:1; }
+.wf-toggle{
+  display:flex; align-items:center; gap:7px; font-size:12px; color:var(--w-ink-2); cursor:pointer; user-select:none;
+}
+.wf-toggle .dot{ width:30px; height:17px; border-radius:9px; background:var(--w-line); position:relative; transition:.15s; }
+.wf-toggle .dot::after{ content:""; position:absolute; top:2px; left:2px; width:13px; height:13px; border-radius:50%; background:#fff; transition:.15s; }
+.wf-toggle.on .dot{ background:var(--w-note); }
+.wf-toggle.on .dot::after{ left:15px; }
+
+.wf-stage{ flex:1; overflow:auto; background:var(--w-canvas); }
+.wf-stage-pad{ min-height:100%; display:flex; align-items:flex-start; justify-content:center; padding:28px; }
+
+/* ---------- Browser chrome (CMS desktop) ---------- */
+.w-browser{ flex:none; width:1180px; background:#fff; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,.14); overflow:hidden; }
+.w-browser.wide{ width:1280px; }
+.w-browser-bar{ height:38px; background:#E9E9EC; border-bottom:1px solid var(--w-line); display:flex; align-items:center; gap:8px; padding:0 12px; }
+.w-dots{ display:flex; gap:6px; }
+.w-dots i{ width:11px; height:11px; border-radius:50%; background:#CFCFD3; display:block; }
+.w-url{ flex:1; height:22px; background:#fff; border:1px solid var(--w-line); border-radius:11px; display:flex; align-items:center; padding:0 12px; font-size:11px; color:var(--w-ink-3); max-width:520px; margin:0 auto; }
+
+/* ---------- Phone frame (mobile / Zalo) ---------- */
+.w-phone{ flex:none; width:375px; background:#fff; border-radius:30px; box-shadow:0 10px 36px rgba(0,0,0,.20); border:8px solid #2A2A2A; overflow:hidden; position:relative; }
+.w-phone.tablet{ width:620px; border-radius:22px; }
+.w-statusbar{ height:30px; display:flex; align-items:center; justify-content:space-between; padding:0 18px; font-size:11px; font-weight:600; color:var(--w-ink); }
+.w-statusbar .sb-r{ display:flex; gap:5px; align-items:center; }
+.w-statusbar .sb-r i{ width:15px; height:9px; border:1px solid var(--w-ink-2); border-radius:2px; display:block; }
+.w-screen{ display:flex; flex-direction:column; height:720px; overflow:hidden; }
+.w-screen.scroll .w-screen-body{ overflow-y:auto; }
+.w-screen-body{ flex:1; min-height:0; }
+
+/* Zalo mini-app top bar */
+.w-zalo-bar{ height:44px; display:flex; align-items:center; gap:10px; padding:0 12px; border-bottom:1px solid var(--w-line); background:#fff; }
+.w-zalo-bar .ztitle{ font-size:14px; font-weight:700; flex:1; text-align:center; }
+.w-zalo-cluster{ display:flex; align-items:center; gap:2px; border:1px solid var(--w-line); border-radius:14px; padding:2px 4px; }
+.w-zalo-cluster i{ width:5px; height:5px; border-radius:50%; background:var(--w-ink-2); display:block; }
+.w-zalo-divider{ width:1px; height:14px; background:var(--w-line); }
+
+/* mobile bottom nav */
+.w-botnav{ height:58px; flex:none; border-top:1px solid var(--w-line); display:flex; background:#fff; }
+.w-botnav .nav-i{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; font-size:9.5px; color:var(--w-ink-3); cursor:pointer; }
+.w-botnav .nav-i .gi{ width:20px; height:20px; border:1.5px solid var(--w-line-2); border-radius:5px; }
+.w-botnav .nav-i.active{ color:var(--w-ink); }
+.w-botnav .nav-i.active .gi{ border-color:var(--w-ink); background:var(--w-fill); }
+
+/* ---------- Wire primitives ---------- */
+.w-box{ background:var(--w-paper); border:1.5px solid var(--w-line); border-radius:var(--w-r); }
+.w-card{ background:var(--w-paper); border:1.5px solid var(--w-line); border-radius:var(--w-r-lg); padding:14px; }
+.w-fill{ background:var(--w-fill); border-radius:var(--w-r); }
+.w-img{
+  background:var(--w-fill); border:1.5px solid var(--w-line); border-radius:var(--w-r);
+  position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center;
+  color:var(--w-ink-3); font-size:11px;
+}
+.w-img::before, .w-img::after{ content:""; position:absolute; top:0; left:0; width:100%; height:100%;
+  background:linear-gradient(to top right, transparent calc(50% - 1px), var(--w-line) 50%, transparent calc(50% + 1px)); }
+.w-img::after{ background:linear-gradient(to top left, transparent calc(50% - 1px), var(--w-line) 50%, transparent calc(50% + 1px)); }
+.w-img > span{ position:relative; z-index:1; background:var(--w-fill); padding:2px 6px; border-radius:4px; }
+.w-img.plain::before, .w-img.plain::after{ display:none; }
+
+.w-line{ height:9px; background:var(--w-bar); border-radius:5px; }
+.w-line.sm{ height:7px; }
+.w-line.dk{ background:var(--w-fill-2); }
+
+.w-btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:7px;
+  height:38px; padding:0 18px; border-radius:var(--w-r); font-size:13px; font-weight:600;
+  background:var(--w-solid); color:#fff; border:1.5px solid var(--w-solid); cursor:pointer; white-space:nowrap;
+}
+.w-btn.lg{ height:46px; font-size:14px; padding:0 22px; }
+.w-btn.sm{ height:30px; font-size:12px; padding:0 12px; }
+.w-btn.block{ width:100%; }
+.w-btn.ghost{ background:#fff; color:var(--w-ink); border-color:var(--w-line-2); }
+.w-btn.disabled{ background:var(--w-fill-2); color:var(--w-ink-3); border-color:var(--w-fill-2); cursor:not-allowed; }
+
+.w-input{
+  height:38px; border:1.5px solid var(--w-line); border-radius:var(--w-r); background:#fff;
+  display:flex; align-items:center; padding:0 12px; font-size:12.5px; color:var(--w-ink-3); width:100%;
+}
+.w-input.lg{ height:44px; }
+.w-input.area{ height:auto; min-height:74px; align-items:flex-start; padding:10px 12px; }
+.w-label{ font-size:12px; color:var(--w-ink-2); font-weight:600; margin-bottom:6px; display:block; }
+.w-label .req{ color:#C0392B; }
+
+.w-chip{ display:inline-flex; align-items:center; gap:6px; height:28px; padding:0 12px; border:1.5px solid var(--w-line); border-radius:1000px; font-size:12px; color:var(--w-ink-2); background:#fff; }
+.w-chip.solid{ background:var(--w-brand-bg); color:var(--w-brand); border-color:var(--w-brand-bg); }
+
+.w-badge{ display:inline-flex; align-items:center; gap:5px; padding:2px 9px; border-radius:1000px; font-size:11px; font-weight:600; background:var(--w-fill); color:var(--w-ink-2); border:1px solid var(--w-line); }
+.w-badge .led{ width:7px; height:7px; border-radius:50%; background:var(--w-ink-3); }
+.w-badge.ok .led{ background:#3FA34D; }
+.w-badge.warn .led{ background:#D08A1E; }
+.w-badge.err .led{ background:#C0392B; }
+
+.w-icon{ width:22px; height:22px; border:1.5px solid var(--w-line-2); border-radius:5px; flex:none; display:inline-block; }
+.w-icon.circle{ border-radius:50%; }
+.w-avatar{ width:34px; height:34px; border-radius:50%; background:var(--w-fill); border:1.5px solid var(--w-line); flex:none; }
+
+/* tables */
+.w-table{ width:100%; border-collapse:collapse; font-size:12.5px; }
+.w-table th{ text-align:left; font-weight:700; color:var(--w-ink-2); font-size:11px; letter-spacing:.04em; text-transform:uppercase; padding:10px 12px; border-bottom:1.5px solid var(--w-line-2); background:var(--w-fill-3); }
+.w-table td{ padding:11px 12px; border-bottom:1px solid var(--w-line); color:var(--w-ink); vertical-align:middle; }
+.w-table tr:hover td{ background:var(--w-fill-3); }
+
+/* annotation pins + notes */
+.w-note{
+  background:var(--w-note-bg); border:1px solid var(--w-note-line); border-left:3px solid var(--w-note);
+  border-radius:6px; padding:9px 11px; font-size:11.5px; color:#7A5410; line-height:1.45;
+}
+.w-note b{ color:var(--w-note); }
+.w-pin{
+  display:inline-flex; align-items:center; justify-content:center; min-width:18px; height:18px; padding:0 5px;
+  border-radius:9px; background:var(--w-note); color:#fff; font-size:10.5px; font-weight:700; vertical-align:middle;
+}
+.anno-hidden .w-note, .anno-hidden .w-pin, .anno-hidden .w-anno{ display:none !important; }
+
+/* hotspot affordance */
+[data-hot]{ cursor:pointer; position:relative; transition:box-shadow .12s, background .12s; }
+[data-hot]:hover{ box-shadow:0 0 0 2px var(--w-hot); }
+.show-hot [data-hot]{ box-shadow:0 0 0 1.5px rgba(63,108,255,.45); }
+.show-hot [data-hot]:hover{ box-shadow:0 0 0 2px var(--w-hot); background:var(--w-hot-bg); }
+
+/* utility */
+.r{ display:flex; align-items:center; }
+.r.g6{ gap:6px; } .r.g8{ gap:8px; } .r.g10{ gap:10px; } .r.g12{ gap:12px; } .r.g16{ gap:16px; } .r.g20{ gap:20px; }
+.r.between{ justify-content:space-between; }
+.r.center{ justify-content:center; }
+.r.start{ align-items:flex-start; }
+.r.wrap{ flex-wrap:wrap; }
+.c{ display:flex; flex-direction:column; }
+.c.g4{ gap:4px; } .c.g6{ gap:6px; } .c.g8{ gap:8px; } .c.g10{ gap:10px; } .c.g12{ gap:12px; } .c.g16{ gap:16px; } .c.g20{ gap:20px; } .c.g24{ gap:24px; }
+.grow{ flex:1; min-width:0; }
+.r.g12 > .c, .r.g16 > .c.eq{ flex:1 1 0; min-width:0; }
+.muted{ color:var(--w-ink-3); }
+.sec{ color:var(--w-ink-2); }
+.tt{ font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--w-ink-3); font-weight:700; }
+.h1{ font-size:22px; font-weight:700; }
+.h2{ font-size:17px; font-weight:700; }
+.h3{ font-size:14px; font-weight:700; }
+.t13{ font-size:13px; } .t12{ font-size:12px; } .t11{ font-size:11px; }
+.center-text{ text-align:center; }
+.divider{ height:1px; background:var(--w-line); }
+.divider.dash{ height:0; border-top:1.5px dashed var(--w-line); background:none; }
+.fill-w{ width:100%; }
+
+/* CMS layout helpers */
+.cms{ display:flex; height:760px; }
+.cms-side{ width:208px; flex:none; background:#fff; border-right:1px solid var(--w-line); padding:14px 10px; }
+.cms-side .logo{ display:flex; align-items:center; gap:8px; padding:6px 8px 14px; }
+.cms-side .logo .mk{ width:26px; height:26px; border-radius:6px; background:var(--w-brand); border:1.5px solid var(--w-brand); }
+.cms-nav{ display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:7px; font-size:12.5px; color:var(--w-ink-2); cursor:pointer; }
+.cms-nav .ci{ width:18px; height:18px; border:1.5px solid var(--w-line-2); border-radius:5px; flex:none; }
+.cms-nav:hover{ background:var(--w-fill-3); }
+.cms-nav.active{ background:var(--w-brand-bg); color:var(--w-brand); font-weight:600; box-shadow:inset 2px 0 0 var(--w-brand); }
+.cms-nav.active .ci{ border-color:var(--w-brand); background:#fff; }
+.cms-body{ flex:1; display:flex; flex-direction:column; min-width:0; background:#FBFBFC; }
+.cms-topbar{ height:54px; flex:none; border-bottom:1px solid var(--w-line); display:flex; align-items:center; gap:14px; padding:0 22px; background:#fff; }
+.cms-content{ flex:1; overflow-y:auto; padding:22px; }
+.cms-pagetitle{ font-size:18px; font-weight:700; }
+
+/* mini cards / stats */
+.w-stat{ border:1.5px solid var(--w-line); border-radius:8px; padding:13px 14px; background:#fff; flex:1; }
+.w-stat .num{ font-size:22px; font-weight:700; }
+.w-stat .lbl{ font-size:11px; color:var(--w-ink-3); margin-top:2px; }
+
+/* bar chart placeholder */
+.w-chart{ display:flex; align-items:flex-end; gap:10px; height:160px; padding:10px; border:1.5px solid var(--w-line); border-radius:8px; background:#fff; }
+.w-chart .bar{ flex:1; background:var(--w-fill-2); border-radius:4px 4px 0 0; }
+
+/* action card (NPP home) */
+.w-actioncard{ border:1.5px solid var(--w-line); border-radius:12px; padding:22px; background:#fff; cursor:pointer; }
+.w-actioncard .ico{ width:46px; height:46px; border:1.5px solid var(--w-line-2); border-radius:10px; background:var(--w-fill-3); }
+
+/* phone scan viewport */
+.w-scanview{ background:#1E1E1E; border-radius:8px; position:relative; display:flex; align-items:center; justify-content:center; }
+.w-scanframe{ width:62%; aspect-ratio:1; border:2px solid #fff; border-radius:14px; position:relative; }
+.w-scanframe::before,.w-scanframe::after{ content:""; position:absolute; width:22px; height:22px; border:3px solid #fff; }
+.w-scanframe::before{ top:-2px; left:-2px; border-right:none; border-bottom:none; border-radius:14px 0 0 0; }
+.w-scanframe::after{ bottom:-2px; right:-2px; border-left:none; border-top:none; border-radius:0 0 14px 0; }
+
+/* progress meter (quota) */
+.w-meter{ height:9px; border-radius:5px; background:var(--w-fill-2); overflow:hidden; }
+.w-meter > i{ display:block; height:100%; background:var(--w-ink-3); }
+.w-meter.warn > i{ background:#D08A1E; }
+.w-meter.full > i{ background:#C0392B; }
+
+/* hub */
+.hub{ max-width:1080px; margin:0 auto; padding:48px 28px 80px; }
+</style>
+<style>
+/* ============================================================
+ * HI-FI THEME — overrides on top of the wireframe kit.
+ *   • Refined neutral palette + product-grade depth/shadows
+ *   • Drops low-fi affordances (X-cross image placeholders,
+ *     amber annotation pins/notes, wireframe screen rail)
+ *   • CMS mode: full-bleed CMS, browser chrome hidden
+ *   • Mobile mode: phone frame centered on soft canvas
+ * ============================================================ */
+:root{
+  --w-canvas:#EEF2F7; --w-paper:#FFFFFF;
+  --w-line:#E5E7EB;   --w-line-2:#D1D5DB;
+  --w-fill:#F1F5F9;   --w-fill-2:#E5E7EB; --w-fill-3:#F8FAFC;
+  --w-bar:#E5E7EB;
+  --w-ink:#0F172A; --w-ink-2:#475569; --w-ink-3:#94A3B8;
+}
+body{ background:var(--w-canvas); }
+
+/* hide wireframe shell chrome (rail + topbar with toggles) */
+.wf-rail, .wf-topbar { display:none !important; }
+.wf-shell{ display:block !important; height:100vh; overflow:auto; }
+.wf-main{ display:block; }
+.wf-stage{ background:var(--w-canvas); overflow:visible; }
+.wf-stage-pad{ padding:0; min-height:100vh; align-items:stretch; display:block; }
+
+/* hide annotation system (pins, notes) */
+.w-note, .w-pin { display:none !important; }
+
+/* image placeholders — drop the X-cross diagonal pattern */
+.w-img::before, .w-img::after { display:none; }
+.w-img{
+  background:linear-gradient(135deg, #F8FAFC, #E2E8F0);
+  border:1px solid var(--w-line); color:#94A3B8;
+}
+.w-img > span{
+  background:rgba(255,255,255,0.85); border-radius:6px;
+  padding:3px 9px; font-weight:500; font-size:11px; color:#64748B;
+}
+
+/* icon placeholders — soft chip with subtle inner highlight */
+.w-icon, .cms-side .ci, .w-botnav .gi{
+  background:linear-gradient(135deg, #FFFFFF, #F1F5F9);
+  border:1px solid var(--w-line);
+  box-shadow:inset 0 -1px 0 rgba(0,0,0,0.02);
+}
+
+/* avatar — soft gradient ring */
+.w-avatar{
+  background:linear-gradient(135deg, #CBD5E1, #94A3B8);
+  border:2px solid #FFFFFF;
+  box-shadow:0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* line text-bars */
+.w-line{ background:var(--w-bar); }
+
+/* cards & boxes */
+.w-card{
+  border:1px solid var(--w-line); border-radius:12px;
+  box-shadow:0 1px 2px rgba(15,23,42,.04), 0 1px 1px rgba(15,23,42,.06);
+}
+.w-box{
+  border:1px solid var(--w-line); border-radius:8px;
+  box-shadow:0 1px 0 rgba(15,23,42,.03);
+}
+
+/* buttons */
+.w-btn{
+  border:none; background:var(--w-brand); color:#fff;
+  box-shadow:0 1px 2px rgba(200,16,46,.15), 0 1px 3px rgba(200,16,46,.10);
+  transition:transform .12s, box-shadow .12s, background .12s;
+}
+.w-btn:not(.disabled):hover{
+  background:#B30E29; transform:translateY(-1px);
+  box-shadow:0 4px 10px rgba(200,16,46,.28), 0 2px 4px rgba(200,16,46,.15);
+}
+.w-btn.ghost{
+  background:#FFFFFF; color:var(--w-ink);
+  border:1px solid var(--w-line-2);
+  box-shadow:0 1px 2px rgba(15,23,42,.04);
+}
+.w-btn.ghost:not(.disabled):hover{
+  background:#F8FAFC; border-color:#94A3B8;
+  transform:translateY(-1px);
+}
+.w-btn.disabled{ background:#E5E7EB; color:#94A3B8; box-shadow:none; }
+
+/* inputs */
+.w-input{
+  background:#FFFFFF; border:1px solid var(--w-line);
+  transition:border-color .12s, box-shadow .12s;
+}
+.w-input:hover{ border-color:#94A3B8; }
+.w-input:focus-within{ border-color:var(--w-brand); box-shadow:0 0 0 3px rgba(200,16,46,.12); }
+
+/* chips */
+.w-chip{
+  background:#FFFFFF; border:1px solid var(--w-line); font-weight:500;
+  transition:background .12s, border-color .12s;
+}
+.w-chip:hover{ background:#F8FAFC; border-color:#94A3B8; }
+.w-chip.solid{
+  background:rgba(200,16,46,.08); border-color:rgba(200,16,46,.18);
+  color:var(--w-brand); font-weight:600;
+}
+
+/* badges (status pills) */
+.w-badge{ background:#F1F5F9; border:1px solid #E2E8F0; color:#475569; font-weight:600; }
+.w-badge.ok   { background:rgba(16,185,129,.08); border-color:rgba(16,185,129,.18); color:#047857; }
+.w-badge.warn { background:rgba(245,158,11,.10); border-color:rgba(245,158,11,.22); color:#B45309; }
+.w-badge.err  { background:rgba(239,68,68,.08);  border-color:rgba(239,68,68,.20); color:#B91C1C; }
+.w-badge.ok .led   { background:#10B981; }
+.w-badge.warn .led { background:#F59E0B; }
+.w-badge.err .led  { background:#EF4444; }
+
+/* tables */
+.w-table th{
+  background:#F8FAFC; color:#64748B; font-weight:600;
+  font-size:11px; letter-spacing:.04em; text-transform:uppercase;
+  border-bottom:1px solid var(--w-line);
+}
+.w-table td{ border-bottom:1px solid #F1F5F9; }
+.w-table tr:hover td{ background:#F8FAFC; }
+
+/* progress meter */
+.w-meter{ background:#F1F5F9; border-radius:999px; }
+.w-meter > i{ background:linear-gradient(90deg, var(--w-brand), #EF7D00); border-radius:999px; }
+.w-meter.warn > i{ background:linear-gradient(90deg, #F59E0B, #FB923C); }
+.w-meter.full > i{ background:linear-gradient(90deg, #EF4444, #DC2626); }
+
+/* stat cards */
+.w-stat{
+  border:1px solid var(--w-line); border-radius:12px;
+  box-shadow:0 1px 2px rgba(15,23,42,.04);
+  padding:14px 16px;
+}
+.w-stat .num{ color:var(--w-ink); }
+.w-stat .lbl{ color:#64748B; }
+
+/* chart */
+.w-chart{ background:#FFFFFF; border-color:var(--w-line); border-radius:10px; }
+.w-chart .bar{
+  background:linear-gradient(180deg, #FFB7C4, #C8102E);
+  border-radius:4px 4px 0 0;
+}
+
+/* divider */
+.divider{ background:#F1F5F9; }
+
+/* ============================================================
+ * MODE: CMS (admin, npp)
+ * Drop the simulated browser chrome — real CMS fills viewport.
+ * ============================================================ */
+.hifi.mode-cms .w-browser{
+  width:100% !important; border-radius:0;
+  box-shadow:none; background:#FFFFFF;
+}
+.hifi.mode-cms .w-browser-bar{ display:none; }
+.hifi.mode-cms .cms{ height:100vh; }
+.hifi.mode-cms .cms-side{
+  background:#FFFFFF; border-right:1px solid var(--w-line);
+  padding:14px 8px;
+}
+.hifi.mode-cms .cms-side .logo{
+  padding:6px 10px 14px;
+  border-bottom:1px solid #F1F5F9;
+  margin-bottom:6px;
+}
+.hifi.mode-cms .cms-side .logo .mk{
+  background:linear-gradient(135deg, #C8102E, #8B0E22);
+  box-shadow:0 2px 6px rgba(200,16,46,.25);
+  border:none; border-radius:8px;
+}
+.hifi.mode-cms .cms-nav{
+  padding:9px 11px; border-radius:8px; margin:1px 4px;
+  transition:background .12s, color .12s;
+}
+.hifi.mode-cms .cms-nav:hover{ background:#F8FAFC; color:var(--w-ink); }
+.hifi.mode-cms .cms-nav.active{
+  background:rgba(200,16,46,.08); color:var(--w-brand);
+  font-weight:600; box-shadow:none;
+}
+.hifi.mode-cms .cms-nav.active .ci{
+  background:#FFFFFF; border-color:var(--w-brand);
+  box-shadow:0 0 0 2px rgba(200,16,46,.15);
+}
+.hifi.mode-cms .cms-topbar{
+  height:60px; padding:0 28px; background:#FFFFFF;
+  box-shadow:0 1px 0 rgba(15,23,42,.04);
+}
+.hifi.mode-cms .cms-content{ padding:24px 28px 80px; background:#F8FAFC; }
+.hifi.mode-cms .cms-pagetitle{
+  font-size:22px; font-weight:700; color:var(--w-ink); letter-spacing:-.01em;
+}
+
+/* Login pages (centered card inside Browser, no Cms) — fill viewport */
+.hifi.mode-cms .w-browser > div[style*="height:760"],
+.hifi.mode-cms .w-browser > div[style*="height: 760"]{
+  height:100vh !important;
+}
+
+/* ============================================================
+ * MODE: MINI APP (shop, sales)
+ * Phone frame on a soft branded canvas.
+ * ============================================================ */
+.hifi.mode-mobile .wf-stage-pad{
+  display:flex; align-items:flex-start; justify-content:center;
+  padding:32px 16px 80px; min-height:100vh;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, #FDE2E5 0%, transparent 60%),
+    linear-gradient(180deg, #EEF2F7, #E2E8F0);
+}
+.hifi.mode-mobile .w-phone{
+  box-shadow:
+    0 28px 70px rgba(15,23,42,.18),
+    0 10px 24px rgba(15,23,42,.10);
+}
+/* Hide the dev notes (".tt — Trên web · desktop") that the npp loyalty
+   web/mobile dual-view emits — those are wireframe annotations. */
+.hifi.mode-cms .tt:first-child + .w-browser{ /* tighten spacing */ }
+
+/* ============================================================
+ * FLOATING SCREEN PICKER (demo navigation)
+ * ============================================================ */
+.hf-pick-btn{
+  position:fixed; right:18px; bottom:18px; z-index:1000;
+  display:inline-flex; align-items:center; gap:9px;
+  padding:11px 18px; max-width:calc(100vw - 36px);
+  background:#0F172A; color:#FFFFFF; border:none; border-radius:999px;
+  font:600 13px/1 var(--w-font); cursor:pointer;
+  box-shadow:0 8px 22px rgba(15,23,42,.28), 0 3px 6px rgba(15,23,42,.16);
+  transition:transform .12s, box-shadow .12s;
+}
+.hf-pick-btn:hover{ transform:translateY(-1px); box-shadow:0 10px 26px rgba(15,23,42,.32), 0 4px 8px rgba(15,23,42,.18); }
+.hf-pick-btn .hf-dot{
+  width:8px; height:8px; background:#4ADE80; border-radius:50%;
+  box-shadow:0 0 0 3px rgba(74,222,128,.25);
+}
+.hf-pick-btn .hf-meta{ opacity:.55; font-weight:500; font-size:11.5px; }
+.hf-pick-panel{
+  position:fixed; right:18px; bottom:72px; z-index:1000;
+  width:330px; max-height:74vh;
+  background:#FFFFFF; border:1px solid var(--w-line); border-radius:14px;
+  box-shadow:0 24px 60px rgba(15,23,42,.22), 0 8px 20px rgba(15,23,42,.10);
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.hf-pick-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 14px; border-bottom:1px solid #F1F5F9;
+}
+.hf-pick-head b{ font-size:13px; font-weight:700; color:var(--w-ink); }
+.hf-pick-head a{ font-size:12px; color:var(--w-ink-3); text-decoration:none; }
+.hf-pick-head a:hover{ color:var(--w-brand); }
+.hf-pick-list{ overflow-y:auto; padding:6px; }
+.hf-pick-group{
+  font-size:10.5px; font-weight:700; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--w-ink-3);
+  padding:10px 10px 4px;
+}
+.hf-pick-item{
+  display:flex; align-items:center; gap:10px; width:100%;
+  padding:8px 10px; background:none; border:none; border-radius:7px;
+  text-align:left; font:500 12.5px/1.35 var(--w-font);
+  color:var(--w-ink-2); cursor:pointer;
+  transition:background .12s, color .12s;
+}
+.hf-pick-item:hover{ background:#F8FAFC; color:var(--w-ink); }
+.hf-pick-item.active{
+  background:rgba(200,16,46,.08); color:var(--w-brand); font-weight:600;
+}
+.hf-pick-num{
+  flex:none; width:22px; height:22px; border-radius:50%;
+  background:#F1F5F9; border:1px solid var(--w-line);
+  font-size:10.5px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--w-ink-3);
+}
+.hf-pick-item.active .hf-pick-num{
+  background:var(--w-brand); border-color:var(--w-brand); color:#FFFFFF;
+}
+</style>
+
+</head>
+<body>
+<div id="root"></div>
+
+<script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.24.7/babel.min.js"></script>
+
+<script type="text/babel" data-presets="env,react">
+/* ============================================================
+ * Admin · Got It — Idemitsu Loyalty (hi-fi from wireframe Phase 1)
+ *   mode: cms
+ * ============================================================ */
+
+/* =====================================================================
+ * Wire Kit — shared React primitives, device frames & screen router.
+ * Loaded after React + Babel. Exposes components on window + window.WF.
+ * ===================================================================== */
+const { useState, useEffect, useCallback } = React;
+
+/* ---------- low-fi primitives ---------- */
+const cx = (...a) => a.filter(Boolean).join(' ');
+
+function Box(p){ return <div className={cx('w-box', p.className)} style={p.style} {...hot(p)}>{p.children}</div>; }
+function Card(p){ return <div className={cx('w-card', p.className)} style={p.style} {...hot(p)}>{p.children}</div>; }
+function Img(p){ return (
+  <div className={cx('w-img', p.plain && 'plain', p.className)} style={{height:p.h, width:p.w, ...p.style}} {...hot(p)}>
+    {p.label ? <span>{p.label}</span> : null}{p.children}
+  </div>
+); }
+function Line(p){ return <div className={cx('w-line', p.sm&&'sm', p.dk&&'dk', p.className)} style={{width:p.w, ...p.style}} />; }
+function Lines({n=3, last='60%', gap=8, w='100%'}){
+  return <div className="c" style={{gap}}>{Array.from({length:n}).map((_,i)=>
+    <Line key={i} w={i===n-1?last:w} sm />)}</div>;
+}
+function Btn(p){ return (
+  <button className={cx('w-btn', p.lg&&'lg', p.sm&&'sm', p.block&&'block', p.ghost&&'ghost', p.disabled&&'disabled', p.className)}
+    style={p.style} {...hot(p)}>{p.children}</button>
+); }
+function Input(p){ return (
+  <div className={cx('w-input', p.lg&&'lg', p.area&&'area', p.className)} style={p.style} {...hot(p)}>
+    {p.children || <span>{p.placeholder||''}</span>}
+  </div>
+); }
+function Field({label, req, children, hint}){ return (
+  <div className="c">
+    {label && <span className="w-label">{label}{req && <span className="req"> *</span>}</span>}
+    {children}
+    {hint && <span className="t11 muted" style={{marginTop:5}}>{hint}</span>}
+  </div>
+); }
+function Chip(p){ return <span className={cx('w-chip', p.solid&&'solid', p.className)} style={p.style} {...hot(p)}>{p.children}</span>; }
+function Badge(p){ return <span className={cx('w-badge', p.kind, p.className)} style={p.style}><i className="led" />{p.children}</span>; }
+function Icon(p){ return <span className={cx('w-icon', p.circle&&'circle', p.className)} style={{width:p.size,height:p.size,...p.style}} />; }
+function Avatar(p){ return <span className="w-avatar" style={{width:p.size,height:p.size,...p.style}} />; }
+function Divider(p){ return <div className={cx('divider', p.dash&&'dash', p.className)} style={p.style} />; }
+function Note(p){ return <div className={cx('w-note', p.className)} style={p.style}>{p.children}</div>; }
+function Pin({n}){ return <span className="w-pin">{n}</span>; }
+function Stat({num, lbl}){ return <div className="w-stat"><div className="num">{num}</div><div className="lbl">{lbl}</div></div>; }
+function Meter({pct, kind}){ return <div className={cx('w-meter', kind)}><i style={{width:pct+'%'}} /></div>; }
+
+function Table({cols, rows, onRow}){
+  return (
+    <div className="w-box" style={{overflow:'hidden'}}>
+      <table className="w-table">
+        <thead><tr>{cols.map((c,i)=><th key={i} style={{width:c.w, textAlign:c.align}}>{c.t}</th>)}</tr></thead>
+        <tbody>{rows.map((r,ri)=>
+          <tr key={ri} {...(onRow?{'data-hot':true, onClick:()=>onRow(ri)}:{})}>
+            {r.map((cell,ci)=><td key={ci} style={{textAlign:cols[ci]&&cols[ci].align}}>{cell}</td>)}
+          </tr>)}</tbody>
+      </table>
+    </div>
+  );
+}
+
+/* hotspot helper: any primitive with `to` becomes clickable */
+function hot(p){
+  if(p.to) return { 'data-hot':true, onClick:(e)=>{ e.stopPropagation(); WF.go(p.to); } };
+  if(p.onClick) return { 'data-hot':true, onClick:p.onClick };
+  return {};
+}
+function Hot({to, onClick, children, style, className, block}){
+  return <div className={cx(className)} style={{display:block?'block':'contents', ...style}}
+    data-hot onClick={(e)=>{ e.stopPropagation(); if(to) WF.go(to); else if(onClick) onClick(e); }}>{children}</div>;
+}
+
+/* ---------- device frames ---------- */
+function StatusBar(){ return (
+  <div className="w-statusbar">
+    <span>9:41</span>
+    <span className="sb-r"><i style={{borderRadius:2}} /><i style={{width:9}} /><i style={{width:18}} /></span>
+  </div>
+); }
+
+function Browser({url, wide, children}){ return (
+  <div className={cx('w-browser', wide&&'wide')}>
+    <div className="w-browser-bar">
+      <span className="w-dots"><i/><i/><i/></span>
+      <span className="w-url">{url||'reward-hub.gotit.vn'}</span>
+    </div>
+    {children}
+  </div>
+); }
+
+function Phone({children, tablet, noStatus}){ return (
+  <div className={cx('w-phone', tablet&&'tablet')}>
+    {!noStatus && <StatusBar/>}
+    {children}
+  </div>
+); }
+
+function ZaloBar({title}){ return (
+  <div className="w-zalo-bar">
+    <span className="w-zalo-cluster"><i/><i/><i/><span className="w-zalo-divider"/><span style={{width:8,height:8,borderRadius:'50%',border:'1.5px solid var(--w-ink-2)',display:'block'}}/></span>
+    <span className="ztitle">{title}</span>
+    <span style={{width:54}} />
+  </div>
+); }
+
+function Screen({children, scroll=true, className}){
+  return <div className={cx('w-screen', scroll&&'scroll', className)}>{children}</div>;
+}
+function ScreenBody({children, style, pad=16}){
+  return <div className="w-screen-body" style={{padding:pad, ...style}}>{children}</div>;
+}
+
+function BotNav({active, items}){
+  const def = items || ['Trang chủ','Kho quà','Quét QR','Lịch sử','Tài khoản'];
+  return (
+    <div className="w-botnav">
+      {def.map((t,i)=>
+        <div key={i} className={cx('nav-i', i===active&&'active')} {...(typeof t==='object'?hot(t):{})}>
+          <span className="gi" style={i===2?{borderRadius:'50%'}:{}} />
+          <span>{typeof t==='object'?t.label:t}</span>
+        </div>)}
+    </div>
+  );
+}
+
+/* CMS scaffold */
+function Cms({nav, active, title, actions, children, breadcrumb, topRight}){
+  return (
+    <div className="cms">
+      <div className="cms-side">
+        <div className="logo"><span className="mk" /><b style={{fontSize:13}}>Got It · Idemitsu</b></div>
+        {nav.map((g,gi)=>
+          <div key={gi}>
+            {g.group && <div className="wf-group" style={{padding:'12px 8px 4px'}}>{g.group}</div>}
+            {g.items.map((it,i)=>
+              <div key={i} className={cx('cms-nav', it.id===active&&'active')} {...(it.to?{'data-hot':true,onClick:()=>WF.go(it.to)}:{})}>
+                <span className="ci" />{it.label}
+              </div>)}
+          </div>)}
+      </div>
+      <div className="cms-body">
+        <div className="cms-topbar">
+          {breadcrumb && <span className="wf-crumbs">{breadcrumb}</span>}
+          <span className="grow" />
+          {topRight}
+          <span className="w-icon" style={{borderRadius:'50%'}} />
+          <span className="w-avatar" />
+        </div>
+        <div className="cms-content">
+          <div className="r between" style={{marginBottom:18}}>
+            <div className="cms-pagetitle">{title}</div>
+            <div className="r g8">{actions}</div>
+          </div>
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- screen router ---------- */
+function WireApp({role, title, sub, screens, defaultId}){
+  const ids = screens.map(s=>s.id);
+  const first = defaultId || ids[0];
+  const read = () => {
+    const h = decodeURIComponent((location.hash||'').replace('#','')); 
+    if(h && ids.includes(h)) return h;
+    const ls = localStorage.getItem('wf_'+role);
+    if(ls && ids.includes(ls)) return ls;
+    return first;
+  };
+  const [cur, setCur] = useState(read);
+  const [anno, setAnno] = useState(true);
+  const [hints, setHints] = useState(false);
+
+  const go = useCallback((id)=>{
+    if(!ids.includes(id)) { console.warn('no screen', id); return; }
+    setCur(id); location.hash = encodeURIComponent(id); localStorage.setItem('wf_'+role, id);
+    const st = document.querySelector('.wf-stage'); if(st) st.scrollTop=0;
+  },[]);
+  useEffect(()=>{ WF.go = go; },[go]);
+  useEffect(()=>{
+    const onHash=()=>{ const h=decodeURIComponent((location.hash||'').replace('#','')); if(h&&ids.includes(h)) setCur(h); };
+    window.addEventListener('hashchange', onHash); return ()=>window.removeEventListener('hashchange', onHash);
+  },[]);
+
+  // group screens
+  const groups = [];
+  screens.forEach(s=>{ let g=groups.find(x=>x.name===(s.group||'')); if(!g){g={name:s.group||'', items:[]}; groups.push(g);} g.items.push(s); });
+  const screen = screens.find(s=>s.id===cur) || screens[0];
+  const idx = screens.indexOf(screen);
+
+  return (
+    <div className={cx('wf-shell', !anno&&'anno-hidden', hints&&'show-hot')}>
+      <div className="wf-rail">
+        <div className="wf-rail-head">
+          <div className="wf-rail-role">{role}</div>
+          <div className="wf-rail-title">{title}</div>
+          {sub && <div className="wf-rail-sub">{sub}</div>}
+        </div>
+        <div className="wf-rail-scroll">
+          {groups.map((g,gi)=>
+            <div key={gi}>
+              {g.name && <div className="wf-group">{g.name}</div>}
+              {g.items.map((s)=>{
+                const n = screens.indexOf(s)+1;
+                return <div key={s.id} className={cx('wf-navitem', s.id===cur&&'active')} onClick={()=>go(s.id)}>
+                  <span className="wf-navnum">{n}</span><span>{s.title}</span>
+                </div>;
+              })}
+            </div>)}
+        </div>
+      </div>
+      <div className="wf-main">
+        <div className="wf-topbar">
+          <a className="wf-back" href="index.html">‹ Tất cả role</a>
+          <span className="wf-crumbs"><b>{screen.title}</b> · màn {idx+1}/{screens.length}</span>
+          <span className="wf-top-spacer" />
+          <span className={cx('wf-toggle', hints&&'on')} onClick={()=>setHints(h=>!h)}><span className="dot"/>Vùng bấm</span>
+          <span className={cx('wf-toggle', anno&&'on')} onClick={()=>setAnno(a=>!a)}><span className="dot"/>Chú thích</span>
+        </div>
+        <div className="wf-stage">
+          <div className="wf-stage-pad">{screen.render()}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const WF = { go:()=>{}, mount(opts){
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(<WireApp {...opts} />);
+}};
+
+/* download a real CSV template (Excel-openable) */
+function dlTemplate(filename, headers, sample){
+  const rows = [headers];
+  if(sample) sample.forEach(r=>rows.push(r));
+  const csv = '\uFEFF' + rows.map(r=>r.map(c=>{
+    const s = String(c==null?'':c);
+    return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s;
+  }).join(',')).join('\r\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{ document.body.removeChild(a); URL.revokeObjectURL(url); }, 0);
+}
+
+Object.assign(window, {
+  cx, Box, Card, Img, Line, Lines, Btn, Input, Field, Chip, Badge, Icon, Avatar,
+  Divider, Note, Pin, Stat, Meter, Table, Hot, hot, dlTemplate,
+  StatusBar, Browser, Phone, ZaloBar, Screen, ScreenBody, BotNav, Cms, WireApp, WF
+});
+
+
+/* ===================== ADMIN — Got It CMS (desktop web) ===================== */
+
+const ADMIN_NAV = [
+  { items: [
+    { id:'npp',   label:'Tài khoản NPP', to:'npp-list' },
+    { id:'pts',   label:'Cấu hình tích điểm', to:'points-config' },
+  ]},
+];
+
+function ABrowser({active, title, actions, breadcrumb, children}){
+  return <Browser url="admin.gotit.vn/idemitsu" wide>
+    <Cms nav={ADMIN_NAV} active={active} title={title} actions={actions} breadcrumb={breadcrumb}>{children}</Cms>
+  </Browser>;
+}
+
+/* 1 — Admin login */
+function aLogin(){
+  return <Browser url="admin.gotit.vn/idemitsu/login">
+    <div style={{height:760, display:'flex', alignItems:'center', justifyContent:'center', background:'#FBFBFC'}}>
+      <div className="w-card" style={{width:380, padding:30}}>
+        <div className="c g6" style={{alignItems:'center', marginBottom:22}}>
+          <span className="mk" style={{width:40,height:40,borderRadius:9,background:'var(--w-fill-2)',border:'1.5px solid var(--w-line)'}} />
+          <div className="h2" style={{marginTop:6}}>Got It Admin · Idemitsu</div>
+          <div className="t12 muted">Hệ thống quản trị Loyalty</div>
+        </div>
+        <div className="c g16">
+          <Field label="Tài khoản"><Input placeholder="email@gotit.vn" /></Field>
+          <Field label="Mật khẩu"><Input placeholder="••••••••" /></Field>
+          <Btn lg block to="npp-list">Đăng nhập</Btn>
+        </div>
+      </div>
+    </div>
+  </Browser>;
+}
+
+/* NPP list */
+function aNppList(){
+  const rows = [
+    ['NPP Miền Bắc 01','npp-mb01','Hà Nội',<Badge kind="ok">Hoạt động</Badge>,'128', '12/03/2026'],
+    ['NPP Miền Trung 02','npp-mt02','Đà Nẵng',<Badge kind="ok">Hoạt động</Badge>,'74','03/04/2026'],
+    ['NPP Miền Nam 05','npp-mn05','TP.HCM',<Badge>Chờ kích hoạt</Badge>,'0','—'],
+    ['NPP Tây Nguyên 01','npp-tn01','Đắk Lắk',<Badge kind="ok">Hoạt động</Badge>,'41','21/02/2026'],
+  ];
+  return <ABrowser active="npp" title="Tài khoản NPP" breadcrumb={<><span>NPP</span> · <b>Danh sách</b></>}
+    actions={<><Btn ghost sm to="npp-credentials">Xuất Excel</Btn><Btn ghost sm to="npp-import">Import Excel</Btn><Btn sm to="npp-create">+ Tạo NPP</Btn></>}>
+    <div className="r g10" style={{marginBottom:14}}>
+      <Input className="grow" style={{maxWidth:280}} placeholder="🔍 Tìm theo tên / mã NPP" />
+      <Chip>Khu vực ▾</Chip><Chip>Trạng thái ▾</Chip>
+    </div>
+    <Table onRow={()=>WF.go('npp-detail')}
+      cols={[{t:'Tên NPP'},{t:'Mã đăng nhập'},{t:'Khu vực'},{t:'Trạng thái'},{t:'Số shop',align:'right'},{t:'Tạo lúc'}]}
+      rows={rows} />
+    <div className="r center" style={{marginTop:14}}><Chip>‹ 1 2 3 ›</Chip></div>
+  </ABrowser>;
+}
+
+/* 4 — Create NPP */
+function aNppCreate(){
+  return <ABrowser active="npp" title="Tạo tài khoản NPP" breadcrumb={<><Hot to="npp-list"><span data-hot style={{color:'var(--w-ink-2)'}}>NPP</span></Hot> · <b>Tạo mới</b></>}>
+    <div className="r g8" style={{marginBottom:16}}><Chip solid>Thêm đơn lẻ</Chip><Chip to="npp-import">Import Excel</Chip></div>
+    <div className="r g20 start">
+      <Card className="grow" style={{maxWidth:620}}>
+        <div className="h3" style={{marginBottom:16}}>Thông tin nhà phân phối</div>
+        <div className="c g16">
+          <Field label="Tên NPP" req><Input placeholder="VD: NPP Miền Bắc 01" /></Field>
+          <div className="r g12"><Field label="Khu vực" req><Input placeholder="VD: Hà Nội" /></Field><Field label="Mã NPP" req><Input placeholder="npp-mb01" /></Field></div>
+          <div className="r g12"><Field label="Người liên hệ" req><Input placeholder="Họ tên" /></Field><Field label="SĐT" req><Input placeholder="09xx xxx xxx" /></Field></div>
+          <Field label="Địa chỉ"><Input placeholder="Số nhà, đường, quận/huyện, tỉnh" /></Field>
+          <Field label="Tọa độ GPS (Long, Lat)" req hint="Vị trí cửa hàng/kho NPP — dùng để xác thực &amp; phân vùng. Nhập Long, Lat.">
+            <div className="r g12">
+              <div className="grow"><Input placeholder="Longitude · VD: 105.8342" /></div>
+              <div className="grow"><Input placeholder="Latitude · VD: 21.0278" /></div>
+            </div>
+          </Field>
+          <Divider/>
+          <div className="r g10"><Btn to="npp-list">Tạo tài khoản</Btn><Btn ghost to="npp-list">Hủy</Btn></div>
+        </div>
+      </Card>
+      <Note style={{width:300}}><Pin n="1"/> Hệ thống <b>tự sinh user/pass</b>. Admin bàn giao thủ công cho NPP (chưa gửi tự động ở Phase 1). NPP sẽ bị buộc đổi mật khẩu ở lần đăng nhập đầu.</Note>
+    </div>
+  </ABrowser>;
+}
+
+/* 4b — Import NPP từ Excel */
+function aNppImport(){
+  const rows = [
+    ['1','NPP Miền Bắc 06','npp-mb06','Hải Phòng',<Badge kind="ok">Hợp lệ</Badge>],
+    ['2','NPP Miền Trung 03','npp-mt03','Huế',<Badge kind="ok">Hợp lệ</Badge>],
+    ['3','(trống)','npp-mn09','Cần Thơ',<Badge kind="err">Thiếu tên</Badge>],
+    ['4','NPP Tây Bắc 01','npp-mb01','Sơn La',<Badge kind="err">Trùng mã NPP</Badge>],
+  ];
+  return <ABrowser active="npp" title="Import NPP từ Excel" breadcrumb={<><Hot to="npp-list"><span data-hot style={{color:'var(--w-ink-2)'}}>NPP</span></Hot> · <b>Import hàng loạt</b></>}>
+    <div className="r g8" style={{marginBottom:16}}><Chip to="npp-create">Thêm đơn lẻ</Chip><Chip solid>Import Excel</Chip></div>
+    <div className="r g20 start">
+      <div className="c g16 grow" style={{maxWidth:760}}>
+        <Card>
+          <div className="h3" style={{marginBottom:12}}>1 · Tải file mẫu</div>
+          <div className="w-box r between wrap g10" style={{padding:'12px 14px', marginBottom:14}}>
+            <div className="c g4"><b className="t13">Mẫu import NPP (.xlsx)</b><span className="t11 muted">Cột: Tên NPP, Mã NPP, Khu vực, Người liên hệ, SĐT, Long, Lat, Tỉ lệ cross-award</span></div>
+            <Btn ghost sm onClick={()=>dlTemplate('mau-import-npp.csv', ['Tên NPP','Mã NPP','Khu vực','Người liên hệ','SĐT','Long','Lat','Tỉ lệ cross-award'], [['NPP Miền Bắc 06','npp-mb06','Hải Phòng','Trần Văn B','0903111222','106.6822','20.8449','1'],['NPP Miền Trung 03','npp-mt03','Huế','Lê Thị C','0905333444','107.5797','16.4637','1']])}>⤓ Tải file mẫu</Btn>
+          </div>
+          <div className="h3" style={{margin:'4px 0 12px'}}>2 · Tải file đã điền</div>
+          <div className="w-img plain" style={{height:120, borderStyle:'dashed', flexDirection:'column', gap:6}} data-hot onClick={()=>{}}>
+            <span style={{background:'none'}} className="muted t13">Kéo thả hoặc bấm để chọn file Excel</span>
+            <span style={{background:'none'}} className="t11 muted">.xlsx · tối đa 2.000 dòng</span>
+          </div>
+        </Card>
+        <Card>
+          <div className="r between" style={{marginBottom:12}}><div className="h3">3 · Kiểm tra dữ liệu</div><div className="r g8"><Badge kind="ok">2 hợp lệ</Badge><Badge kind="err">2 lỗi</Badge></div></div>
+          <div style={{overflowX:'auto'}}>
+            <Table cols={[{t:'#',w:'48px'},{t:'Tên NPP'},{t:'Mã NPP'},{t:'Khu vực'},{t:'Long, Lat'},{t:'Kết quả'}]} rows={rows.map((r,i)=>[r[0],r[1],r[2],r[3],<span className="t12 muted">{['105.83, 21.03','108.22, 16.05','—','105.78, 21.04'][i]}</span>,r[4]])} />
+          </div>
+          <div className="r g10" style={{marginTop:14}}><Btn to="npp-list">Import 2 NPP hợp lệ & sinh tài khoản</Btn><Btn ghost to="npp-list">Hủy</Btn></div>
+        </Card>
+      </div>
+      <Note style={{width:300}}><Pin n="1"/> Import hàng loạt: hệ thống <b>tự sinh user/pass</b> cho mỗi NPP hợp lệ. Xong export danh sách tài khoản để bàn giao. Dòng lỗi (thiếu tên / trùng mã) được bỏ qua.</Note>
+    </div>
+  </ABrowser>;
+}
+
+/* 5 — Export danh sách tài khoản NPP (chức năng export duy nhất) */
+function aNppCreds(){
+  const rows = [
+    ['NPP Miền Bắc 01','npp-mb01','Idmt@2026aB','Hà Nội'],
+    ['NPP Miền Trung 02','npp-mt02','Idmt@2026cD','Đà Nẵng'],
+    ['NPP Miền Nam 05','npp-mn05','Idmt@2026xK','TP.HCM'],
+  ];
+  return <ABrowser active="npp" title="Export danh sách tài khoản NPP" breadcrumb={<><Hot to="npp-list"><span data-hot style={{color:'var(--w-ink-2)'}}>NPP</span></Hot> · <b>Xuất Excel</b></>}>
+    <div className="r g20 start">
+      <Card className="grow" style={{maxWidth:640}}>
+        <div className="h3" style={{marginBottom:4}}>Xuất danh sách tài khoản NPP</div>
+        <div className="t12 muted" style={{marginBottom:16}}>Tải file danh sách tài khoản NPP (kèm user / mật khẩu tạm) để bàn giao thủ công.</div>
+        <div className="r g10" style={{marginBottom:18}}>
+          <Btn>⤓ Export file Excel</Btn>
+          <Chip>.xlsx</Chip><Chip>.csv</Chip>
+        </div>
+        <div className="tt" style={{marginBottom:8}}>Xem trước nội dung file</div>
+        <div style={{overflowX:'auto'}}>
+          <Table cols={[{t:'Tên NPP'},{t:'Tài khoản'},{t:'Mật khẩu tạm'},{t:'Khu vực'}]} rows={rows} />
+        </div>
+        <Divider style={{margin:'18px 0'}}/>
+        <Btn ghost to="npp-list">Về danh sách NPP</Btn>
+      </Card>
+      <Note style={{width:300}}><Pin n="2"/> File chứa <b>mật khẩu tạm</b> — bàn giao an toàn cho NPP. NPP buộc đổi mật khẩu ở lần đăng nhập đầu. Nếu lộ/quên, Admin reset để sinh mật khẩu mới.</Note>
+    </div>
+  </ABrowser>;
+}
+
+/* 6 — NPP detail */
+function aNppDetail(){
+  return <ABrowser active="npp" title="NPP Miền Bắc 01" breadcrumb={<><Hot to="npp-list"><span data-hot style={{color:'var(--w-ink-2)'}}>NPP</span></Hot> · <b>Chi tiết</b></>}
+    actions={<><Btn ghost sm>Reset mật khẩu</Btn><Btn ghost sm>Tạm khóa</Btn></>}>
+    <div className="r g16" style={{marginBottom:18}}>
+      <Stat num="128" lbl="Shop trong whitelist" /><Stat num="9.842" lbl="Lượt quét (shop)" /><Stat num="9.842" lbl="Điểm cross-award" /><Stat num="3" lbl="Lần đổi quà" />
+    </div>
+    <div className="r g20 start">
+      <Card className="grow"><div className="h3" style={{marginBottom:14}}>Thông tin</div>
+        <div className="c g12">
+          {[['Mã đăng nhập','npp-mb01'],['Khu vực','Hà Nội'],['Người liên hệ','Nguyễn Văn A · 0901 234 567'],['Tỉ lệ cross-award','1 điểm / lượt quét'],['Trạng thái','Hoạt động']].map((x,i)=>
+            <div key={i} className="r between t13"><span className="muted">{x[0]}</span><b>{x[1]}</b></div>)}
+        </div>
+      </Card>
+      <Card style={{width:360}}><div className="h3" style={{marginBottom:12}}>Hoạt động gần đây</div>
+        <Lines n={5} gap={12} />
+      </Card>
+    </div>
+  </ABrowser>;
+}
+
+/* 7 — Cấu hình ZNS (tin Zalo tự gửi khi NPP add/import shop) */
+/* 8 — Cấu hình cơ chế tích điểm (NPP theo SKU + % cửa hàng) */
+function aPointsConfig(){
+  const sku = [
+    ['Sản phẩm 1','Zepro 0W-20','4','2'],
+    ['Sản phẩm 2','Touring 5W-30','6','2'],
+    ['Sản phẩm 3','Diesel 15W-40','8','3'],
+  ];
+  return <ABrowser active="pts" title="Cấu hình tích điểm" breadcrumb={<><b>Cấu hình tích điểm</b></>}
+    actions={<><Btn ghost sm>Lịch sử thay đổi</Btn><Btn ghost sm>+ Thêm sản phẩm</Btn><Btn sm>Lưu cấu hình</Btn></>}>
+    <Note style={{marginBottom:16}}><Pin n="1"/> Cấu hình điểm <b>theo từng sản phẩm</b>: mỗi lượt quét QR hợp lệ, <b>Repair Shop</b> và <b>NPP</b> cộng điểm theo mức riêng của sản phẩm đó. VD: SP1 — shop +4, NPP +2; SP2 — shop +6, NPP +2.</Note>
+
+    <Card style={{marginBottom:16}}>
+      <div className="h3" style={{marginBottom:6}}>Điểm tích theo sản phẩm (mỗi lượt quét)</div>
+      <div className="t12 muted" style={{marginBottom:14}}>Đặt độc lập điểm cho Repair Shop và NPP trên từng SKU.</div>
+      <div style={{overflowX:'auto'}}>
+        <Table cols={[{t:'Sản phẩm'},{t:'SKU'},{t:'Điểm Repair Shop',align:'right'},{t:'Điểm NPP',align:'right'},{t:'',align:'right'}]}
+          rows={sku.map(r=>[
+            <b>{r[0]}</b>, r[1],
+            <span className="w-chip solid" style={{minWidth:28, justifyContent:'center'}}>+{r[2]}</span>,
+            <span className="w-chip solid" style={{minWidth:28, justifyContent:'center'}}>+{r[3]}</span>,
+            <Chip>Sửa</Chip>
+          ])} />
+      </div>
+    </Card>
+
+    <Card>
+      <div className="h3" style={{marginBottom:6}}>Ví dụ tính cho 1 lượt quét</div>
+      <div className="r g16 wrap">
+        {[['Sản phẩm 1','+4','+2'],['Sản phẩm 2','+6','+2']].map((x,i)=>
+          <div key={i} className="w-box c g8" style={{flex:'1 1 240px', minWidth:220, padding:14}}>
+            <b className="t13">{x[0]}</b>
+            <div className="r between t13"><span className="muted">Repair Shop nhận</span><b style={{color:'#3FA34D'}}>{x[1]} điểm</b></div>
+            <div className="r between t13"><span className="muted">NPP nhận</span><b style={{color:'#3FA34D'}}>{x[2]} điểm</b></div>
+          </div>)}
+      </div>
+    </Card>
+  </ABrowser>;
+}
+
+const ADMIN_SCREENS = [
+  { id:'login',           group:'Khởi tạo',         title:'Đăng nhập Admin', render:aLogin },
+  { id:'npp-list',        group:'Quản lý NPP',      title:'Danh sách NPP', render:aNppList },
+  { id:'npp-create',      group:'Quản lý NPP',      title:'Tạo NPP · đơn lẻ', render:aNppCreate },
+  { id:'npp-import',      group:'Quản lý NPP',      title:'Tạo NPP · import Excel', render:aNppImport },
+  { id:'npp-credentials', group:'Quản lý NPP',      title:'Export tài khoản NPP (Excel)', render:aNppCreds },
+  { id:'npp-detail',      group:'Quản lý NPP',      title:'Chi tiết NPP', render:aNppDetail },
+  { id:'points-config',   group:'Cấu hình tích điểm', title:'Cơ chế tích điểm', render:aPointsConfig },
+];
+
+
+
+
+
+function HiFiApp({ mode, role, title, sub, screens, defaultId }){
+  const ids = screens.map(s => s.id);
+  const first = defaultId || ids[0];
+  const read = () => {
+    const h = decodeURIComponent((location.hash||'').replace(/^#/,''));
+    if(h && ids.includes(h)) return h;
+    return first;
+  };
+  const [cur, setCur] = useState(read);
+  const [open, setOpen] = useState(false);
+
+  const go = useCallback((id) => {
+    if(id === 'home'){ location.href = '../'; return; }
+    if(!ids.includes(id)){ console.warn('no screen', id); return; }
+    setCur(id);
+    location.hash = encodeURIComponent(id);
+    window.scrollTo(0,0);
+  }, []);
+
+  useEffect(() => { WF.go = go; }, [go]);
+  useEffect(() => {
+    const on = () => {
+      const h = decodeURIComponent((location.hash||'').replace(/^#/,''));
+      if(h && ids.includes(h)) setCur(h);
+    };
+    window.addEventListener('hashchange', on);
+    return () => window.removeEventListener('hashchange', on);
+  }, []);
+
+  // group by .group field for the picker
+  const groups = [];
+  screens.forEach(s => {
+    let g = groups.find(x => x.name === (s.group||''));
+    if(!g){ g = { name:s.group||'', items:[] }; groups.push(g); }
+    g.items.push(s);
+  });
+
+  const screen = screens.find(s => s.id === cur) || screens[0];
+  const idx = screens.indexOf(screen) + 1;
+
+  const hasBus = typeof LoyaltyState !== 'undefined';
+  const hasToast = typeof LoyaltyToast === 'function';
+  // Render the screen as a proper React component (not a function call) so
+  // hooks inside it get their own per-screen state. The key forces an
+  // unmount/remount on navigation — important for screens that compute
+  // something fresh on mount (e.g. shop scan-success records a new scan).
+  const ScreenComp = screen.render;
+
+  return (
+    <div className={cx('wf-shell hifi', 'mode-' + mode)}>
+      <div className="wf-stage">
+        <div className="wf-stage-pad"><ScreenComp key={screen.id} /></div>
+      </div>
+
+      <button className="hf-pick-btn" onClick={() => setOpen(o => !o)} title="Đổi màn demo">
+        <span className="hf-dot" />
+        <span>{screen.title}</span>
+        <span className="hf-meta">· {idx}/{screens.length}</span>
+      </button>
+
+      {open && (
+        <>
+          <div onClick={() => setOpen(false)}
+            style={{position:'fixed', inset:0, zIndex:999, background:'transparent'}} />
+          <div className="hf-pick-panel">
+            <div className="hf-pick-head">
+              <b>{role}</b>
+              <div className="r g8" style={{alignItems:'center'}}>
+                {hasBus && (
+                  <button className="hf-reset-btn"
+                    onClick={() => { LoyaltyState.reset(); }}
+                    title="Reset demo points & history">↻ Reset demo</button>
+                )}
+                <a href="../">‹ Tất cả role</a>
+              </div>
+            </div>
+            <div className="hf-pick-list">
+              {groups.map((g, gi) => (
+                <div key={gi}>
+                  {g.name && <div className="hf-pick-group">{g.name}</div>}
+                  {g.items.map(s => {
+                    const n = screens.indexOf(s) + 1;
+                    return (
+                      <button key={s.id}
+                        className={cx('hf-pick-item', s.id === cur && 'active')}
+                        onClick={() => { go(s.id); setOpen(false); }}>
+                        <span className="hf-pick-num">{n}</span>
+                        <span>{s.title}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+
+      {hasToast && <LoyaltyToast />}
+    </div>
+  );
+}
+
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <HiFiApp
+    mode="cms"
+    role="Admin · Got It"
+    title="Admin CMS"
+    sub="Tạo NPP · Tích điểm · Quản trị"
+    screens={ADMIN_SCREENS}
+    defaultId="login"
+  />
+);
+</script>
+</body>
+</html>

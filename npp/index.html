@@ -1,0 +1,2489 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NPP · Nhà phân phối — Idemitsu Loyalty</title>
+<meta name="description" content="NPP CMS · Whitelist · Loyalty · Cashback">
+<meta name="theme-color" content="#C8102E">
+<meta property="og:title" content="NPP · Nhà phân phối — Idemitsu Loyalty">
+<meta property="og:description" content="NPP CMS · Whitelist · Loyalty · Cashback">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23C8102E%22/><text x=%2250%22 y=%2266%22 font-size=%2244%22 font-family=%22Inter,sans-serif%22 font-weight=%22700%22 fill=%22%23fff%22 text-anchor=%22middle%22>IL</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>/* =====================================================================
+ * Idemitsu Loyalty — Wireframe Kit
+ * Low-fi grayscale. Structure-first. One restrained "annotation" amber
+ * and one "hotspot" blue are the only non-gray hues.
+ * ===================================================================== */
+
+:root{
+  --w-ink:      #2E2E2E;   /* primary text */
+  --w-ink-2:    #6B6B6B;   /* secondary text */
+  --w-ink-3:    #9A9A9A;   /* meta / hint */
+  --w-line:     #C9C9C9;   /* borders */
+  --w-line-2:   #B0B0B0;   /* stronger borders */
+  --w-fill:     #ECECEC;   /* placeholder block */
+  --w-fill-2:   #E0E0E0;   /* darker placeholder */
+  --w-fill-3:   #F4F4F4;   /* subtle wash */
+  --w-paper:    #FFFFFF;
+  --w-canvas:   #D8DAde;   /* stage behind frames */
+  --w-solid:    #C8102E;   /* Idemitsu red — primary filled control */
+  --w-brand:    #C8102E;   /* Idemitsu red */
+  --w-brand-2:  #EF7D00;   /* Apollo orange accent */
+  --w-brand-bg: #FBE9EB;   /* red tint wash */
+  --w-hot:      #3F6CFF;   /* clickable affordance */
+  --w-hot-bg:   #EAF0FF;
+  --w-note:     #B5781A;   /* annotation ink */
+  --w-note-bg:  #FFF6E2;
+  --w-note-line:#EAD4A0;
+  --w-bar:      #DBDBDB;   /* text-line bars */
+  --w-r:        6px;
+  --w-r-lg:     10px;
+  --w-font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  font-family:var(--w-font);
+  color:var(--w-ink);
+  background:#F0F1F3;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- App shell (per-role page) ---------- */
+.wf-shell{ display:flex; height:100vh; overflow:hidden; }
+
+.wf-rail{
+  width:248px; flex:none; background:#fff; border-right:1px solid var(--w-line);
+  display:flex; flex-direction:column; height:100vh;
+}
+.wf-rail-head{ padding:16px 16px 12px; border-bottom:1px solid var(--w-line); }
+.wf-rail-role{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--w-brand); font-weight:700; }
+.wf-rail-title{ font-size:16px; font-weight:700; margin-top:3px; color:var(--w-ink); }
+.wf-rail-sub{ font-size:11px; color:var(--w-ink-3); margin-top:2px; }
+.wf-rail-scroll{ overflow-y:auto; flex:1; padding:8px 8px 24px; }
+.wf-group{ font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--w-ink-3); font-weight:700; padding:14px 10px 6px; }
+.wf-navitem{
+  display:flex; align-items:center; gap:8px; padding:7px 10px; border-radius:6px;
+  font-size:12.5px; color:var(--w-ink-2); cursor:pointer; user-select:none; line-height:1.3;
+}
+.wf-navitem:hover{ background:var(--w-fill-3); color:var(--w-ink); }
+.wf-navitem.active{ background:var(--w-brand); color:#fff; }
+.wf-navitem.active .wf-navnum{ color:#fff; border-color:#fff; }
+.wf-navnum{
+  flex:none; width:18px; height:18px; border:1px solid var(--w-line-2); border-radius:50%;
+  font-size:10px; display:flex; align-items:center; justify-content:center; color:var(--w-ink-3);
+}
+
+.wf-main{ flex:1; display:flex; flex-direction:column; min-width:0; }
+.wf-topbar{
+  height:46px; flex:none; background:#fff; border-bottom:1px solid var(--w-line);
+  display:flex; align-items:center; gap:14px; padding:0 16px;
+}
+.wf-topbar a.wf-back{ font-size:12.5px; color:var(--w-ink-2); text-decoration:none; display:flex; align-items:center; gap:5px; }
+.wf-topbar a.wf-back:hover{ color:var(--w-ink); }
+.wf-crumbs{ font-size:12.5px; color:var(--w-ink-3); }
+.wf-crumbs b{ color:var(--w-ink); font-weight:600; }
+.wf-top-spacer{ flex:1; }
+.wf-toggle{
+  display:flex; align-items:center; gap:7px; font-size:12px; color:var(--w-ink-2); cursor:pointer; user-select:none;
+}
+.wf-toggle .dot{ width:30px; height:17px; border-radius:9px; background:var(--w-line); position:relative; transition:.15s; }
+.wf-toggle .dot::after{ content:""; position:absolute; top:2px; left:2px; width:13px; height:13px; border-radius:50%; background:#fff; transition:.15s; }
+.wf-toggle.on .dot{ background:var(--w-note); }
+.wf-toggle.on .dot::after{ left:15px; }
+
+.wf-stage{ flex:1; overflow:auto; background:var(--w-canvas); }
+.wf-stage-pad{ min-height:100%; display:flex; align-items:flex-start; justify-content:center; padding:28px; }
+
+/* ---------- Browser chrome (CMS desktop) ---------- */
+.w-browser{ flex:none; width:1180px; background:#fff; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,.14); overflow:hidden; }
+.w-browser.wide{ width:1280px; }
+.w-browser-bar{ height:38px; background:#E9E9EC; border-bottom:1px solid var(--w-line); display:flex; align-items:center; gap:8px; padding:0 12px; }
+.w-dots{ display:flex; gap:6px; }
+.w-dots i{ width:11px; height:11px; border-radius:50%; background:#CFCFD3; display:block; }
+.w-url{ flex:1; height:22px; background:#fff; border:1px solid var(--w-line); border-radius:11px; display:flex; align-items:center; padding:0 12px; font-size:11px; color:var(--w-ink-3); max-width:520px; margin:0 auto; }
+
+/* ---------- Phone frame (mobile / Zalo) ---------- */
+.w-phone{ flex:none; width:375px; background:#fff; border-radius:30px; box-shadow:0 10px 36px rgba(0,0,0,.20); border:8px solid #2A2A2A; overflow:hidden; position:relative; }
+.w-phone.tablet{ width:620px; border-radius:22px; }
+.w-statusbar{ height:30px; display:flex; align-items:center; justify-content:space-between; padding:0 18px; font-size:11px; font-weight:600; color:var(--w-ink); }
+.w-statusbar .sb-r{ display:flex; gap:5px; align-items:center; }
+.w-statusbar .sb-r i{ width:15px; height:9px; border:1px solid var(--w-ink-2); border-radius:2px; display:block; }
+.w-screen{ display:flex; flex-direction:column; height:720px; overflow:hidden; }
+.w-screen.scroll .w-screen-body{ overflow-y:auto; }
+.w-screen-body{ flex:1; min-height:0; }
+
+/* Zalo mini-app top bar */
+.w-zalo-bar{ height:44px; display:flex; align-items:center; gap:10px; padding:0 12px; border-bottom:1px solid var(--w-line); background:#fff; }
+.w-zalo-bar .ztitle{ font-size:14px; font-weight:700; flex:1; text-align:center; }
+.w-zalo-cluster{ display:flex; align-items:center; gap:2px; border:1px solid var(--w-line); border-radius:14px; padding:2px 4px; }
+.w-zalo-cluster i{ width:5px; height:5px; border-radius:50%; background:var(--w-ink-2); display:block; }
+.w-zalo-divider{ width:1px; height:14px; background:var(--w-line); }
+
+/* mobile bottom nav */
+.w-botnav{ height:58px; flex:none; border-top:1px solid var(--w-line); display:flex; background:#fff; }
+.w-botnav .nav-i{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; font-size:9.5px; color:var(--w-ink-3); cursor:pointer; }
+.w-botnav .nav-i .gi{ width:20px; height:20px; border:1.5px solid var(--w-line-2); border-radius:5px; }
+.w-botnav .nav-i.active{ color:var(--w-ink); }
+.w-botnav .nav-i.active .gi{ border-color:var(--w-ink); background:var(--w-fill); }
+
+/* ---------- Wire primitives ---------- */
+.w-box{ background:var(--w-paper); border:1.5px solid var(--w-line); border-radius:var(--w-r); }
+.w-card{ background:var(--w-paper); border:1.5px solid var(--w-line); border-radius:var(--w-r-lg); padding:14px; }
+.w-fill{ background:var(--w-fill); border-radius:var(--w-r); }
+.w-img{
+  background:var(--w-fill); border:1.5px solid var(--w-line); border-radius:var(--w-r);
+  position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center;
+  color:var(--w-ink-3); font-size:11px;
+}
+.w-img::before, .w-img::after{ content:""; position:absolute; top:0; left:0; width:100%; height:100%;
+  background:linear-gradient(to top right, transparent calc(50% - 1px), var(--w-line) 50%, transparent calc(50% + 1px)); }
+.w-img::after{ background:linear-gradient(to top left, transparent calc(50% - 1px), var(--w-line) 50%, transparent calc(50% + 1px)); }
+.w-img > span{ position:relative; z-index:1; background:var(--w-fill); padding:2px 6px; border-radius:4px; }
+.w-img.plain::before, .w-img.plain::after{ display:none; }
+
+.w-line{ height:9px; background:var(--w-bar); border-radius:5px; }
+.w-line.sm{ height:7px; }
+.w-line.dk{ background:var(--w-fill-2); }
+
+.w-btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:7px;
+  height:38px; padding:0 18px; border-radius:var(--w-r); font-size:13px; font-weight:600;
+  background:var(--w-solid); color:#fff; border:1.5px solid var(--w-solid); cursor:pointer; white-space:nowrap;
+}
+.w-btn.lg{ height:46px; font-size:14px; padding:0 22px; }
+.w-btn.sm{ height:30px; font-size:12px; padding:0 12px; }
+.w-btn.block{ width:100%; }
+.w-btn.ghost{ background:#fff; color:var(--w-ink); border-color:var(--w-line-2); }
+.w-btn.disabled{ background:var(--w-fill-2); color:var(--w-ink-3); border-color:var(--w-fill-2); cursor:not-allowed; }
+
+.w-input{
+  height:38px; border:1.5px solid var(--w-line); border-radius:var(--w-r); background:#fff;
+  display:flex; align-items:center; padding:0 12px; font-size:12.5px; color:var(--w-ink-3); width:100%;
+}
+.w-input.lg{ height:44px; }
+.w-input.area{ height:auto; min-height:74px; align-items:flex-start; padding:10px 12px; }
+.w-label{ font-size:12px; color:var(--w-ink-2); font-weight:600; margin-bottom:6px; display:block; }
+.w-label .req{ color:#C0392B; }
+
+.w-chip{ display:inline-flex; align-items:center; gap:6px; height:28px; padding:0 12px; border:1.5px solid var(--w-line); border-radius:1000px; font-size:12px; color:var(--w-ink-2); background:#fff; }
+.w-chip.solid{ background:var(--w-brand-bg); color:var(--w-brand); border-color:var(--w-brand-bg); }
+
+.w-badge{ display:inline-flex; align-items:center; gap:5px; padding:2px 9px; border-radius:1000px; font-size:11px; font-weight:600; background:var(--w-fill); color:var(--w-ink-2); border:1px solid var(--w-line); }
+.w-badge .led{ width:7px; height:7px; border-radius:50%; background:var(--w-ink-3); }
+.w-badge.ok .led{ background:#3FA34D; }
+.w-badge.warn .led{ background:#D08A1E; }
+.w-badge.err .led{ background:#C0392B; }
+
+.w-icon{ width:22px; height:22px; border:1.5px solid var(--w-line-2); border-radius:5px; flex:none; display:inline-block; }
+.w-icon.circle{ border-radius:50%; }
+.w-avatar{ width:34px; height:34px; border-radius:50%; background:var(--w-fill); border:1.5px solid var(--w-line); flex:none; }
+
+/* tables */
+.w-table{ width:100%; border-collapse:collapse; font-size:12.5px; }
+.w-table th{ text-align:left; font-weight:700; color:var(--w-ink-2); font-size:11px; letter-spacing:.04em; text-transform:uppercase; padding:10px 12px; border-bottom:1.5px solid var(--w-line-2); background:var(--w-fill-3); }
+.w-table td{ padding:11px 12px; border-bottom:1px solid var(--w-line); color:var(--w-ink); vertical-align:middle; }
+.w-table tr:hover td{ background:var(--w-fill-3); }
+
+/* annotation pins + notes */
+.w-note{
+  background:var(--w-note-bg); border:1px solid var(--w-note-line); border-left:3px solid var(--w-note);
+  border-radius:6px; padding:9px 11px; font-size:11.5px; color:#7A5410; line-height:1.45;
+}
+.w-note b{ color:var(--w-note); }
+.w-pin{
+  display:inline-flex; align-items:center; justify-content:center; min-width:18px; height:18px; padding:0 5px;
+  border-radius:9px; background:var(--w-note); color:#fff; font-size:10.5px; font-weight:700; vertical-align:middle;
+}
+.anno-hidden .w-note, .anno-hidden .w-pin, .anno-hidden .w-anno{ display:none !important; }
+
+/* hotspot affordance */
+[data-hot]{ cursor:pointer; position:relative; transition:box-shadow .12s, background .12s; }
+[data-hot]:hover{ box-shadow:0 0 0 2px var(--w-hot); }
+.show-hot [data-hot]{ box-shadow:0 0 0 1.5px rgba(63,108,255,.45); }
+.show-hot [data-hot]:hover{ box-shadow:0 0 0 2px var(--w-hot); background:var(--w-hot-bg); }
+
+/* utility */
+.r{ display:flex; align-items:center; }
+.r.g6{ gap:6px; } .r.g8{ gap:8px; } .r.g10{ gap:10px; } .r.g12{ gap:12px; } .r.g16{ gap:16px; } .r.g20{ gap:20px; }
+.r.between{ justify-content:space-between; }
+.r.center{ justify-content:center; }
+.r.start{ align-items:flex-start; }
+.r.wrap{ flex-wrap:wrap; }
+.c{ display:flex; flex-direction:column; }
+.c.g4{ gap:4px; } .c.g6{ gap:6px; } .c.g8{ gap:8px; } .c.g10{ gap:10px; } .c.g12{ gap:12px; } .c.g16{ gap:16px; } .c.g20{ gap:20px; } .c.g24{ gap:24px; }
+.grow{ flex:1; min-width:0; }
+.r.g12 > .c, .r.g16 > .c.eq{ flex:1 1 0; min-width:0; }
+.muted{ color:var(--w-ink-3); }
+.sec{ color:var(--w-ink-2); }
+.tt{ font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--w-ink-3); font-weight:700; }
+.h1{ font-size:22px; font-weight:700; }
+.h2{ font-size:17px; font-weight:700; }
+.h3{ font-size:14px; font-weight:700; }
+.t13{ font-size:13px; } .t12{ font-size:12px; } .t11{ font-size:11px; }
+.center-text{ text-align:center; }
+.divider{ height:1px; background:var(--w-line); }
+.divider.dash{ height:0; border-top:1.5px dashed var(--w-line); background:none; }
+.fill-w{ width:100%; }
+
+/* CMS layout helpers */
+.cms{ display:flex; height:760px; }
+.cms-side{ width:208px; flex:none; background:#fff; border-right:1px solid var(--w-line); padding:14px 10px; }
+.cms-side .logo{ display:flex; align-items:center; gap:8px; padding:6px 8px 14px; }
+.cms-side .logo .mk{ width:26px; height:26px; border-radius:6px; background:var(--w-brand); border:1.5px solid var(--w-brand); }
+.cms-nav{ display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:7px; font-size:12.5px; color:var(--w-ink-2); cursor:pointer; }
+.cms-nav .ci{ width:18px; height:18px; border:1.5px solid var(--w-line-2); border-radius:5px; flex:none; }
+.cms-nav:hover{ background:var(--w-fill-3); }
+.cms-nav.active{ background:var(--w-brand-bg); color:var(--w-brand); font-weight:600; box-shadow:inset 2px 0 0 var(--w-brand); }
+.cms-nav.active .ci{ border-color:var(--w-brand); background:#fff; }
+.cms-body{ flex:1; display:flex; flex-direction:column; min-width:0; background:#FBFBFC; }
+.cms-topbar{ height:54px; flex:none; border-bottom:1px solid var(--w-line); display:flex; align-items:center; gap:14px; padding:0 22px; background:#fff; }
+.cms-content{ flex:1; overflow-y:auto; padding:22px; }
+.cms-pagetitle{ font-size:18px; font-weight:700; }
+
+/* mini cards / stats */
+.w-stat{ border:1.5px solid var(--w-line); border-radius:8px; padding:13px 14px; background:#fff; flex:1; }
+.w-stat .num{ font-size:22px; font-weight:700; }
+.w-stat .lbl{ font-size:11px; color:var(--w-ink-3); margin-top:2px; }
+
+/* bar chart placeholder */
+.w-chart{ display:flex; align-items:flex-end; gap:10px; height:160px; padding:10px; border:1.5px solid var(--w-line); border-radius:8px; background:#fff; }
+.w-chart .bar{ flex:1; background:var(--w-fill-2); border-radius:4px 4px 0 0; }
+
+/* action card (NPP home) */
+.w-actioncard{ border:1.5px solid var(--w-line); border-radius:12px; padding:22px; background:#fff; cursor:pointer; }
+.w-actioncard .ico{ width:46px; height:46px; border:1.5px solid var(--w-line-2); border-radius:10px; background:var(--w-fill-3); }
+
+/* phone scan viewport */
+.w-scanview{ background:#1E1E1E; border-radius:8px; position:relative; display:flex; align-items:center; justify-content:center; }
+.w-scanframe{ width:62%; aspect-ratio:1; border:2px solid #fff; border-radius:14px; position:relative; }
+.w-scanframe::before,.w-scanframe::after{ content:""; position:absolute; width:22px; height:22px; border:3px solid #fff; }
+.w-scanframe::before{ top:-2px; left:-2px; border-right:none; border-bottom:none; border-radius:14px 0 0 0; }
+.w-scanframe::after{ bottom:-2px; right:-2px; border-left:none; border-top:none; border-radius:0 0 14px 0; }
+
+/* progress meter (quota) */
+.w-meter{ height:9px; border-radius:5px; background:var(--w-fill-2); overflow:hidden; }
+.w-meter > i{ display:block; height:100%; background:var(--w-ink-3); }
+.w-meter.warn > i{ background:#D08A1E; }
+.w-meter.full > i{ background:#C0392B; }
+
+/* hub */
+.hub{ max-width:1080px; margin:0 auto; padding:48px 28px 80px; }
+</style>
+<style>
+/* ============================================================
+ * HI-FI THEME — overrides on top of the wireframe kit.
+ *   • Refined neutral palette + product-grade depth/shadows
+ *   • Drops low-fi affordances (X-cross image placeholders,
+ *     amber annotation pins/notes, wireframe screen rail)
+ *   • CMS mode: full-bleed CMS, browser chrome hidden
+ *   • Mobile mode: phone frame centered on soft canvas
+ * ============================================================ */
+:root{
+  --w-canvas:#EEF2F7; --w-paper:#FFFFFF;
+  --w-line:#E5E7EB;   --w-line-2:#D1D5DB;
+  --w-fill:#F1F5F9;   --w-fill-2:#E5E7EB; --w-fill-3:#F8FAFC;
+  --w-bar:#E5E7EB;
+  --w-ink:#0F172A; --w-ink-2:#475569; --w-ink-3:#94A3B8;
+}
+body{ background:var(--w-canvas); }
+
+/* hide wireframe shell chrome (rail + topbar with toggles) */
+.wf-rail, .wf-topbar { display:none !important; }
+.wf-shell{ display:block !important; height:100vh; overflow:auto; }
+.wf-main{ display:block; }
+.wf-stage{ background:var(--w-canvas); overflow:visible; }
+.wf-stage-pad{ padding:0; min-height:100vh; align-items:stretch; display:block; }
+
+/* hide annotation system (pins, notes) */
+.w-note, .w-pin { display:none !important; }
+
+/* image placeholders — drop the X-cross diagonal pattern */
+.w-img::before, .w-img::after { display:none; }
+.w-img{
+  background:linear-gradient(135deg, #F8FAFC, #E2E8F0);
+  border:1px solid var(--w-line); color:#94A3B8;
+}
+.w-img > span{
+  background:rgba(255,255,255,0.85); border-radius:6px;
+  padding:3px 9px; font-weight:500; font-size:11px; color:#64748B;
+}
+
+/* icon placeholders — soft chip with subtle inner highlight */
+.w-icon, .cms-side .ci, .w-botnav .gi{
+  background:linear-gradient(135deg, #FFFFFF, #F1F5F9);
+  border:1px solid var(--w-line);
+  box-shadow:inset 0 -1px 0 rgba(0,0,0,0.02);
+}
+
+/* avatar — soft gradient ring */
+.w-avatar{
+  background:linear-gradient(135deg, #CBD5E1, #94A3B8);
+  border:2px solid #FFFFFF;
+  box-shadow:0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* line text-bars */
+.w-line{ background:var(--w-bar); }
+
+/* cards & boxes */
+.w-card{
+  border:1px solid var(--w-line); border-radius:12px;
+  box-shadow:0 1px 2px rgba(15,23,42,.04), 0 1px 1px rgba(15,23,42,.06);
+}
+.w-box{
+  border:1px solid var(--w-line); border-radius:8px;
+  box-shadow:0 1px 0 rgba(15,23,42,.03);
+}
+
+/* buttons */
+.w-btn{
+  border:none; background:var(--w-brand); color:#fff;
+  box-shadow:0 1px 2px rgba(200,16,46,.15), 0 1px 3px rgba(200,16,46,.10);
+  transition:transform .12s, box-shadow .12s, background .12s;
+}
+.w-btn:not(.disabled):hover{
+  background:#B30E29; transform:translateY(-1px);
+  box-shadow:0 4px 10px rgba(200,16,46,.28), 0 2px 4px rgba(200,16,46,.15);
+}
+.w-btn.ghost{
+  background:#FFFFFF; color:var(--w-ink);
+  border:1px solid var(--w-line-2);
+  box-shadow:0 1px 2px rgba(15,23,42,.04);
+}
+.w-btn.ghost:not(.disabled):hover{
+  background:#F8FAFC; border-color:#94A3B8;
+  transform:translateY(-1px);
+}
+.w-btn.disabled{ background:#E5E7EB; color:#94A3B8; box-shadow:none; }
+
+/* inputs */
+.w-input{
+  background:#FFFFFF; border:1px solid var(--w-line);
+  transition:border-color .12s, box-shadow .12s;
+}
+.w-input:hover{ border-color:#94A3B8; }
+.w-input:focus-within{ border-color:var(--w-brand); box-shadow:0 0 0 3px rgba(200,16,46,.12); }
+
+/* chips */
+.w-chip{
+  background:#FFFFFF; border:1px solid var(--w-line); font-weight:500;
+  transition:background .12s, border-color .12s;
+}
+.w-chip:hover{ background:#F8FAFC; border-color:#94A3B8; }
+.w-chip.solid{
+  background:rgba(200,16,46,.08); border-color:rgba(200,16,46,.18);
+  color:var(--w-brand); font-weight:600;
+}
+
+/* badges (status pills) */
+.w-badge{ background:#F1F5F9; border:1px solid #E2E8F0; color:#475569; font-weight:600; }
+.w-badge.ok   { background:rgba(16,185,129,.08); border-color:rgba(16,185,129,.18); color:#047857; }
+.w-badge.warn { background:rgba(245,158,11,.10); border-color:rgba(245,158,11,.22); color:#B45309; }
+.w-badge.err  { background:rgba(239,68,68,.08);  border-color:rgba(239,68,68,.20); color:#B91C1C; }
+.w-badge.ok .led   { background:#10B981; }
+.w-badge.warn .led { background:#F59E0B; }
+.w-badge.err .led  { background:#EF4444; }
+
+/* tables */
+.w-table th{
+  background:#F8FAFC; color:#64748B; font-weight:600;
+  font-size:11px; letter-spacing:.04em; text-transform:uppercase;
+  border-bottom:1px solid var(--w-line);
+}
+.w-table td{ border-bottom:1px solid #F1F5F9; }
+.w-table tr:hover td{ background:#F8FAFC; }
+
+/* progress meter */
+.w-meter{ background:#F1F5F9; border-radius:999px; }
+.w-meter > i{ background:linear-gradient(90deg, var(--w-brand), #EF7D00); border-radius:999px; }
+.w-meter.warn > i{ background:linear-gradient(90deg, #F59E0B, #FB923C); }
+.w-meter.full > i{ background:linear-gradient(90deg, #EF4444, #DC2626); }
+
+/* stat cards */
+.w-stat{
+  border:1px solid var(--w-line); border-radius:12px;
+  box-shadow:0 1px 2px rgba(15,23,42,.04);
+  padding:14px 16px;
+}
+.w-stat .num{ color:var(--w-ink); }
+.w-stat .lbl{ color:#64748B; }
+
+/* chart */
+.w-chart{ background:#FFFFFF; border-color:var(--w-line); border-radius:10px; }
+.w-chart .bar{
+  background:linear-gradient(180deg, #FFB7C4, #C8102E);
+  border-radius:4px 4px 0 0;
+}
+
+/* divider */
+.divider{ background:#F1F5F9; }
+
+/* ============================================================
+ * MODE: CMS (admin, npp)
+ * Drop the simulated browser chrome — real CMS fills viewport.
+ * ============================================================ */
+.hifi.mode-cms .w-browser{
+  width:100% !important; border-radius:0;
+  box-shadow:none; background:#FFFFFF;
+}
+.hifi.mode-cms .w-browser-bar{ display:none; }
+.hifi.mode-cms .cms{ height:100vh; }
+.hifi.mode-cms .cms-side{
+  background:#FFFFFF; border-right:1px solid var(--w-line);
+  padding:14px 8px;
+}
+.hifi.mode-cms .cms-side .logo{
+  padding:6px 10px 14px;
+  border-bottom:1px solid #F1F5F9;
+  margin-bottom:6px;
+}
+.hifi.mode-cms .cms-side .logo .mk{
+  background:linear-gradient(135deg, #C8102E, #8B0E22);
+  box-shadow:0 2px 6px rgba(200,16,46,.25);
+  border:none; border-radius:8px;
+}
+.hifi.mode-cms .cms-nav{
+  padding:9px 11px; border-radius:8px; margin:1px 4px;
+  transition:background .12s, color .12s;
+}
+.hifi.mode-cms .cms-nav:hover{ background:#F8FAFC; color:var(--w-ink); }
+.hifi.mode-cms .cms-nav.active{
+  background:rgba(200,16,46,.08); color:var(--w-brand);
+  font-weight:600; box-shadow:none;
+}
+.hifi.mode-cms .cms-nav.active .ci{
+  background:#FFFFFF; border-color:var(--w-brand);
+  box-shadow:0 0 0 2px rgba(200,16,46,.15);
+}
+.hifi.mode-cms .cms-topbar{
+  height:60px; padding:0 28px; background:#FFFFFF;
+  box-shadow:0 1px 0 rgba(15,23,42,.04);
+}
+.hifi.mode-cms .cms-content{ padding:24px 28px 80px; background:#F8FAFC; }
+.hifi.mode-cms .cms-pagetitle{
+  font-size:22px; font-weight:700; color:var(--w-ink); letter-spacing:-.01em;
+}
+
+/* Login pages (centered card inside Browser, no Cms) — fill viewport */
+.hifi.mode-cms .w-browser > div[style*="height:760"],
+.hifi.mode-cms .w-browser > div[style*="height: 760"]{
+  height:100vh !important;
+}
+
+/* ============================================================
+ * MODE: MINI APP (shop, sales)
+ * Phone frame on a soft branded canvas.
+ * ============================================================ */
+.hifi.mode-mobile .wf-stage-pad{
+  display:flex; align-items:flex-start; justify-content:center;
+  padding:32px 16px 80px; min-height:100vh;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, #FDE2E5 0%, transparent 60%),
+    linear-gradient(180deg, #EEF2F7, #E2E8F0);
+}
+.hifi.mode-mobile .w-phone{
+  box-shadow:
+    0 28px 70px rgba(15,23,42,.18),
+    0 10px 24px rgba(15,23,42,.10);
+}
+/* Hide the dev notes (".tt — Trên web · desktop") that the npp loyalty
+   web/mobile dual-view emits — those are wireframe annotations. */
+.hifi.mode-cms .tt:first-child + .w-browser{ /* tighten spacing */ }
+
+/* ============================================================
+ * FLOATING SCREEN PICKER (demo navigation)
+ * ============================================================ */
+.hf-pick-btn{
+  position:fixed; right:18px; bottom:18px; z-index:1000;
+  display:inline-flex; align-items:center; gap:9px;
+  padding:11px 18px; max-width:calc(100vw - 36px);
+  background:#0F172A; color:#FFFFFF; border:none; border-radius:999px;
+  font:600 13px/1 var(--w-font); cursor:pointer;
+  box-shadow:0 8px 22px rgba(15,23,42,.28), 0 3px 6px rgba(15,23,42,.16);
+  transition:transform .12s, box-shadow .12s;
+}
+.hf-pick-btn:hover{ transform:translateY(-1px); box-shadow:0 10px 26px rgba(15,23,42,.32), 0 4px 8px rgba(15,23,42,.18); }
+.hf-pick-btn .hf-dot{
+  width:8px; height:8px; background:#4ADE80; border-radius:50%;
+  box-shadow:0 0 0 3px rgba(74,222,128,.25);
+}
+.hf-pick-btn .hf-meta{ opacity:.55; font-weight:500; font-size:11.5px; }
+.hf-pick-panel{
+  position:fixed; right:18px; bottom:72px; z-index:1000;
+  width:330px; max-height:74vh;
+  background:#FFFFFF; border:1px solid var(--w-line); border-radius:14px;
+  box-shadow:0 24px 60px rgba(15,23,42,.22), 0 8px 20px rgba(15,23,42,.10);
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.hf-pick-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 14px; border-bottom:1px solid #F1F5F9;
+}
+.hf-pick-head b{ font-size:13px; font-weight:700; color:var(--w-ink); }
+.hf-pick-head a{ font-size:12px; color:var(--w-ink-3); text-decoration:none; }
+.hf-pick-head a:hover{ color:var(--w-brand); }
+.hf-pick-list{ overflow-y:auto; padding:6px; }
+.hf-pick-group{
+  font-size:10.5px; font-weight:700; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--w-ink-3);
+  padding:10px 10px 4px;
+}
+.hf-pick-item{
+  display:flex; align-items:center; gap:10px; width:100%;
+  padding:8px 10px; background:none; border:none; border-radius:7px;
+  text-align:left; font:500 12.5px/1.35 var(--w-font);
+  color:var(--w-ink-2); cursor:pointer;
+  transition:background .12s, color .12s;
+}
+.hf-pick-item:hover{ background:#F8FAFC; color:var(--w-ink); }
+.hf-pick-item.active{
+  background:rgba(200,16,46,.08); color:var(--w-brand); font-weight:600;
+}
+.hf-pick-num{
+  flex:none; width:22px; height:22px; border-radius:50%;
+  background:#F1F5F9; border:1px solid var(--w-line);
+  font-size:10.5px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--w-ink-3);
+}
+.hf-pick-item.active .hf-pick-num{
+  background:var(--w-brand); border-color:var(--w-brand); color:#FFFFFF;
+}
+</style>
+<style>
+/* hi-fi scanner viewport */
+.hf-scanview{
+  position:relative; width:100%; height:360px;
+  background:radial-gradient(ellipse at center, #1F2937 0%, #0B1220 85%), #0B1220;
+  border-radius:18px; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:inset 0 0 80px rgba(0,0,0,.55), 0 10px 30px rgba(15,23,42,.18);
+}
+.hf-scanview::before{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(99,102,241,.10), transparent 55%),
+    radial-gradient(ellipse at 85% 90%, rgba(236,72,153,.08), transparent 55%);
+}
+.hf-scan-target{
+  position:relative; width:min(220px, 60%); aspect-ratio:1;
+}
+.hf-scan-corner{
+  position:absolute; width:28px; height:28px; border:3px solid #fff;
+  filter:drop-shadow(0 0 6px rgba(255,255,255,.35));
+}
+.hf-scan-corner.tl{ top:-3px; left:-3px; border-right:none; border-bottom:none; border-radius:10px 0 0 0; }
+.hf-scan-corner.tr{ top:-3px; right:-3px; border-left:none; border-bottom:none; border-radius:0 10px 0 0; }
+.hf-scan-corner.bl{ bottom:-3px; left:-3px; border-right:none; border-top:none; border-radius:0 0 0 10px; }
+.hf-scan-corner.br{ bottom:-3px; right:-3px; border-left:none; border-top:none; border-radius:0 0 10px 0; }
+.hf-qr-wrap{
+  position:absolute; inset:18px; background:#FFFFFF;
+  border-radius:6px; padding:12px; overflow:hidden;
+  box-shadow:0 8px 24px rgba(0,0,0,.4);
+}
+.hf-qr-wrap > svg{ display:block; width:100%; height:100%; }
+.hf-scanline{
+  position:absolute; left:8px; right:8px; height:2px;
+  background:linear-gradient(90deg, transparent, #FF4757 20%, #FFB3BC 50%, #FF4757 80%, transparent);
+  box-shadow:0 0 14px rgba(255,71,87,.85), 0 0 30px rgba(255,71,87,.4);
+  animation:hf-scan 2s ease-in-out infinite;
+  pointer-events:none; z-index:3;
+}
+@keyframes hf-scan{
+  0%, 100% { top:4px; opacity:0; }
+  10%, 90% { opacity:1; }
+  50% { top:calc(100% - 6px); }
+}
+.hf-scan-hint{
+  position:absolute; bottom:14px; left:50%; transform:translateX(-50%);
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(15,23,42,.55); color:#fff; font:600 11px/1 var(--w-font);
+  padding:7px 13px; border-radius:999px; backdrop-filter:blur(8px);
+}
+.hf-scan-hint .led{ width:6px; height:6px; border-radius:50%; background:#4ADE80; box-shadow:0 0 0 3px rgba(74,222,128,.25); }
+
+/* success / error big badges */
+.hf-badge{
+  position:relative; width:120px; height:120px; flex:none;
+}
+.hf-badge .halo{
+  position:absolute; inset:0; border-radius:50%;
+  background:radial-gradient(circle, var(--c1) 0%, transparent 70%);
+  opacity:.35;
+}
+.hf-badge .core{
+  position:absolute; inset:18px; border-radius:50%;
+  background:linear-gradient(135deg, var(--c0), var(--c1));
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 14px 30px var(--c-shadow);
+}
+.hf-badge .spark{
+  position:absolute; width:8px; height:8px; border-radius:50%;
+  background:#FBBF24; box-shadow:0 0 10px rgba(251,191,36,.65);
+}
+.hf-badge.ok{ --c0:#34D399; --c1:#10B981; --c-shadow:rgba(16,185,129,.35); }
+.hf-badge.err{ --c0:#FB7185; --c1:#EF4444; --c-shadow:rgba(239,68,68,.35); }
+
+/* product card with bottle */
+.hf-bottle{ display:block; flex:none; }
+
+/* details mono key */
+.hf-mono{ font-family:ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-weight:600; }
+
+/* live points hero */
+.hf-points-hero{
+  padding:20px 18px;
+  background:linear-gradient(135deg, #FFF1F1 0%, #FFFFFF 70%);
+  border:1px solid #FECDD3 !important;
+  border-radius:14px;
+  position:relative; overflow:hidden;
+}
+.hf-points-hero::before{
+  content:''; position:absolute; right:-30px; top:-30px;
+  width:140px; height:140px; border-radius:50%;
+  background:radial-gradient(circle, rgba(200,16,46,.10), transparent 70%);
+}
+.hf-points-num{
+  font-size:38px; font-weight:800; letter-spacing:-.02em;
+  color:#C8102E; font-variant-numeric:tabular-nums; line-height:1.05;
+}
+.hf-points-num .delta{
+  display:inline-block; margin-left:10px; vertical-align:middle;
+  font-size:14px; font-weight:700; color:#10B981;
+  padding:3px 9px; border-radius:999px; background:rgba(16,185,129,.12);
+  animation:hf-delta 1.6s ease-out forwards;
+}
+@keyframes hf-delta {
+  0%   { opacity:0; transform:translateY(-4px); }
+  20%  { opacity:1; transform:translateY(0); }
+  80%  { opacity:1; }
+  100% { opacity:0; transform:translateY(-4px); }
+}
+
+/* demo banner */
+.hf-demo-banner{
+  display:flex; align-items:flex-start; gap:10px;
+  padding:11px 14px; border-radius:10px;
+  background:#FEF9E7; border:1px solid #FDE68A; color:#92400E;
+  font-size:12.5px; line-height:1.5;
+}
+.hf-demo-banner a{ color:#C8102E; font-weight:600; text-decoration:none; border-bottom:1px solid currentColor; }
+.hf-demo-banner .demo-reset{
+  margin-left:auto; flex:none;
+  font:600 11px/1 var(--w-font); padding:5px 10px;
+  background:#FFFFFF; border:1px solid #FDE68A; border-radius:6px;
+  color:#92400E; cursor:pointer; white-space:nowrap;
+  transition:background .12s, border-color .12s;
+}
+.hf-demo-banner .demo-reset:hover{ background:#FEF3C7; border-color:#F59E0B; }
+
+/* Mobile-scoped tweaks — loyalty page is rendered both in CMS browser
+   chrome (820px max) and in the .w-phone mobile frame (~359px). The
+   media-query approach won't trigger because the viewport is desktop,
+   so we scope styles via the .w-phone ancestor selector. */
+.w-phone .hf-points-hero{ padding:16px 14px; border-radius:12px; }
+.w-phone .hf-points-num{ font-size:30px; }
+.w-phone .hf-points-num .delta{
+  display:block; margin-left:0; margin-top:6px;
+}
+.w-phone .hf-demo-banner{
+  font-size:11.5px; padding:10px 12px; flex-wrap:wrap;
+}
+.w-phone .hf-demo-banner .demo-reset{
+  margin-left:auto; margin-top:0; width:auto;
+}
+.w-phone .hf-row-new{ animation-duration:2.2s; }
+
+/* new history row pulse */
+.hf-row-new{ animation:hf-row-new 2.2s ease-out; }
+@keyframes hf-row-new {
+  0%   { background:#FFF9DB; box-shadow:inset 3px 0 0 #F59E0B; }
+  60%  { background:#FFFCEB; box-shadow:inset 3px 0 0 rgba(245,158,11,.4); }
+  100% { background:#FFFFFF; box-shadow:none; }
+}
+
+/* toast stack */
+.hf-toast-stack{
+  position:fixed; top:18px; right:18px; z-index:2000;
+  display:flex; flex-direction:column; gap:10px; pointer-events:none;
+  max-width:calc(100vw - 36px);
+}
+.hf-toast{
+  pointer-events:auto;
+  display:flex; align-items:center; gap:12px;
+  padding:12px 14px;
+  background:#FFFFFF; border:1px solid #E5E7EB; border-radius:12px;
+  box-shadow:0 14px 32px rgba(15,23,42,.18), 0 4px 8px rgba(15,23,42,.08);
+  min-width:300px; max-width:380px;
+  animation:hf-toast-in .35s cubic-bezier(.34,1.4,.5,1);
+}
+.hf-toast.out{ animation:hf-toast-out .25s ease-in forwards; }
+@keyframes hf-toast-in {
+  from { opacity:0; transform:translateX(24px) scale(.96); }
+  to   { opacity:1; transform:translateX(0) scale(1); }
+}
+@keyframes hf-toast-out {
+  from { opacity:1; transform:translateX(0); }
+  to   { opacity:0; transform:translateX(24px); }
+}
+.hf-toast-icon{
+  width:42px; height:42px; border-radius:11px; flex:none;
+  background:linear-gradient(135deg, #34D399, #10B981);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 6px 14px rgba(16,185,129,.35);
+}
+.hf-toast-body{ display:flex; flex-direction:column; gap:2px; min-width:0; flex:1; }
+.hf-toast-body b{ font-size:13px; color:#0F172A; font-weight:700; }
+.hf-toast-body span{ font-size:11.5px; color:#64748B; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.hf-toast-pts{
+  margin-left:auto; font-size:20px; font-weight:800; color:#10B981;
+  letter-spacing:-.02em; font-variant-numeric:tabular-nums; flex:none;
+}
+
+/* reset chip in picker */
+.hf-reset-btn{
+  font:600 11px/1 var(--w-font); padding:5px 10px;
+  background:#F8FAFC; border:1px solid #E5E7EB; border-radius:6px;
+  color:#64748B; cursor:pointer; transition:background .12s, border-color .12s;
+}
+.hf-reset-btn:hover{ background:#FEF2F2; border-color:#FECACA; color:#C8102E; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.24.7/babel.min.js"></script>
+
+<script type="text/babel" data-presets="env,react">
+/* ============================================================
+ * NPP · Nhà phân phối — Idemitsu Loyalty (hi-fi from wireframe Phase 1)
+ *   mode: cms
+ * ============================================================ */
+
+/* =====================================================================
+ * Wire Kit — shared React primitives, device frames & screen router.
+ * Loaded after React + Babel. Exposes components on window + window.WF.
+ * ===================================================================== */
+const { useState, useEffect, useCallback } = React;
+
+/* ---------- low-fi primitives ---------- */
+const cx = (...a) => a.filter(Boolean).join(' ');
+
+function Box(p){ return <div className={cx('w-box', p.className)} style={p.style} {...hot(p)}>{p.children}</div>; }
+function Card(p){ return <div className={cx('w-card', p.className)} style={p.style} {...hot(p)}>{p.children}</div>; }
+function Img(p){ return (
+  <div className={cx('w-img', p.plain && 'plain', p.className)} style={{height:p.h, width:p.w, ...p.style}} {...hot(p)}>
+    {p.label ? <span>{p.label}</span> : null}{p.children}
+  </div>
+); }
+function Line(p){ return <div className={cx('w-line', p.sm&&'sm', p.dk&&'dk', p.className)} style={{width:p.w, ...p.style}} />; }
+function Lines({n=3, last='60%', gap=8, w='100%'}){
+  return <div className="c" style={{gap}}>{Array.from({length:n}).map((_,i)=>
+    <Line key={i} w={i===n-1?last:w} sm />)}</div>;
+}
+function Btn(p){ return (
+  <button className={cx('w-btn', p.lg&&'lg', p.sm&&'sm', p.block&&'block', p.ghost&&'ghost', p.disabled&&'disabled', p.className)}
+    style={p.style} {...hot(p)}>{p.children}</button>
+); }
+function Input(p){ return (
+  <div className={cx('w-input', p.lg&&'lg', p.area&&'area', p.className)} style={p.style} {...hot(p)}>
+    {p.children || <span>{p.placeholder||''}</span>}
+  </div>
+); }
+function Field({label, req, children, hint}){ return (
+  <div className="c">
+    {label && <span className="w-label">{label}{req && <span className="req"> *</span>}</span>}
+    {children}
+    {hint && <span className="t11 muted" style={{marginTop:5}}>{hint}</span>}
+  </div>
+); }
+function Chip(p){ return <span className={cx('w-chip', p.solid&&'solid', p.className)} style={p.style} {...hot(p)}>{p.children}</span>; }
+function Badge(p){ return <span className={cx('w-badge', p.kind, p.className)} style={p.style}><i className="led" />{p.children}</span>; }
+function Icon(p){ return <span className={cx('w-icon', p.circle&&'circle', p.className)} style={{width:p.size,height:p.size,...p.style}} />; }
+function Avatar(p){ return <span className="w-avatar" style={{width:p.size,height:p.size,...p.style}} />; }
+function Divider(p){ return <div className={cx('divider', p.dash&&'dash', p.className)} style={p.style} />; }
+function Note(p){ return <div className={cx('w-note', p.className)} style={p.style}>{p.children}</div>; }
+function Pin({n}){ return <span className="w-pin">{n}</span>; }
+function Stat({num, lbl}){ return <div className="w-stat"><div className="num">{num}</div><div className="lbl">{lbl}</div></div>; }
+function Meter({pct, kind}){ return <div className={cx('w-meter', kind)}><i style={{width:pct+'%'}} /></div>; }
+
+function Table({cols, rows, onRow}){
+  return (
+    <div className="w-box" style={{overflow:'hidden'}}>
+      <table className="w-table">
+        <thead><tr>{cols.map((c,i)=><th key={i} style={{width:c.w, textAlign:c.align}}>{c.t}</th>)}</tr></thead>
+        <tbody>{rows.map((r,ri)=>
+          <tr key={ri} {...(onRow?{'data-hot':true, onClick:()=>onRow(ri)}:{})}>
+            {r.map((cell,ci)=><td key={ci} style={{textAlign:cols[ci]&&cols[ci].align}}>{cell}</td>)}
+          </tr>)}</tbody>
+      </table>
+    </div>
+  );
+}
+
+/* hotspot helper: any primitive with `to` becomes clickable */
+function hot(p){
+  if(p.to) return { 'data-hot':true, onClick:(e)=>{ e.stopPropagation(); WF.go(p.to); } };
+  if(p.onClick) return { 'data-hot':true, onClick:p.onClick };
+  return {};
+}
+function Hot({to, onClick, children, style, className, block}){
+  return <div className={cx(className)} style={{display:block?'block':'contents', ...style}}
+    data-hot onClick={(e)=>{ e.stopPropagation(); if(to) WF.go(to); else if(onClick) onClick(e); }}>{children}</div>;
+}
+
+/* ---------- device frames ---------- */
+function StatusBar(){ return (
+  <div className="w-statusbar">
+    <span>9:41</span>
+    <span className="sb-r"><i style={{borderRadius:2}} /><i style={{width:9}} /><i style={{width:18}} /></span>
+  </div>
+); }
+
+function Browser({url, wide, children}){ return (
+  <div className={cx('w-browser', wide&&'wide')}>
+    <div className="w-browser-bar">
+      <span className="w-dots"><i/><i/><i/></span>
+      <span className="w-url">{url||'reward-hub.gotit.vn'}</span>
+    </div>
+    {children}
+  </div>
+); }
+
+function Phone({children, tablet, noStatus}){ return (
+  <div className={cx('w-phone', tablet&&'tablet')}>
+    {!noStatus && <StatusBar/>}
+    {children}
+  </div>
+); }
+
+function ZaloBar({title}){ return (
+  <div className="w-zalo-bar">
+    <span className="w-zalo-cluster"><i/><i/><i/><span className="w-zalo-divider"/><span style={{width:8,height:8,borderRadius:'50%',border:'1.5px solid var(--w-ink-2)',display:'block'}}/></span>
+    <span className="ztitle">{title}</span>
+    <span style={{width:54}} />
+  </div>
+); }
+
+function Screen({children, scroll=true, className}){
+  return <div className={cx('w-screen', scroll&&'scroll', className)}>{children}</div>;
+}
+function ScreenBody({children, style, pad=16}){
+  return <div className="w-screen-body" style={{padding:pad, ...style}}>{children}</div>;
+}
+
+function BotNav({active, items}){
+  const def = items || ['Trang chủ','Kho quà','Quét QR','Lịch sử','Tài khoản'];
+  return (
+    <div className="w-botnav">
+      {def.map((t,i)=>
+        <div key={i} className={cx('nav-i', i===active&&'active')} {...(typeof t==='object'?hot(t):{})}>
+          <span className="gi" style={i===2?{borderRadius:'50%'}:{}} />
+          <span>{typeof t==='object'?t.label:t}</span>
+        </div>)}
+    </div>
+  );
+}
+
+/* CMS scaffold */
+function Cms({nav, active, title, actions, children, breadcrumb, topRight}){
+  return (
+    <div className="cms">
+      <div className="cms-side">
+        <div className="logo"><span className="mk" /><b style={{fontSize:13}}>Got It · Idemitsu</b></div>
+        {nav.map((g,gi)=>
+          <div key={gi}>
+            {g.group && <div className="wf-group" style={{padding:'12px 8px 4px'}}>{g.group}</div>}
+            {g.items.map((it,i)=>
+              <div key={i} className={cx('cms-nav', it.id===active&&'active')} {...(it.to?{'data-hot':true,onClick:()=>WF.go(it.to)}:{})}>
+                <span className="ci" />{it.label}
+              </div>)}
+          </div>)}
+      </div>
+      <div className="cms-body">
+        <div className="cms-topbar">
+          {breadcrumb && <span className="wf-crumbs">{breadcrumb}</span>}
+          <span className="grow" />
+          {topRight}
+          <span className="w-icon" style={{borderRadius:'50%'}} />
+          <span className="w-avatar" />
+        </div>
+        <div className="cms-content">
+          <div className="r between" style={{marginBottom:18}}>
+            <div className="cms-pagetitle">{title}</div>
+            <div className="r g8">{actions}</div>
+          </div>
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- screen router ---------- */
+function WireApp({role, title, sub, screens, defaultId}){
+  const ids = screens.map(s=>s.id);
+  const first = defaultId || ids[0];
+  const read = () => {
+    const h = decodeURIComponent((location.hash||'').replace('#','')); 
+    if(h && ids.includes(h)) return h;
+    const ls = localStorage.getItem('wf_'+role);
+    if(ls && ids.includes(ls)) return ls;
+    return first;
+  };
+  const [cur, setCur] = useState(read);
+  const [anno, setAnno] = useState(true);
+  const [hints, setHints] = useState(false);
+
+  const go = useCallback((id)=>{
+    if(!ids.includes(id)) { console.warn('no screen', id); return; }
+    setCur(id); location.hash = encodeURIComponent(id); localStorage.setItem('wf_'+role, id);
+    const st = document.querySelector('.wf-stage'); if(st) st.scrollTop=0;
+  },[]);
+  useEffect(()=>{ WF.go = go; },[go]);
+  useEffect(()=>{
+    const onHash=()=>{ const h=decodeURIComponent((location.hash||'').replace('#','')); if(h&&ids.includes(h)) setCur(h); };
+    window.addEventListener('hashchange', onHash); return ()=>window.removeEventListener('hashchange', onHash);
+  },[]);
+
+  // group screens
+  const groups = [];
+  screens.forEach(s=>{ let g=groups.find(x=>x.name===(s.group||'')); if(!g){g={name:s.group||'', items:[]}; groups.push(g);} g.items.push(s); });
+  const screen = screens.find(s=>s.id===cur) || screens[0];
+  const idx = screens.indexOf(screen);
+
+  return (
+    <div className={cx('wf-shell', !anno&&'anno-hidden', hints&&'show-hot')}>
+      <div className="wf-rail">
+        <div className="wf-rail-head">
+          <div className="wf-rail-role">{role}</div>
+          <div className="wf-rail-title">{title}</div>
+          {sub && <div className="wf-rail-sub">{sub}</div>}
+        </div>
+        <div className="wf-rail-scroll">
+          {groups.map((g,gi)=>
+            <div key={gi}>
+              {g.name && <div className="wf-group">{g.name}</div>}
+              {g.items.map((s)=>{
+                const n = screens.indexOf(s)+1;
+                return <div key={s.id} className={cx('wf-navitem', s.id===cur&&'active')} onClick={()=>go(s.id)}>
+                  <span className="wf-navnum">{n}</span><span>{s.title}</span>
+                </div>;
+              })}
+            </div>)}
+        </div>
+      </div>
+      <div className="wf-main">
+        <div className="wf-topbar">
+          <a className="wf-back" href="index.html">‹ Tất cả role</a>
+          <span className="wf-crumbs"><b>{screen.title}</b> · màn {idx+1}/{screens.length}</span>
+          <span className="wf-top-spacer" />
+          <span className={cx('wf-toggle', hints&&'on')} onClick={()=>setHints(h=>!h)}><span className="dot"/>Vùng bấm</span>
+          <span className={cx('wf-toggle', anno&&'on')} onClick={()=>setAnno(a=>!a)}><span className="dot"/>Chú thích</span>
+        </div>
+        <div className="wf-stage">
+          <div className="wf-stage-pad">{screen.render()}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const WF = { go:()=>{}, mount(opts){
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(<WireApp {...opts} />);
+}};
+
+/* download a real CSV template (Excel-openable) */
+function dlTemplate(filename, headers, sample){
+  const rows = [headers];
+  if(sample) sample.forEach(r=>rows.push(r));
+  const csv = '\uFEFF' + rows.map(r=>r.map(c=>{
+    const s = String(c==null?'':c);
+    return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s;
+  }).join(',')).join('\r\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{ document.body.removeChild(a); URL.revokeObjectURL(url); }, 0);
+}
+
+Object.assign(window, {
+  cx, Box, Card, Img, Line, Lines, Btn, Input, Field, Chip, Badge, Icon, Avatar,
+  Divider, Note, Pin, Stat, Meter, Table, Hot, hot, dlTemplate,
+  StatusBar, Browser, Phone, ZaloBar, Screen, ScreenBody, BotNav, Cms, WireApp, WF
+});
+
+
+/* ===================== NPP — CMS web (desktop) + scan (mobile/tablet) ===================== */
+
+const NPP_NAV = [
+  { items:[
+    { id:'shop',   label:'Quản lý Shop', to:'npp-shop-list' },
+    { id:'loy',    label:'Loyalty (Tích điểm)', to:'npp-rewards' },
+    { id:'visit',  label:'Check-in của Sale', to:'npp-visit-log' },
+  ]},
+  { group:'Khác', items:[
+    { id:'profile', label:'Tài khoản', to:'npp-profile' },
+  ]},
+];
+function NBrowser({active, title, actions, breadcrumb, children}){
+  return <Browser url="reward-hub.gotit.vn/npp">
+    <Cms nav={NPP_NAV} active={active} title={title} actions={actions} breadcrumb={breadcrumb}>{children}</Cms>
+  </Browser>;
+}
+
+/* 1 — login */
+function nLogin(){
+  return <Browser url="reward-hub.gotit.vn/npp/login">
+    <div style={{height:760, display:'flex', alignItems:'center', justifyContent:'center', background:'#FBFBFC'}}>
+      <div className="w-card" style={{width:380, padding:30}}>
+        <div className="c g6" style={{alignItems:'center', marginBottom:22}}>
+          <span style={{width:40,height:40,borderRadius:9,background:'var(--w-fill-2)',border:'1.5px solid var(--w-line)'}} />
+          <div className="h2" style={{marginTop:6}}>Idemitsu Loyalty · NPP</div>
+          <div className="t12 muted">Cổng quản trị nhà phân phối</div>
+        </div>
+        <div className="c g16">
+          <Field label="Tài khoản"><Input placeholder="npp-mb01" /></Field>
+          <Field label="Mật khẩu"><Input placeholder="Mật khẩu được Got It bàn giao" /></Field>
+          <Btn lg block to="npp-force-pw">Đăng nhập</Btn>
+          <span className="t11 muted center-text">Lần đầu đăng nhập sẽ yêu cầu đổi mật khẩu</span>
+        </div>
+      </div>
+    </div>
+  </Browser>;
+}
+
+/* 2 — force change password */
+function nForcePw(){
+  return <Browser url="reward-hub.gotit.vn/npp/change-password">
+    <div style={{height:760, display:'flex', alignItems:'center', justifyContent:'center', background:'#FBFBFC'}}>
+      <div className="w-card" style={{width:420, padding:30}}>
+        <Badge kind="warn" style={{marginBottom:12}}>Bắt buộc đổi mật khẩu</Badge>
+        <div className="h2" style={{marginBottom:4}}>Đổi mật khẩu lần đầu</div>
+        <div className="t12 muted" style={{marginBottom:20}}>Vì lý do bảo mật, bạn cần đặt mật khẩu mới trước khi sử dụng.</div>
+        <div className="c g16">
+          <Field label="Mật khẩu hiện tại (tạm)" req><Input placeholder="••••••••" /></Field>
+          <Field label="Mật khẩu mới" req hint="Tối thiểu 8 ký tự, gồm chữ và số"><Input placeholder="••••••••" /></Field>
+          <Field label="Nhập lại mật khẩu mới" req><Input placeholder="••••••••" /></Field>
+          <Btn lg block to="npp-shop-list">Lưu & tiếp tục</Btn>
+        </div>
+      </div>
+    </div>
+  </Browser>;
+}
+
+/* 4 — shop whitelist list */
+function nShopList(){
+  const rows = [
+    ['Sửa xe Hùng Anh','0901 234 567','Cầu Giấy, HN',<Badge kind="ok">Active</Badge>],
+    ['Gara Minh Phát','0912 888 777','Đống Đa, HN',<Badge kind="ok">Active</Badge>],
+    ['Tiệm sửa xe Tâm','0987 111 222','Hà Đông, HN',<Badge kind="err">Inactive</Badge>],
+    ['Auto Care 24h','0933 222 111','Long Biên, HN',<Badge kind="ok">Active</Badge>],
+  ];
+  return <NBrowser active="shop" title="Quản lý Shop · Whitelist" breadcrumb={<><b>Quản lý Shop</b></>}
+    actions={<><Btn ghost sm to="npp-shop-import">Import Excel</Btn><Btn sm to="npp-shop-add">+ Thêm shop</Btn></>}>
+    <div className="r g10" style={{marginBottom:14}}>
+      <Input className="grow" style={{maxWidth:300}} placeholder="🔍 Tìm theo tên / SĐT shop" />
+      <Chip>Trạng thái ▾</Chip>
+    </div>
+    <Table cols={[{t:'Tên shop'},{t:'SĐT'},{t:'Địa chỉ'},{t:'Trạng thái'},{t:'',align:'right'}]} rows={rows.map(r=>[...r, <Chip>⋯</Chip>])} />
+    <Note style={{marginTop:14}}><Pin n="1"/> Thêm shop vào whitelist <b>đơn lẻ</b> hoặc <b>import Excel</b> hàng loạt; hệ thống tự gửi ZNS link mời. Trạng thái <b>Active</b> = shop đang hoạt động trong chương trình; <b>Inactive</b> = tạm ngừng / chưa kích hoạt.</Note>
+  </NBrowser>;
+}
+
+/* 5 — add single shop */
+function nShopAdd(){
+  return <NBrowser active="shop" title="Thêm shop vào whitelist" breadcrumb={<><Hot to="npp-shop-list"><span data-hot style={{color:'var(--w-ink-2)'}}>Quản lý Shop</span></Hot> · <b>Thêm đơn lẻ</b></>}>
+    <Card style={{maxWidth:560}}>
+      <div className="c g16">
+        <Field label="Tên repair shop" req><Input placeholder="VD: Sửa xe Hùng Anh" /></Field>
+        <Field label="Số điện thoại (Zalo)" req hint="ZNS link mời sẽ gửi tới số này"><Input placeholder="09xx xxx xxx" /></Field>
+        <Field label="Địa chỉ"><Input placeholder="Số nhà, đường, quận/huyện, tỉnh" /></Field>
+        <Divider/>
+        <div className="r g10"><Btn to="npp-shop-invited">Thêm & gửi lời mời</Btn><Btn ghost to="npp-shop-list">Hủy</Btn></div>
+      </div>
+    </Card>
+  </NBrowser>;
+}
+
+/* 6 — bulk import excel */
+function nShopImport(){
+  const rows = [
+    ['1','Sửa xe Hùng Anh','0901234567',<Badge kind="ok">Hợp lệ</Badge>],
+    ['2','Gara Minh Phát','0912888777',<Badge kind="ok">Hợp lệ</Badge>],
+    ['3','(trống)','0987111222',<Badge kind="err">Thiếu tên</Badge>],
+    ['4','Auto Care','09332221',<Badge kind="err">SĐT không hợp lệ</Badge>],
+  ];
+  return <NBrowser active="shop" title="Import shop từ Excel" breadcrumb={<><Hot to="npp-shop-list"><span data-hot style={{color:'var(--w-ink-2)'}}>Quản lý Shop</span></Hot> · <b>Import hàng loạt</b></>}>
+    <div className="c g16" style={{maxWidth:760}}>
+      <Card>
+        <div className="h3" style={{marginBottom:12}}>1 · Tải file mẫu</div>
+        <div className="w-box r between wrap g10" style={{padding:'12px 14px', marginBottom:14}}>
+          <div className="c g4"><b className="t13">Mẫu import shop (.xlsx)</b><span className="t11 muted">Cột: Tên shop, SĐT (Zalo), Địa chỉ</span></div>
+          <Btn ghost sm onClick={()=>dlTemplate('mau-import-shop.csv', ['Tên shop','SĐT (Zalo)','Địa chỉ'], [['Sửa xe Hùng Anh','0901234567','Cầu Giấy, HN'],['Gara Minh Phát','0912888777','Đống Đa, HN']])}>⤓ Tải file mẫu</Btn>
+        </div>
+        <div className="h3" style={{margin:'4px 0 12px'}}>2 · Tải file đã điền</div>
+        <div className="w-img plain" style={{height:120, borderStyle:'dashed', flexDirection:'column', gap:6}} data-hot onClick={()=>{}}>
+          <span style={{background:'none'}} className="muted t13">Kéo thả hoặc bấm để chọn file Excel</span>
+          <span style={{background:'none'}} className="t11 muted">.xlsx · tối đa 2.000 dòng</span>
+        </div>
+      </Card>
+      <Card>
+        <div className="r between" style={{marginBottom:12}}><div className="h3">3 · Kiểm tra dữ liệu</div><div className="r g8"><Badge kind="ok">2 hợp lệ</Badge><Badge kind="err">2 lỗi</Badge></div></div>
+        <Table cols={[{t:'#',w:'48px'},{t:'Tên shop'},{t:'SĐT'},{t:'Kết quả'}]} rows={rows} />
+        <div className="r g10" style={{marginTop:14}}><Btn to="npp-shop-invited">Import 2 dòng hợp lệ & gửi mời</Btn><Btn ghost to="npp-shop-list">Hủy</Btn></div>
+      </Card>
+    </div>
+  </NBrowser>;
+}
+
+/* 7 — invited / ZNS sent */
+function nShopInvited(){
+  return <NBrowser active="shop" title="Đã gửi lời mời" breadcrumb={<><Hot to="npp-shop-list"><span data-hot style={{color:'var(--w-ink-2)'}}>Quản lý Shop</span></Hot> · <b>Kết quả</b></>}>
+    <div className="r g20 start">
+      <Card className="grow" style={{maxWidth:520}}>
+        <Badge kind="ok" style={{marginBottom:14}}>Đã gửi ZNS</Badge>
+        <div className="h3" style={{marginBottom:6}}>Đã gửi lời mời tới 2 shop</div>
+        <div className="t12 muted" style={{marginBottom:16}}>Shop sẽ nhận tin Zalo (ZNS) kèm link mở Mini App Loyalty Idemitsu.</div>
+        <div className="c g10">
+          {['Sửa xe Hùng Anh · 0901 234 567','Gara Minh Phát · 0912 888 777'].map((t,i)=>
+            <div key={i} className="w-box r between" style={{padding:'10px 13px'}}><span className="t13">{t}</span><Badge kind="ok">Đã gửi</Badge></div>)}
+        </div>
+        <Divider style={{margin:'18px 0'}}/>
+        <Btn to="npp-shop-list">Về danh sách shop</Btn>
+      </Card>
+    </div>
+  </NBrowser>;
+}
+
+/* ---- SCAN — mobile = bản responsive của CÙNG trang web (dùng chung nội dung) ---- */
+function ScanMobile(title, content){
+  return <div className="c g16" style={{alignItems:'center'}}>
+    <Note style={{maxWidth:440}}><Pin n="M"/> Mobile chỉ là <b>bản responsive của cùng trang web NPP</b> — cùng màn, cùng thành phần, tự xếp dọc khi màn hẹp. Không phải app riêng. (Mở từ "Quét QR" trên web.)</Note>
+    <Phone>
+      <Screen scroll>
+        <div className="w-zalo-bar" style={{background:'#fff'}}>
+          <span className="w-icon" style={{width:20,height:20,borderRadius:4}} />
+          <span className="ztitle">{title}</span>
+          <span className="w-avatar" style={{width:24,height:24}} />
+        </div>
+        <div className="w-screen-body" style={{padding:14, background:'#FBFBFC', display:'flex', flexDirection:'column', gap:14, overflowY:'auto'}}>
+          {content}
+        </div>
+      </Screen>
+    </Phone>
+  </div>;
+}
+
+function nScanMethod(){ return ScanMobile('Quét QR', scMethod('mobile')); }
+function nScanUpload(){ return ScanMobile('Tải ảnh QR', scUpload('mobile')); }
+function nScanUploadError(){ return ScanMobile('Tải ảnh QR', scInvalid('mobile')); }
+function nScanCam(){ return ScanMobile('Quét QR', scCam('mobile')); }
+function nScanSuccess(){ return ScanMobile('Quét thành công', scSuccess('mobile')); }
+function nScanLimit(){ return ScanMobile('Giới hạn quét', scLimit('mobile')); }
+
+/* ======= SCAN — nội dung dùng chung cho web & mobile (responsive, tự xếp dọc) ======= */
+const SCAN_IDS = {
+  web:    { method:'npp-scan-web', upload:'npp-scan-web-upload', invalid:'npp-scan-web-upload-error', cam:'npp-scan-web-cam', success:'npp-scan-web-success', limit:'npp-scan-web-limit' },
+  mobile: { method:'npp-scan-method', upload:'npp-scan-upload', invalid:'npp-scan-upload-error', cam:'npp-scan-cam', success:'npp-scan-success', limit:'npp-scan-limit' },
+};
+
+function scQuota(){
+  return <div className="w-box r between wrap g16" style={{padding:'12px 16px'}}>
+    <div className="r g24 wrap">
+      {[['Hôm nay','12 / 30',40,''],['Tuần này','64 / 150',43,''],['Tháng này','248 / 500',50,'']].map((x,i)=>
+        <div key={i} className="c g6" style={{minWidth:118}}>
+          <div className="r between t12"><span className="muted">{x[0]}</span><b>{x[1]}</b></div>
+          <Meter pct={x[2]} kind={x[3]} />
+        </div>)}
+    </div>
+    <Chip>Quota anti-fraud</Chip>
+  </div>;
+}
+
+function scMethod(m){
+  const id = SCAN_IDS[m];
+  return <>
+    {scQuota()}
+    <div className="r g16 wrap start">
+      <div className="grow c g16" style={{minWidth:260, maxWidth:680}}>
+        <div className="h3">Chọn phương thức quét</div>
+        <div className="r g16 wrap">
+          <div className="w-card" style={{padding:20, flex:'1 1 220px'}} data-hot onClick={()=>WF.go(id.upload)}>
+            <div className="c g10"><span className="w-icon" style={{width:44,height:44,borderRadius:10}}/><div className="h3">Tải ảnh QR</div><span className="t12 muted">Kéo thả / chọn ảnh chụp tem.</span></div>
+          </div>
+          <div className="w-card" style={{padding:20, flex:'1 1 220px'}} data-hot onClick={()=>WF.go(id.cam)}>
+            <div className="c g10"><span className="w-icon" style={{width:44,height:44,borderRadius:10}}/><div className="h3">Mở camera</div><span className="t12 muted">Quét trực tiếp qua camera thiết bị.</span></div>
+          </div>
+        </div>
+        <div className="w-img plain" style={{height:140, borderStyle:'dashed', flexDirection:'column', gap:6}} data-hot onClick={()=>WF.go(id.upload)}>
+          <span style={{background:'none'}} className="muted t13">Kéo thả ảnh QR vào đây</span>
+          <span style={{background:'none'}} className="t11 muted">.jpg .png · hoặc bấm để chọn file</span>
+        </div>
+      </div>
+      <Note style={{flex:'1 1 240px', minWidth:240, maxWidth:320}}><Pin n="3"/> Quét QR nằm trong <b>trang Loyalty nhúng vào CMS</b> (mở từ Đổi quà). Cùng web view này NPP vừa quét tem vừa đổi quà. Dùng webcam hoặc tải ảnh QR; chịu chung <b>giới hạn anti-fraud</b>.</Note>
+    </div>
+  </>;
+}
+
+function scUpload(m){
+  const id = SCAN_IDS[m];
+  return <div className="r g16 wrap start">
+    <div className="grow c g16" style={{minWidth:260, maxWidth:680}}>
+      <div className="w-img plain" style={{height:260, borderStyle:'dashed', flexDirection:'column', gap:10}} data-hot onClick={()=>{}}>
+        <span className="w-icon" style={{width:48,height:48,borderRadius:12}} />
+        <span style={{background:'none'}} className="h3">Kéo thả ảnh QR vào đây</span>
+        <span style={{background:'none'}} className="t12 muted">hoặc bấm để chọn file · .jpg .png · tối đa 8MB</span>
+      </div>
+      <div className="c g8">
+        <span className="t11 muted">— Mô phỏng kết quả nhận diện —</span>
+        <div className="r g10 wrap"><Btn ghost to={id.invalid}>Không hợp lệ</Btn><Btn to={id.success}>Hợp lệ</Btn></div>
+      </div>
+    </div>
+    <Note style={{flex:'1 1 240px', minWidth:240, maxWidth:320}}><Pin n="3"/> Sau khi tải ảnh lên, hệ thống <b>tự nhận diện mã QR</b>: hợp lệ thì cộng điểm ngay; mờ / không phải QR Idemitsu / đã dùng → báo <b>không hợp lệ</b>.</Note>
+  </div>;
+}
+
+function scInvalid(m){
+  const id = SCAN_IDS[m];
+  return <div className="r center" style={{paddingTop:20}}>
+    <div className="w-card" style={{maxWidth:420, padding:30}}>
+      <div className="c g14" style={{alignItems:'center'}}>
+        <span className="w-icon" style={{width:56,height:56,borderRadius:'50%',borderColor:'#C0392B'}} />
+        <div className="center-text"><div className="h2" style={{color:'#C0392B'}}>Mã QR không hợp lệ</div><div className="t12 muted" style={{marginTop:6}}>Vui lòng chọn ảnh khác và thử lại.</div></div>
+        <div className="r g10 wrap center" style={{marginTop:4}}><Btn ghost to={id.method}>Đóng</Btn><Btn to={id.upload}>Chọn ảnh khác</Btn></div>
+      </div>
+    </div>
+  </div>;
+}
+
+function scCam(m){
+  const id = SCAN_IDS[m];
+  return <div className="r g16 wrap start">
+    <div className="grow c g14" style={{minWidth:260, maxWidth:620}}>
+      <div className="w-scanview" style={{height:340}}><div className="w-scanframe" style={{width:'48%'}} /></div>
+      <div className="center-text t12 muted">Đưa tem QR vào khung để camera đọc mã</div>
+      <div className="r g10 wrap center"><Btn ghost to={id.method}>Hủy</Btn><Btn to={id.success}>Mô phỏng quét OK</Btn></div>
+    </div>
+    <Card style={{flex:'1 1 240px', minWidth:240, maxWidth:300}}><div className="h3" style={{marginBottom:12}}>Mẹo quét</div><Lines n={4} last="50%" /></Card>
+  </div>;
+}
+
+function scSuccess(m){
+  const id = SCAN_IDS[m];
+  const rows = [
+    ['Zepro 0W-20','IDMT-B0098-0001a4','+10','+1','Vừa xong'],
+    ['Touring 5W-30','IDMT-B0102-03f9c1','+8','+1','5 phút trước'],
+    ['Diesel 15W-40','IDMT-B0105-0a12bb','+12','+1','12 phút trước'],
+  ];
+  return <div className="r g20 wrap start">
+    <Card style={{flex:'1 1 300px', minWidth:280, maxWidth:360}}>
+      <div className="c g14" style={{alignItems:'center'}}>
+        <span className="w-icon circle" style={{width:60,height:60,borderColor:'#3FA34D'}} />
+        <div className="center-text"><div className="h1">+10 điểm</div><div className="t12 muted">Idemitsu Zepro 0W-20</div></div>
+        <div className="w-box fill-w c g10" style={{padding:14}}>
+          <div className="r between t12"><span className="muted">Mã QR</span><b>IDMT-B0098-0001a4</b></div>
+          <div className="r between t12"><span className="muted">Thời gian</span><b>28/05 09:12</b></div>
+          <Divider/>
+          <div className="r between t12"><span className="muted">Cross-award NPP</span><b>+1 điểm</b></div>
+        </div>
+        <div className="r g10 wrap fill-w"><Btn block ghost to={id.limit}>Xem giới hạn</Btn><Btn block to={id.method}>Quét tiếp</Btn></div>
+      </div>
+    </Card>
+    <div className="grow c g12" style={{minWidth:280}}>
+      <Note><Pin n="4"/> Mỗi lượt quét hợp lệ cộng điểm SP <b>và</b> tự động <b>cross-award</b> cho NPP. Quota đã trừ 1 lượt.</Note>
+      <div className="h3">Lượt quét gần đây (phiên này)</div>
+      <div style={{overflowX:'auto'}}><Table cols={[{t:'Sản phẩm'},{t:'Mã QR'},{t:'Điểm SP',align:'right'},{t:'Cross-award',align:'right'},{t:'Thời gian'}]} rows={rows} /></div>
+    </div>
+  </div>;
+}
+
+function scLimit(m){
+  return <div className="r g20 wrap start">
+    <Card style={{flex:'1 1 320px', minWidth:280, maxWidth:560}}>
+      <div className="r g14 start" style={{marginBottom:16}}>
+        <span className="w-icon" style={{width:48,height:48,borderRadius:12,borderColor:'#C0392B',flex:'none'}} />
+        <div className="c g4"><div className="h3" style={{color:'#C0392B'}}>Bạn đã đạt giới hạn quét hôm nay</div><div className="t12 muted">Vui lòng quay lại vào ngày mai. Giới hạn nhằm chống tự quét tem gom điểm.</div></div>
+      </div>
+      <div className="c g14">
+        {[['Hôm nay','30 / 30','full',100],['Tuần này','118 / 150','warn',79],['Tháng này','402 / 500','',80]].map((x,i)=>
+          <div key={i} className="c g6"><div className="r between t13"><span className="muted">{x[0]}</span><b>{x[1]}</b></div><Meter pct={x[3]} kind={x[2]} /></div>)}
+      </div>
+      <Divider style={{margin:'18px 0'}}/>
+      <Btn ghost to="npp-shop-list">Về Quản lý Shop</Btn>
+    </Card>
+    <Note style={{flex:'1 1 240px', minWidth:240, maxWidth:320}}><Pin n="5"/> Ngưỡng <b>ngày / tuần / tháng</b> cấu hình tập trung ở CMS Admin (Cấu hình điểm / anti-fraud).</Note>
+  </div>;
+}
+
+/* ===== Loyalty web view (mở từ CMS) — render SONG SONG: web (desktop) + responsive (mobile browser) ===== */
+const NPP_LOY_NAV = [
+  {label:'Trang chủ', to:'npp-rewards'},
+  {label:'Quét QR', to:'npp-scan-web'},
+  {label:'Lịch sử điểm', to:'npp-loy-history'},
+];
+function loyWeb(title, active, back, body){
+  return <div className="c g8" style={{alignItems:'center'}}>
+    <span className="tt">Trên web · desktop (mở trong CMS)</span>
+    <Browser url="loyalty.idemitsu.vn/npp">
+      <div style={{background:'#fff', height:720, display:'flex', flexDirection:'column'}}>
+        <div className="r between" style={{padding:'0 20px', height:58, borderBottom:'1px solid var(--w-line)', flex:'none'}}>
+          <div className="r g10"><span className="w-icon" style={{width:26,height:26,borderRadius:7}}/><b>Loyalty Idemitsu</b></div>
+          <div className="r" style={{gap:4, height:'100%'}}>{NPP_LOY_NAV.map((n,i)=>
+            <span key={i} data-hot onClick={()=>WF.go(n.to)} className={i===active?'t13':'t13 muted'}
+              style={{display:'flex', alignItems:'center', padding:'0 12px', height:'100%', fontWeight:i===active?700:500, cursor:'pointer', borderBottom:i===active?'2px solid var(--w-ink)':'2px solid transparent'}}>{n.label}</span>)}</div>
+          <div className="r g10"><span className="w-chip solid">◆ 9.842 điểm</span><span className="w-avatar" style={{width:30,height:30}}/></div>
+        </div>
+        <div className="r between" style={{padding:'7px 20px', borderBottom:'1px solid var(--w-line)', background:'var(--w-fill-3)', flex:'none'}}>
+          {back
+            ? <span className="r g6 t12 muted" data-hot onClick={()=>WF.go(back)} style={{cursor:'pointer'}}><span>‹</span> Quay lại</span>
+            : <span className="r g6 t12 muted" data-hot onClick={()=>WF.go('npp-shop-list')} style={{cursor:'pointer'}}><span>‹</span> Thoát về CMS</span>}
+          <span className="t11 muted">{title}</span>
+        </div>
+        <div style={{flex:1, overflowY:'auto'}}><div style={{maxWidth:820, margin:'0 auto'}}>{body}</div></div>
+      </div>
+    </Browser>
+  </div>;
+}
+function loyMobile(title, active, back, body){
+  return <div className="c g8" style={{alignItems:'center'}}>
+    <span className="tt">Responsive · mobile browser</span>
+    <Phone noStatus>
+      <div style={{display:'flex', flexDirection:'column', height:740}}>
+        <div className="r g8" style={{height:36, padding:'0 12px', background:'#E9E9EC', borderBottom:'1px solid var(--w-line)', flex:'none'}}>
+          <span className="w-icon" style={{width:14,height:14,borderRadius:'50%',flex:'none'}}/>
+          <div className="grow r" style={{height:22, background:'#fff', borderRadius:11, padding:'0 10px', alignItems:'center'}}><span className="t11 muted">loyalty.idemitsu.vn</span></div>
+          <span className="muted t12">⟳</span>
+        </div>
+        <div className="r between" style={{height:46, padding:'0 14px', borderBottom:'1px solid var(--w-line)', flex:'none'}}>
+          {back ? <span className="muted" data-hot onClick={()=>WF.go(back)} style={{fontSize:18, cursor:'pointer'}}>‹</span> : <span className="w-icon" style={{width:20,height:20,borderRadius:5}}/>}
+          <b className="t13">{title}</b>
+          <span className="w-chip solid" style={{height:22}}>◆ 9.842</span>
+        </div>
+        <div style={{flex:1, overflowY:'auto'}}>{body}</div>
+        {active!=null && <BotNav active={active} items={NPP_LOY_NAV.map((n,i)=> i===active ? n.label : {label:n.label, to:n.to})} />}
+      </div>
+    </Phone>
+  </div>;
+}
+function nLoy(title, active, back, body, note){
+  return <div className="c g16" style={{alignItems:'center', width:'100%'}}>
+    {note && <Note style={{maxWidth:600}}>{note}</Note>}
+    <div className="r g24 wrap start" style={{justifyContent:'center'}}>
+      {loyWeb(title, active, back, body)}
+      {loyMobile(title, active, back, body)}
+    </div>
+  </div>;
+}
+
+/* camera scan — chỉ camera, giống Repair Shop */
+function nScanWeb(){
+  return nLoy('Quét QR sản phẩm', 1, 'npp-rewards',
+    <div style={{padding:16, display:'flex', flexDirection:'column', gap:14}}>
+      <div className="w-scanview" style={{height:300}}><div className="w-scanframe" /></div>
+      <div className="center-text t12 muted">Đưa tem QR trên sản phẩm vào khung</div>
+      <div className="r g10"><Btn block ghost to="npp-scan-web-upload-error">Mã lỗi</Btn><Btn block to="npp-scan-web-success">Quét OK</Btn></div>
+    </div>,
+    <><Pin n="3"/> Trang Loyalty là <b>web view mở từ CMS</b> (không phải app). NPP mở trên <b>trình duyệt desktop</b> hoặc <b>browser mobile</b> — cùng một trang, tự responsive. Quét QR dùng camera thiết bị.</>
+  );
+}
+function nScanWebUploadError(){
+  return nLoy('Không hợp lệ', null, 'npp-scan-web',
+    <div style={{padding:24, display:'flex', flexDirection:'column', gap:16, alignItems:'center'}}>
+      <span className="w-icon" style={{width:64,height:64,borderRadius:'50%',borderColor:'#C0392B'}} />
+      <div className="center-text"><div className="h3" style={{color:'#C0392B'}}>Mã QR đã được quét</div><div className="t12 muted" style={{marginTop:4}}>Tem này đã tính điểm trước đó. Mỗi tem chỉ dùng một lần.</div></div>
+      <div className="w-box fill-w c g8" style={{padding:14, maxWidth:420}}>
+        <div className="t11 muted">Các lỗi thường gặp</div>
+        <div className="t12">• Mã không thuộc sản phẩm Idemitsu</div>
+        <div className="t12">• Tem đã bị quét trước đó</div>
+        <div className="t12">• Ảnh QR mờ / không đọc được</div>
+      </div>
+      <Btn to="npp-scan-web">Quét lại</Btn>
+    </div>
+  );
+}
+function nScanWebSuccess(){
+  return nLoy('Quét thành công', null, 'npp-scan-web',
+    <div style={{padding:24, display:'flex', flexDirection:'column', gap:16, alignItems:'center'}}>
+      <span className="w-icon circle" style={{width:72,height:72,borderColor:'#3FA34D'}} />
+      <div className="center-text"><div className="h1">+10 điểm</div><div className="t12 muted">Idemitsu Zepro 0W-20</div></div>
+      <div className="w-box fill-w c g10" style={{padding:14, maxWidth:420}}>
+        <div className="r between t12"><span className="muted">Mã QR</span><b>IDMT-B0098-0001a4</b></div>
+        <div className="r between t12"><span className="muted">Thời gian</span><b>28/05 09:12</b></div>
+        <Divider/>
+        <div className="r between t12"><span className="muted">Điểm cross-award NPP</span><b>+1 điểm</b></div>
+      </div>
+      <div className="r g10" style={{maxWidth:420, width:'100%'}}><Btn block to="npp-scan-web">Quét tiếp</Btn></div>
+    </div>
+  );
+}
+
+/* ---- Lịch sử điểm (+/−) — Loyalty web view (web + mobile browser) ---- */
+function LoyHistBody(){
+  const [f, setF] = React.useState('all');
+  const rows = [
+    ['NPP tự quét','Zepro 0W-20 · IDMT-B0098-0001a4','+10','28/05 08:50','ok','NPP quét','npp'],
+    ['Shop quét · Sửa xe Hùng Anh','Zepro 0W-20 · IDMT-B0098-0001a5','+1','28/05 09:40','ok','Cross-award','shop'],
+    ['Shop quét · Auto Care 24h','Touring 5W-30 · IDMT-B0102-0a77c2','+1','28/05 09:12','ok','Cross-award','shop'],
+    ['Quy đổi cashback kỳ T4/2026','Chiết khấu cuối tháng theo chính sách','-186.200','01/05 00:00','err','Cashback','cashback'],
+    ['Shop quét · Gara Thành Đạt','Diesel 15W-40 · IDMT-B0105-0b91aa','+1','27/05 15:50','ok','Cross-award','shop'],
+    ['NPP tự quét','Touring 5W-30 · IDMT-B0102-03f9c1','+8','27/05 10:22','ok','NPP quét','npp'],
+  ];
+  const cats = [['all','Tất cả'],['npp','NPP tự quét'],['shop','Shop quét'],['cashback','Quy đổi cashback']];
+  const list = rows.filter(r => f==='all' || r[6]===f);
+  return <div style={{padding:16, display:'flex', flexDirection:'column', gap:12}}>
+    <div className="r g8 wrap">
+      {cats.map(c=>
+        <Chip key={c[0]} solid={f===c[0]} onClick={()=>setF(c[0])} style={{cursor:'pointer'}}>{c[1]}</Chip>)}
+    </div>
+    <div className="r g10 wrap">
+      <div className="w-box grow c g4" style={{padding:'10px 13px', minWidth:120}}><span className="t11 muted">Số dư hiện tại</span><b className="t13">9.842 điểm</b></div>
+      <div className="w-box grow c g4" style={{padding:'10px 13px', minWidth:120}}><span className="t11 muted">+ NPP tự quét</span><b className="t13" style={{color:'#3FA34D'}}>+3.340</b></div>
+      <div className="w-box grow c g4" style={{padding:'10px 13px', minWidth:120}}><span className="t11 muted">+ Shop quét (cross-award)</span><b className="t13" style={{color:'#3FA34D'}}>+6.632</b></div>
+    </div>
+    {list.map((r,i)=>
+      <div key={i} className="w-box r g12" style={{padding:'12px 13px'}}>
+        <span className="w-icon" style={{width:34,height:34,borderRadius:8,flex:'none',borderColor:r[4]==='err'?'#C0392B':'var(--w-line-2)'}} />
+        <div className="grow c g4"><b className="t13">{r[0]}</b><span className="t11 muted">{r[1]}</span><div className="r g8"><Chip style={{height:20}}>{r[5]}</Chip><span className="t11 muted">{r[3]}</span></div></div>
+        <b className="t13" style={{color:r[2].startsWith('-')?'#C0392B':'#3FA34D'}}>{r[2]}</b>
+      </div>)}
+    {list.length===0 && <div className="center-text muted t12" style={{padding:'24px 0'}}>Không có giao dịch phù hợp bộ lọc.</div>}
+  </div>;
+}
+function nLoyHistory(){
+  return nLoy('Lịch sử điểm', 2, 'npp-rewards',
+    <LoyHistBody />,
+    <><Pin n="6"/> NPP <b>chỉ tích điểm, không đổi quà</b>. Lọc lịch sử theo <b>NPP tự quét</b>, <b>Shop quét</b> (cross-award) hoặc <b>Quy đổi cashback</b>. Điểm trừ (−) khi Idemitsu quy đổi cashback/chiết khấu cuối tháng theo tổng điểm — tránh gian lận khi nhiều admin dùng chung 1 tài khoản.</>
+  );
+}
+
+
+/* 13 — Điểm tích lũy & Cashback (thay cho Reward Hub) */
+function nCashback(){
+  const policy = [
+    ['Dưới 50.000','3%'],
+    ['50.000 – 199.999','5%'],
+    ['200.000 – 499.999','7%'],
+    ['Từ 500.000','10%'],
+  ];
+  const months = [
+    ['Tháng 5/2026','214.500','7%','15.015.000đ',<Badge kind="ok">Đã chi trả</Badge>],
+    ['Tháng 4/2026','186.200','5%','9.310.000đ',<Badge kind="ok">Đã chi trả</Badge>],
+    ['Tháng 3/2026','142.000','5%','7.100.000đ',<Badge kind="ok">Đã chi trả</Badge>],
+  ];
+  return <NBrowser active="reward" title="Điểm tích lũy & Cashback" breadcrumb={<><b>Điểm tích lũy & Cashback</b></>}
+    actions={<Btn ghost sm>Xuất sao kê</Btn>}>
+    <Note style={{marginBottom:16}}><Pin n="8"/> NPP <b>không đổi quà</b>. Toàn bộ điểm tích lũy (từ shop &amp; NPP quét QR) được Idemitsu quy đổi thành <b>cashback / chiết khấu cuối tháng</b> theo chính sách — tránh rủi ro gian lận &amp; double-effort khi nhiều admin cùng dùng 1 tài khoản.</Note>
+
+    <div className="r g16 wrap" style={{marginBottom:18}}>
+      <Stat num="9.842" lbl="Điểm tháng này (6/2026)" />
+      <Stat num="1.284.560" lbl="Điểm lũy kế" />
+      <Stat num="7%" lbl="Bậc chiết khấu hiện tại" />
+      <Stat num="≈ 688.940đ" lbl="Cashback dự kiến tháng này" />
+    </div>
+
+    <div className="r g16 wrap start">
+      {/* chính sách cashback theo bậc điểm */}
+      <Card style={{flex:'1 1 360px', minWidth:320}}>
+        <div className="h3" style={{marginBottom:6}}>Chính sách cashback / chiết khấu</div>
+        <div className="t12 muted" style={{marginBottom:14}}>Idemitsu chi trả vào cuối mỗi tháng dựa trên tổng điểm tích lũy trong tháng.</div>
+        <div style={{overflowX:'auto'}}>
+          <Table cols={[{t:'Điểm tích lũy / tháng'},{t:'Tỷ lệ cashback',align:'right'}]}
+            rows={policy.map((p,i)=>[p[0], <b>{p[1]}</b>])} />
+        </div>
+        <div className="w-box r g10" style={{padding:'11px 13px', marginTop:12}}>
+          <span className="w-icon" style={{width:18,height:18,flex:'none'}} />
+          <span className="t12 muted">Bậc &amp; tỷ lệ do Idemitsu cấu hình; có thể khác theo nhóm NPP / chính sách từng kỳ.</span>
+        </div>
+      </Card>
+
+      {/* cách quy đổi */}
+      <Card style={{flex:'1 1 300px', minWidth:280}}>
+        <div className="h3" style={{marginBottom:12}}>Cách quy đổi tháng này</div>
+        <div className="c g10">
+          <div className="r between t13"><span className="muted">Điểm tích lũy tháng 6</span><b>9.842</b></div>
+          <div className="r between t13"><span className="muted">Bậc áp dụng</span><b>7%</b></div>
+          <Divider/>
+          <div className="r between t13"><span className="muted">Cashback dự kiến</span><b>≈ 688.940đ</b></div>
+          <div className="t11 muted">Số liệu chốt vào cuối kỳ; thanh toán theo chính sách Idemitsu.</div>
+        </div>
+      </Card>
+    </div>
+
+    {/* lịch sử chi trả */}
+    <div className="h3" style={{margin:'20px 0 10px'}}>Lịch sử cashback theo tháng</div>
+    <div style={{overflowX:'auto'}}>
+      <Table cols={[{t:'Kỳ'},{t:'Điểm tích lũy',align:'right'},{t:'Bậc'},{t:'Cashback',align:'right'},{t:'Trạng thái'}]} rows={months} />
+    </div>
+  </NBrowser>;
+}
+
+/* 14 — Loyalty HOME (web view mở từ CMS) */
+function nRewards(){
+  const recent = [
+    ['Shop quét · Sửa xe Hùng Anh','+1','28/05 09:40','ok'],
+    ['NPP tự quét · Zepro 0W-20','+10','28/05 08:50','ok'],
+  ];
+  return nLoy('Trang chủ', 0, null,
+    <div style={{padding:16, display:'flex', flexDirection:'column', gap:18}}>
+      <div className="w-card" style={{padding:16}}>
+        <div className="c g4"><span className="t11 muted">Điểm khả dụng · NPP Miền Bắc 01</span><div className="h1">9.842</div><span className="t11 muted">Tích điểm khi shop &amp; NPP quét QR sản phẩm Idemitsu</span></div>
+      </div>
+
+      <Btn lg block to="npp-scan-web" style={{height:48}}>◎ Quét QR tích điểm</Btn>
+
+      <div className="c g12">
+        <div className="r between"><div className="h3">Lịch sử điểm gần đây</div><span className="t12 muted" data-hot onClick={()=>WF.go('npp-loy-history')}>Xem tất cả ›</span></div>
+        {recent.map((r,i)=>
+          <div key={i} className="w-box r g12" style={{padding:'12px 13px'}}>
+            <span className="w-icon" style={{width:32,height:32,borderRadius:8,flex:'none',borderColor:r[3]==='err'?'#C0392B':'var(--w-line-2)'}} />
+            <div className="grow c g4"><b className="t13">{r[0]}</b><span className="t11 muted">{r[2]}</span></div>
+            <b className="t13" style={{color:r[1].startsWith('-')?'#C0392B':'#3FA34D'}}>{r[1]}</b>
+          </div>)}
+      </div>
+    </div>,
+    <><Pin n="9"/> Loyalty của NPP là <b>trang web mở từ CMS</b> — không phải app. NPP truy cập qua <b>trình duyệt desktop</b> (trái) hoặc <b>browser mobile/tablet</b> (phải): cùng một trang, tự responsive. Chỉ <b>lưu điểm + lịch sử (+/−)</b> và <b>quét QR tích điểm</b>, không đổi quà.</>
+  );
+}
+
+/* 14a — Danh mục quà (catalog đầy đủ) */
+function nCatalog(){
+  const cats = ['Tất cả','Mới','Cafe & Bánh','Tiện ích','Thực phẩm','Voucher'];
+  return nLoy('Danh mục quà', 1, null,
+    <div style={{padding:16, display:'flex', flexDirection:'column', gap:16}}>
+      <div className="w-input"><span>🔍 Tìm kiếm quà / voucher</span></div>
+      <div className="r g8 wrap">
+        {cats.map((c,i)=><Chip key={i} solid={i===0}>{c}</Chip>)}
+      </div>
+      <div className="r between"><div className="h3">Tất cả <span className="t12 muted">(21)</span></div></div>
+      <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(150px, 1fr))', gap:12}}>
+        {Array.from({length:8}).map((_,i)=>
+          <div key={i} className="w-card" style={{padding:0, overflow:'hidden'}} data-hot onClick={()=>WF.go(i%2?'npp-reward-voucher':'npp-reward-detail')}>
+            <Img h={104} label="ảnh quà" style={{border:'none', borderRadius:0, borderBottom:'1px solid var(--w-line)'}} />
+            <div className="c g6" style={{padding:'9px 10px'}}>
+              <div className="r g6"><span className="w-icon" style={{width:16,height:16,borderRadius:4,flex:'none'}}/><span className="t11 muted">{i%2?'Voucher':'Quà vật lý'}</span></div>
+              <Line sm w="85%" />
+              <b className="t12">{i%2?'1.000 điểm':'3.000 điểm'}</b>
+            </div>
+          </div>)}
+      </div>
+    </div>
+  );
+}
+
+function rwStepper(){
+  return <div className="r g10" style={{alignItems:'center'}}>
+    <span className="w-icon" style={{width:26,height:26,borderRadius:6}} />
+    <b className="t13" style={{minWidth:14, textAlign:'center'}}>0</b>
+    <span className="w-icon" style={{width:26,height:26,borderRadius:6}} />
+  </div>;
+}
+function rwAccordion(label){
+  return <div className="r between" style={{padding:'13px 0', borderTop:'1px solid var(--w-line)'}}><span className="t13">{label}</span><span className="muted">⌄</span></div>;
+}
+function nRewardDetail(){
+  return nLoy('Chi tiết quà', null, 'npp-catalog',
+    <div className="c">
+      <Img h={240} label="ảnh sản phẩm" style={{border:'none', borderRadius:0, borderBottom:'1px solid var(--w-line)'}} />
+      <div style={{padding:16}}>
+        <div className="h3" style={{marginBottom:12}}>Robotek W600 Wifi Robot Vacuum Cleaner</div>
+        <div className="r between" style={{marginBottom:6}}>
+          <b className="h3">3.000 điểm</b>
+          {rwStepper()}
+        </div>
+        {['Mô tả sản phẩm','Hướng dẫn sử dụng','Điều khoản & Điều kiện'].map((t,i)=><div key={i}>{rwAccordion(t)}</div>)}
+      </div>
+      <div className="r between" style={{padding:'12px 16px', borderTop:'1px solid var(--w-line)', background:'#fff'}}>
+        <div className="c g2"><span className="t11 muted">Tổng</span><b className="t13">0 điểm</b></div>
+        <Btn className="disabled">Đổi quà ngay</Btn>
+      </div>
+    </div>
+  );
+}
+function nRewardVoucher(){
+  const denos = [['10.000đ','60 điểm'],['20.000đ','115 điểm'],['50.000đ','280 điểm']];
+  return nLoy('Chi tiết quà', null, 'npp-catalog',
+    <div className="c">
+      <div style={{padding:16, borderBottom:'1px solid var(--w-line)'}}><Img h={200} label="ảnh voucher" /></div>
+      <div style={{padding:16}}>
+        <div className="h3" style={{marginBottom:14}}>Voucher Highlands Coffee</div>
+        <div className="r between t11 muted" style={{paddingBottom:8}}><span style={{flex:1}}>Mệnh giá</span><span style={{width:90, textAlign:'center'}}>Số lượng</span><span style={{width:44, textAlign:'right'}}>Tổng</span></div>
+        {denos.map((d,i)=>
+          <div key={i} className="r between" style={{padding:'11px 0', borderTop:'1px solid var(--w-line)', alignItems:'center'}}>
+            <div className="c g2" style={{flex:1}}><b className="t13">{d[0]}</b><span className="t11 muted">{d[1]}</span></div>
+            <div style={{width:90, display:'flex', justifyContent:'center'}}>{rwStepper()}</div>
+            <b className="t13" style={{width:44, textAlign:'right'}}>0</b>
+          </div>)}
+        <div style={{height:8}} />
+        {['Mô tả sản phẩm','Hướng dẫn sử dụng','Điều khoản & Điều kiện'].map((t,i)=><div key={i}>{rwAccordion(t)}</div>)}
+      </div>
+      <div className="r between" style={{padding:'12px 16px', borderTop:'1px solid var(--w-line)', background:'#fff'}}>
+        <div className="c g2"><span className="t11 muted">Tổng</span><b className="t13">0 điểm</b></div>
+        <Btn className="disabled">Giữ quà ngay</Btn>
+      </div>
+    </div>
+  );
+}
+
+/* 14b — Tài khoản trên Loyalty */
+function nLoyAccount(){
+  return nLoy('Tài khoản', 3, null,
+    <div style={{padding:16, display:'flex', flexDirection:'column', gap:14}}>
+      <div className="w-card r g12 start" style={{padding:16}}>
+        <span className="w-avatar" style={{width:52,height:52}} />
+        <div className="grow c g6">
+          <b className="t13">NPP MIỀN BẮC 01</b>
+          <span className="w-chip" style={{height:22, alignSelf:'flex-start'}}>NHÀ PHÂN PHỐI</span>
+          <span className="t12 muted">Điểm khả dụng: 9.842 · <span data-hot onClick={()=>WF.go('npp-loy-history')} style={{cursor:'pointer'}}>Lịch sử điểm ›</span></span>
+        </div>
+      </div>
+
+      <div className="w-card c g14" style={{padding:16}}>
+        <div className="r between"><div className="h3">Hồ sơ</div><Chip>Chỉnh sửa</Chip></div>
+        <Field label="Tên NPP"><Input>NPP Miền Bắc 01</Input></Field>
+        <div className="r g12 wrap"><Field label="Người liên hệ"><Input>Nguyễn Văn A</Input></Field><Field label="SĐT"><Input>0901 234 567</Input></Field></div>
+        <Field label="Khu vực"><Input>Hà Nội</Input></Field>
+        <Btn style={{alignSelf:'flex-start'}}>Lưu thay đổi</Btn>
+      </div>
+
+      <div className="w-card c g14" style={{padding:16}}>
+        <div className="h3">Đổi mật khẩu</div>
+        <Field label="Mật khẩu hiện tại"><Input placeholder="••••••••" /></Field>
+        <div className="r g12 wrap"><Field label="Mật khẩu mới"><Input placeholder="••••••••" /></Field><Field label="Nhập lại mật khẩu mới"><Input placeholder="••••••••" /></Field></div>
+        <Btn style={{alignSelf:'flex-start'}}>Cập nhật mật khẩu</Btn>
+      </div>
+
+      <div className="w-box c">
+        <div className="r between" style={{padding:'14px 13px'}} data-hot onClick={()=>WF.go('npp-shop-list')}><span className="t13">Thoát về CMS</span><span className="muted">›</span></div>
+        <Divider/>
+        <div className="r between" style={{padding:'14px 13px'}} data-hot onClick={()=>WF.go('npp-login')}><span className="t13">Đăng xuất</span><span className="muted">›</span></div>
+      </div>
+    </div>,
+    <><Pin n="8"/> Hồ sơ NPP &amp; đổi mật khẩu nằm trong <b>Tài khoản của Loyalty</b>, cho phép chỉnh sửa trực tiếp tại đây.</>
+  );
+}
+
+/* 15 — profile (CMS) */
+function nVisitLog(){
+  const visits = [
+    ['Nguyễn Văn Sale','Tại NPP Miền Bắc 01','02/06 09:10',<Badge kind="ok">Khớp GPS</Badge>,'Giao chỉ tiêu tháng 6'],
+    ['Nguyễn Văn Sale','Sửa xe Hùng Anh','01/06 14:30',<Badge kind="ok">Khớp GPS</Badge>,'Hỗ trợ trưng bày, hướng dẫn quét QR'],
+    ['Trần Thị Bán','Auto Care 24h','31/05 10:05',<Badge kind="ok">Khớp GPS</Badge>,'Thăm định kỳ'],
+    ['Nguyễn Văn Sale','Gara Thành Đạt','30/05 16:20',<Badge kind="warn">Lệch ~120m</Badge>,'Giới thiệu SP mới'],
+  ];
+  return <NBrowser active="visit" title="Check-in của Sale" breadcrumb={<><b>Check-in của Sale</b></>}
+    actions={<Btn ghost sm>Xuất Excel</Btn>}>
+    <Note style={{marginBottom:16}}><Pin n="1"/> NPP xem được <b>lịch sử &amp; báo cáo check-in của Sale</b> tại chính NPP và tại các cửa hàng thuộc NPP — đối soát hoạt động thăm viếng. (Dữ liệu từ App Sales · Phase 2.)</Note>
+
+    <div className="r g16 wrap" style={{marginBottom:18}}>
+      <Stat num="42" lbl="Lượt check-in (tháng)" />
+      <Stat num="3" lbl="Check-in tại NPP" />
+      <Stat num="38" lbl="Cửa hàng được thăm" />
+      <Stat num="2" lbl="Check-in lệch GPS" />
+    </div>
+
+    <div className="r g10 wrap" style={{marginBottom:14}}>
+      <Input className="grow" style={{maxWidth:280}} placeholder="🔍 Tìm theo Sale / cửa hàng" />
+      <Chip>Đối tượng ▾</Chip><Chip>Khoảng thời gian ▾</Chip>
+    </div>
+
+    <div className="h3" style={{marginBottom:10}}>Lịch sử check-in</div>
+    <div style={{overflowX:'auto'}}>
+      <Table cols={[{t:'Nhân viên Sale'},{t:'Địa điểm'},{t:'Thời gian'},{t:'Vị trí'},{t:'Nội dung chăm sóc'}]} rows={visits} />
+    </div>
+  </NBrowser>;
+}
+
+/* 15 — profile (CMS) */
+function nProfile(){
+  return <NBrowser active="profile" title="Tài khoản" breadcrumb={<><b>Tài khoản</b></>}>
+    <div className="r g20 start" style={{maxWidth:840}}>
+      <Card className="grow">
+        <div className="h3" style={{marginBottom:16}}>Thông tin NPP</div>
+        <div className="c g14">
+          <Field label="Tên NPP"><Input>NPP Miền Bắc 01</Input></Field>
+          <div className="r g12"><Field label="Người liên hệ"><Input>Nguyễn Văn A</Input></Field><Field label="SĐT"><Input>0901 234 567</Input></Field></div>
+          <Field label="Khu vực"><Input>Hà Nội</Input></Field>
+          <Btn ghost style={{alignSelf:'flex-start'}}>Lưu thay đổi</Btn>
+        </div>
+      </Card>
+      <Card style={{width:340}}>
+        <div className="h3" style={{marginBottom:16}}>Đổi mật khẩu</div>
+        <div className="c g14">
+          <Field label="Mật khẩu hiện tại"><Input placeholder="••••••••" /></Field>
+          <Field label="Mật khẩu mới"><Input placeholder="••••••••" /></Field>
+          <Field label="Nhập lại mật khẩu mới"><Input placeholder="••••••••" /></Field>
+          <Btn style={{alignSelf:'flex-start'}}>Cập nhật mật khẩu</Btn>
+          <Divider style={{margin:'4px 0'}}/>
+          <Btn ghost to="npp-login" style={{alignSelf:'flex-start'}}>Đăng xuất</Btn>
+        </div>
+      </Card>
+    </div>
+  </NBrowser>;
+}
+
+const NPP_SCREENS = [
+  { id:'npp-login',        group:'Đăng nhập',        title:'Đăng nhập', render:nLogin },
+  { id:'npp-force-pw',     group:'Đăng nhập',        title:'Đổi mật khẩu lần đầu', render:nForcePw },
+  { id:'npp-shop-list',    group:'Quản lý Shop',     title:'Whitelist shop', render:nShopList },
+  { id:'npp-shop-add',     group:'Quản lý Shop',     title:'Thêm shop đơn lẻ', render:nShopAdd },
+  { id:'npp-shop-import',  group:'Quản lý Shop',     title:'Import Excel', render:nShopImport },
+  { id:'npp-shop-invited', group:'Quản lý Shop',     title:'Đã gửi ZNS', render:nShopInvited },
+  { id:'npp-rewards',      group:'Loyalty (web view)', title:'Trang chủ · điểm', render:nRewards },
+  { id:'npp-scan-web',     group:'Loyalty (web view)', title:'Quét QR · camera', render:nScanWeb },
+  { id:'npp-scan-web-upload-error', group:'Loyalty (web view)', title:'Quét QR · không hợp lệ', render:nScanWebUploadError },
+  { id:'npp-scan-web-success', group:'Loyalty (web view)', title:'Quét QR · thành công', render:nScanWebSuccess },
+  { id:'npp-loy-history',  group:'Loyalty (web view)', title:'Lịch sử điểm (+/−)', render:nLoyHistory },
+  { id:'npp-visit-log',    group:'Check-in của Sale', title:'Lịch sử & báo cáo check-in', render:nVisitLog },
+  { id:'npp-profile',      group:'Tài khoản',        title:'Hồ sơ & đổi MK', render:nProfile },
+];
+
+
+
+/* ----- Hi-fi illustrations (shared by NPP + Shop scan screens) ----- */
+function HfQrPattern(){
+  const SIZE = 21;
+  const cells = [];
+  const finder = (sx, sy) => {
+    for (let y=0; y<7; y++) for (let x=0; x<7; x++) {
+      const v = (y===0||y===6||x===0||x===6) || (y>=2&&y<=4&&x>=2&&x<=4);
+      if (v) cells.push([sx+x, sy+y]);
+    }
+  };
+  finder(0, 0); finder(14, 0); finder(0, 14);
+  // timing pattern
+  for (let i=8; i<13; i++) {
+    if (i % 2 === 0) { cells.push([i, 6]); cells.push([6, i]); }
+  }
+  // pseudo-random data modules (deterministic seed)
+  let s = 42;
+  const rng = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+  for (let y=0; y<SIZE; y++) for (let x=0; x<SIZE; x++) {
+    if ((x < 8 && y < 8) || (x > 12 && y < 8) || (x < 8 && y > 12)) continue;
+    if (x === 6 || y === 6) continue;
+    if (rng() < 0.46) cells.push([x, y]);
+  }
+  return (
+    <svg viewBox={`0 0 ${SIZE} ${SIZE}`} shapeRendering="crispEdges">
+      <rect width={SIZE} height={SIZE} fill="#fff"/>
+      {cells.map(([x,y], i) => <rect key={i} x={x} y={y} width="1" height="1" fill="#0F172A"/>)}
+    </svg>
+  );
+}
+
+function HfOilBottle({size = 56, label = 'Zepro'}){
+  const id = 'hfob-' + label;
+  return (
+    <svg className="hf-bottle" viewBox="0 0 64 80" width={size} height={size * 80/64}>
+      <defs>
+        <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#EF4444"/>
+          <stop offset="60%" stopColor="#C8102E"/>
+          <stop offset="100%" stopColor="#7A0A1C"/>
+        </linearGradient>
+      </defs>
+      <rect x="22" y="4" width="20" height="9" fill="#1F2937" rx="2"/>
+      <rect x="25" y="13" width="14" height="6" fill="#0F172A"/>
+      <path d="M10 26 Q10 19 16 19 L48 19 Q54 19 54 26 L54 72 Q54 76 50 76 L14 76 Q10 76 10 72 Z" fill={`url(#${id})`}/>
+      <rect x="14" y="36" width="36" height="24" fill="rgba(255,255,255,.94)" rx="2"/>
+      <text x="32" y="46" textAnchor="middle" fontSize="6.4" fontWeight="800" fill="#C8102E" fontFamily="Inter, sans-serif">IDEMITSU</text>
+      <text x="32" y="55" textAnchor="middle" fontSize="5.4" fontWeight="700" fill="#0F172A" fontFamily="Inter, sans-serif">{label}</text>
+      <rect x="13" y="22" width="3" height="50" fill="rgba(255,255,255,.18)" rx="1.5"/>
+      <rect x="48" y="22" width="2" height="50" fill="rgba(0,0,0,.15)" rx="1"/>
+    </svg>
+  );
+}
+
+function HfSuccessBadge(){
+  return (
+    <div className="hf-badge ok">
+      <div className="halo" />
+      <div className="core">
+        <svg viewBox="0 0 24 24" width="52%" height="52%" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M5 13l4 4L19 7"/>
+        </svg>
+      </div>
+      <span className="spark" style={{top:'8%', left:'14%'}} />
+      <span className="spark" style={{top:'12%', right:'8%', width:6, height:6}} />
+      <span className="spark" style={{bottom:'10%', left:'6%', width:7, height:7}} />
+      <span className="spark" style={{bottom:'14%', right:'14%'}} />
+      <span className="spark" style={{top:'-2%', left:'48%', width:5, height:5}} />
+    </div>
+  );
+}
+
+function HfErrorBadge(){
+  return (
+    <div className="hf-badge err">
+      <div className="halo" />
+      <div className="core">
+        <svg viewBox="0 0 24 24" width="52%" height="52%" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M6 6l12 12 M18 6l-12 12"/>
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+
+const { useRef } = React;
+
+const LOY_KEY = 'idemitsu-loyalty-demo-v1';
+const LOY_BUS = (typeof BroadcastChannel !== 'undefined') ? new BroadcastChannel(LOY_KEY) : null;
+const LOY_BASELINE = { nppPoints: 9842, shopPoints: 5000 };
+
+const LoyaltyState = {
+  nppPoints: LOY_BASELINE.nppPoints,
+  shopPoints: LOY_BASELINE.shopPoints,
+  history: [],
+  listeners: new Set(),
+
+  load() {
+    try {
+      const s = JSON.parse(localStorage.getItem(LOY_KEY) || 'null');
+      if (s) {
+        if (typeof s.nppPoints === 'number') this.nppPoints = s.nppPoints;
+        if (typeof s.shopPoints === 'number') this.shopPoints = s.shopPoints;
+        if (Array.isArray(s.history)) this.history = s.history;
+      }
+    } catch (e) {}
+  },
+  save() {
+    try {
+      localStorage.setItem(LOY_KEY, JSON.stringify({
+        nppPoints: this.nppPoints,
+        shopPoints: this.shopPoints,
+        history: this.history,
+      }));
+    } catch (e) {}
+  },
+  subscribe(fn) { this.listeners.add(fn); return () => this.listeners.delete(fn); },
+  emit() { for (const fn of this.listeners) fn(this); },
+
+  recordScan(source, product, qr, shopPts, nppPts) {
+    const entry = { source, product, qr, time: Date.now(), shopPts, nppPts };
+    this.shopPoints += shopPts;
+    this.nppPoints  += nppPts;
+    this.history.unshift(entry);
+    if (this.history.length > 100) this.history.length = 100;
+    this.save();
+    this.emit();
+    if (LOY_BUS) LOY_BUS.postMessage({ kind: 'scan', entry });
+  },
+  reset() {
+    this.nppPoints = LOY_BASELINE.nppPoints;
+    this.shopPoints = LOY_BASELINE.shopPoints;
+    this.history = [];
+    this.save();
+    this.emit();
+    if (LOY_BUS) LOY_BUS.postMessage({ kind: 'reset' });
+  },
+};
+LoyaltyState.load();
+
+if (LOY_BUS) {
+  LOY_BUS.onmessage = (e) => {
+    if (!e.data) return;
+    if (e.data.kind === 'scan') {
+      LoyaltyState.shopPoints += e.data.entry.shopPts;
+      LoyaltyState.nppPoints  += e.data.entry.nppPts;
+      LoyaltyState.history.unshift(e.data.entry);
+      if (LoyaltyState.history.length > 100) LoyaltyState.history.length = 100;
+      LoyaltyState.save();
+      LoyaltyState.emit();
+    } else if (e.data.kind === 'reset') {
+      LoyaltyState.nppPoints  = LOY_BASELINE.nppPoints;
+      LoyaltyState.shopPoints = LOY_BASELINE.shopPoints;
+      LoyaltyState.history    = [];
+      LoyaltyState.save();
+      LoyaltyState.emit();
+    }
+  };
+}
+// Fallback for browsers without BroadcastChannel only — if both BC and
+// storage event fire, we'd apply the same scan twice (BC += delta, then
+// storage overwrites with saved value, which could double-count depending
+// on event order).
+if (!LOY_BUS) {
+  window.addEventListener('storage', (ev) => {
+    if (ev.key !== LOY_KEY || !ev.newValue) return;
+    try {
+      const s = JSON.parse(ev.newValue);
+      LoyaltyState.nppPoints  = s.nppPoints;
+      LoyaltyState.shopPoints = s.shopPoints;
+      LoyaltyState.history    = s.history || [];
+      LoyaltyState.emit();
+    } catch (e) {}
+  });
+}
+
+function useLoyaltyState() {
+  const [, force] = useState(0);
+  useEffect(() => LoyaltyState.subscribe(() => force(t => t + 1)), []);
+  return LoyaltyState;
+}
+
+function useAnimatedNumber(target) {
+  const [val, setVal] = useState(target);
+  const rafRef = useRef(null);
+  const startRef = useRef(target);
+  useEffect(() => {
+    if (val === target) { startRef.current = target; return; }
+    const start = startRef.current;
+    const delta = target - start;
+    const dur = 700;
+    const t0 = performance.now();
+    const step = (now) => {
+      const t = Math.min(1, (now - t0) / dur);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setVal(Math.round(start + delta * eased));
+      if (t < 1) rafRef.current = requestAnimationFrame(step);
+      else startRef.current = target;
+    };
+    rafRef.current = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [target]);
+  return val;
+}
+
+// Product catalog used by the demo. Shop:NPP ratio is 2:1 (NPP = 0.5 × shop).
+const SCAN_PRODUCTS = [
+  { name: 'Idemitsu Zepro 0W-20',  sku: 'IDMT-B0098', shopPts: 10, nppPts: 5 },
+  { name: 'Idemitsu Touring 5W-30', sku: 'IDMT-B0102', shopPts: 8,  nppPts: 4 },
+  { name: 'Idemitsu Diesel 15W-40', sku: 'IDMT-B0105', shopPts: 12, nppPts: 6 },
+];
+function pickRandomProduct() {
+  return SCAN_PRODUCTS[Math.floor(Math.random() * SCAN_PRODUCTS.length)];
+}
+function mockQrFor(sku) {
+  return sku + '-' + Math.random().toString(16).slice(2, 8);
+}
+function formatHM(ts) {
+  const d = new Date(ts);
+  return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+}
+// Reliable integer formatter — avoids Intl/locale quirks (some Chrome
+// builds render '9.842' as '9.8420' under vi-VN with non-integer values).
+function fmtNum(n) {
+  return String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+function nScanWebHiFi(){
+  return nLoy('Quét QR sản phẩm', 1, 'npp-rewards',
+    <div style={{padding:'20px 16px', display:'flex', flexDirection:'column', gap:18}}>
+      <div className="r between wrap g8" style={{padding:'0 2px'}}>
+        <div className="c g4">
+          <div style={{fontSize:16, fontWeight:700, color:'#0F172A'}}>Quét tem QR sản phẩm</div>
+          <span className="t11 muted">Zepro · Touring · Diesel — mỗi tem chỉ tích 1 lần</span>
+        </div>
+        <span className="w-badge ok"><i className="led" />Camera đã bật</span>
+      </div>
+
+      <div className="hf-scanview">
+        <div className="hf-scan-target">
+          <span className="hf-scan-corner tl" />
+          <span className="hf-scan-corner tr" />
+          <span className="hf-scan-corner bl" />
+          <span className="hf-scan-corner br" />
+          <div className="hf-qr-wrap">
+            <HfQrPattern />
+            <div className="hf-scanline" />
+          </div>
+        </div>
+        <span className="hf-scan-hint"><span className="led" />Đặt tem QR vào khung</span>
+      </div>
+
+      <div className="w-card r g12" style={{padding:12, alignItems:'center'}}>
+        <HfOilBottle size={44} label="Zepro" />
+        <div className="grow c g4">
+          <b className="t13">Tem QR nằm trên thân chai</b>
+          <span className="t11 muted">Quét hợp lệ → cộng điểm sản phẩm cho cửa hàng và <b>cross-award</b> cho NPP.</span>
+        </div>
+      </div>
+
+      <div className="r g10 wrap">
+        <Btn block ghost to="npp-scan-web-upload-error">Mô phỏng · Mã lỗi</Btn>
+        <Btn block to="npp-scan-web-success">Mô phỏng · Quét OK</Btn>
+      </div>
+    </div>
+  );
+}
+
+function nScanWebSuccessHiFi(){
+  return nLoy('Quét thành công', null, 'npp-scan-web',
+    <div style={{padding:'24px 16px 28px', display:'flex', flexDirection:'column', gap:18, alignItems:'center'}}>
+      <HfSuccessBadge />
+      <div className="center-text">
+        <div style={{fontSize:30, fontWeight:800, color:'#10B981', letterSpacing:'-.02em', lineHeight:1.1}}>+10 điểm</div>
+        <div className="t12 muted" style={{marginTop:6}}>Đã ghi nhận vào tài khoản NPP</div>
+      </div>
+
+      <div className="w-card r g14" style={{padding:14, width:'100%', maxWidth:440, alignItems:'center'}}>
+        <HfOilBottle size={56} label="Zepro" />
+        <div className="grow c g6">
+          <b className="t13">Idemitsu Zepro 0W-20</b>
+          <span className="t11 muted">SKU · IDMT-B0098 · 1L</span>
+          <div className="r g6"><span className="w-chip" style={{height:22, fontSize:11}}>Synthetic</span><span className="w-chip solid" style={{height:22, fontSize:11}}>+10 điểm</span></div>
+        </div>
+      </div>
+
+      <div className="w-box c g10" style={{padding:14, width:'100%', maxWidth:440}}>
+        <div className="r between t12"><span className="muted">Mã QR</span><b className="hf-mono">IDMT-B0098-0001a4</b></div>
+        <div className="r between t12"><span className="muted">Thời gian</span><b>28/05 · 09:12</b></div>
+        <Divider />
+        <div className="r between t12"><span className="muted">Điểm sản phẩm</span><b style={{color:'#10B981'}}>+10 điểm</b></div>
+        <div className="r between t12"><span className="muted">Cross-award NPP</span><b style={{color:'#10B981'}}>+1 điểm</b></div>
+      </div>
+
+      <div className="r g10" style={{width:'100%', maxWidth:440}}>
+        <Btn block ghost to="npp-loy-history">Xem lịch sử</Btn>
+        <Btn block to="npp-scan-web">Quét tiếp</Btn>
+      </div>
+    </div>
+  );
+}
+
+function nScanWebUploadErrorHiFi(){
+  return nLoy('Không hợp lệ', null, 'npp-scan-web',
+    <div style={{padding:'24px 16px 28px', display:'flex', flexDirection:'column', gap:18, alignItems:'center'}}>
+      <HfErrorBadge />
+      <div className="center-text">
+        <div style={{fontSize:20, fontWeight:700, color:'#DC2626'}}>Mã QR không hợp lệ</div>
+        <div className="t12 muted" style={{marginTop:6, maxWidth:340}}>Tem này đã được tính điểm trước đó hoặc không thuộc sản phẩm Idemitsu.</div>
+      </div>
+
+      <div className="w-card c g10" style={{padding:14, width:'100%', maxWidth:440}}>
+        <div className="t11 muted">Các trường hợp thường gặp</div>
+        {[
+          'Mã không thuộc sản phẩm Idemitsu',
+          'Tem đã được quét trước đó (1 tem · 1 lần)',
+          'Ảnh QR mờ / khung quét thiếu sáng',
+        ].map((txt, i) => (
+          <div key={i} className="r g10" style={{alignItems:'center'}}>
+            <span style={{width:26, height:26, borderRadius:'50%', background:'#FEF3C7', color:'#B45309', display:'flex', alignItems:'center', justifyContent:'center', flex:'none', fontSize:13, fontWeight:700}}>!</span>
+            <span className="t12">{txt}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="r g10" style={{width:'100%', maxWidth:440}}>
+        <Btn block ghost to="npp-rewards">Về trang chủ</Btn>
+        <Btn block to="npp-scan-web">Quét lại</Btn>
+      </div>
+    </div>
+  );
+}
+
+/* mutate NPP_SCREENS so the picker + router pick up the new renders */
+(function(){
+  const map = { 'npp-scan-web':nScanWebHiFi, 'npp-scan-web-success':nScanWebSuccessHiFi, 'npp-scan-web-upload-error':nScanWebUploadErrorHiFi };
+  for (const s of NPP_SCREENS) { if (map[s.id]) s.render = map[s.id]; }
+})();
+
+function LoyaltyToast() {
+  const [toasts, setToasts] = useState([]);
+  const lastLenRef = useRef(LoyaltyState.history.length);
+  useEffect(() => {
+    lastLenRef.current = LoyaltyState.history.length;
+    return LoyaltyState.subscribe((s) => {
+      const delta = s.history.length - lastLenRef.current;
+      lastLenRef.current = s.history.length;
+      if (delta <= 0) return;
+      const fresh = s.history.slice(0, delta).filter(e => e.source === 'shop-scan');
+      for (const e of fresh) {
+        const id = Math.random().toString(36).slice(2);
+        setToasts(prev => [...prev, { id, e, out: false }]);
+        setTimeout(() => {
+          setToasts(prev => prev.map(t => t.id === id ? { ...t, out: true } : t));
+          setTimeout(() => setToasts(prev => prev.filter(t => t.id !== id)), 250);
+        }, 4500);
+      }
+    });
+  }, []);
+  return (
+    <div className="hf-toast-stack">
+      {toasts.map(({id, e, out}) => (
+        <div key={id} className={cx('hf-toast', out && 'out')}>
+          <div className="hf-toast-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <div className="hf-toast-body">
+            <b>Cross-award nhận được</b>
+            <span>Shop vừa quét {e.product}</span>
+          </div>
+          <span className="hf-toast-pts">+{e.nppPts}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function NppRewardsBody() {
+  const state = useLoyaltyState();
+  const pts = useAnimatedNumber(state.nppPoints);
+  const lastDeltaRef = useRef({ ts: 0, val: 0 });
+  // Capture latest cross-award delta for the badge
+  const lastShopScan = state.history.find(e => e.source === 'shop-scan');
+  if (lastShopScan && lastShopScan.time !== lastDeltaRef.current.ts) {
+    lastDeltaRef.current = { ts: lastShopScan.time, val: lastShopScan.nppPts };
+  }
+  const showDelta = lastDeltaRef.current.ts > 0
+    && lastDeltaRef.current.val > 0
+    && (Date.now() - lastDeltaRef.current.ts) < 2000;
+
+  const recent = state.history.slice(0, 5);
+
+  return (
+    <div style={{padding:16, display:'flex', flexDirection:'column', gap:16}}>
+      <div className="hf-points-hero">
+        <div className="c g6" style={{position:'relative', zIndex:1}}>
+          <span className="t11 muted" style={{textTransform:'uppercase', letterSpacing:'.08em'}}>Điểm khả dụng · NPP Miền Bắc 01</span>
+          <div className="hf-points-num">
+            {fmtNum(pts)}
+            {showDelta && <span className="delta" key={lastDeltaRef.current.ts}>+{lastDeltaRef.current.val} cross-award</span>}
+          </div>
+          <span className="t11 muted">Tự động cộng khi <b>Repair Shop quét QR</b> sản phẩm Idemitsu · cross-award 50%</span>
+        </div>
+      </div>
+
+      <Btn lg block to="npp-scan-web" style={{height:48}}>◎ Quét QR tích điểm (NPP tự quét)</Btn>
+
+      <div className="c g10">
+        <div className="r between">
+          <div className="h3">Hoạt động gần đây</div>
+          <span className="t12 muted" data-hot onClick={() => WF.go('npp-loy-history')} style={{cursor:'pointer'}}>Xem tất cả ›</span>
+        </div>
+
+        {recent.length === 0 && (
+          <div className="w-box c g8" style={{padding:'22px 16px', alignItems:'center', textAlign:'center'}}>
+            <span style={{fontSize:26, opacity:.5}}>📡</span>
+            <span className="t12 muted">Chưa có hoạt động. Mở <b>/shop/</b> và quét QR để xem real-time.</span>
+          </div>
+        )}
+
+        {recent.map((e, i) => {
+          const isShop = e.source === 'shop-scan';
+          const isFresh = (Date.now() - e.time) < 2500;
+          return (
+            <div key={e.time + '-' + i} className={cx('w-box r g12', isFresh && i === 0 && 'hf-row-new')} style={{padding:'12px 13px'}}>
+              <span style={{width:38, height:38, borderRadius:9, background: isShop ? 'linear-gradient(135deg,#FEE2E2,#FECACA)' : 'linear-gradient(135deg,#DCFCE7,#BBF7D0)', display:'flex', alignItems:'center', justifyContent:'center', flex:'none', fontSize:17}}>
+                {isShop ? '🏪' : '🏢'}
+              </span>
+              <div className="grow c g4" style={{minWidth:0}}>
+                <b className="t13" style={{whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'}}>{isShop ? 'Shop quét' : 'NPP tự quét'} · {e.product}</b>
+                <span className="t11 muted hf-mono" style={{whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'}}>{e.qr} · {formatHM(e.time)}</span>
+              </div>
+              <b className="t13" style={{color:'#10B981', flex:'none'}}>+{e.nppPts}</b>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function nRewardsHiFi() {
+  return nLoy('Trang chủ', 0, null, <NppRewardsBody />, null);
+}
+
+function NppLoyHistoryBody() {
+  const state = useLoyaltyState();
+  const [f, setF] = useState('all');
+
+  // Live entries on top, then static demo seed entries
+  const live = state.history.map(e => ({
+    title: e.source === 'shop-scan' ? 'Shop quét · ' + e.product : 'NPP tự quét · ' + e.product,
+    detail: e.qr,
+    pts: '+' + e.nppPts,
+    time: formatHM(e.time),
+    tag: e.source === 'shop-scan' ? 'Cross-award' : 'NPP quét',
+    cat: e.source === 'shop-scan' ? 'shop' : 'npp',
+    live: true,
+    time_raw: e.time,
+  }));
+  const seed = [
+    {title:'Quy đổi cashback kỳ T4/2026', detail:'Chiết khấu cuối tháng theo chính sách', pts:'-186.200', time:'01/05 00:00', tag:'Cashback', cat:'cashback'},
+    {title:'NPP tự quét', detail:'Touring 5W-30 · IDMT-B0102-03f9c1', pts:'+8', time:'27/05 10:22', tag:'NPP quét', cat:'npp'},
+  ];
+  const all = [...live, ...seed];
+  const list = all.filter(r => f === 'all' || r.cat === f);
+  const cats = [['all','Tất cả'],['npp','NPP tự quét'],['shop','Shop quét'],['cashback','Quy đổi cashback']];
+
+  return (
+    <div style={{padding:16, display:'flex', flexDirection:'column', gap:14}}>
+      <div className="r g8 wrap">
+        {cats.map(c => (
+          <Chip key={c[0]} solid={f===c[0]} onClick={() => setF(c[0])} style={{cursor:'pointer'}}>{c[1]}</Chip>
+        ))}
+      </div>
+      <div className="r g10 wrap">
+        <div className="w-box grow c g4" style={{padding:'10px 13px', minWidth:120}}>
+          <span className="t11 muted">Số dư hiện tại</span>
+          <b className="t13">{fmtNum(state.nppPoints)} điểm</b>
+        </div>
+        <div className="w-box grow c g4" style={{padding:'10px 13px', minWidth:120}}>
+          <span className="t11 muted">+ NPP tự quét</span>
+          <b className="t13" style={{color:'#10B981'}}>+{fmtNum(state.history.filter(e=>e.source!=='shop-scan').reduce((a,e)=>a+e.nppPts,0))}</b>
+        </div>
+        <div className="w-box grow c g4" style={{padding:'10px 13px', minWidth:120}}>
+          <span className="t11 muted">+ Cross-award (shop quét)</span>
+          <b className="t13" style={{color:'#10B981'}}>+{fmtNum(state.history.filter(e=>e.source==='shop-scan').reduce((a,e)=>a+e.nppPts,0))}</b>
+        </div>
+      </div>
+      {list.map((r, i) => {
+        const isErr = r.pts.startsWith('-');
+        const isFresh = r.live && r.time_raw && (Date.now() - r.time_raw) < 2500;
+        return (
+          <div key={i} className={cx('w-box r g12', isFresh && 'hf-row-new')} style={{padding:'12px 13px'}}>
+            <span style={{width:36, height:36, borderRadius:9, background: r.cat==='shop' ? 'linear-gradient(135deg,#FEE2E2,#FECACA)' : r.cat==='cashback' ? 'linear-gradient(135deg,#FEF3C7,#FDE68A)' : 'linear-gradient(135deg,#DCFCE7,#BBF7D0)', display:'flex', alignItems:'center', justifyContent:'center', flex:'none', fontSize:16}}>
+              {r.cat==='shop' ? '🏪' : r.cat==='cashback' ? '💰' : '🏢'}
+            </span>
+            <div className="grow c g4" style={{minWidth:0}}>
+              <b className="t13" style={{whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'}}>{r.title}</b>
+              <span className="t11 muted hf-mono" style={{whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'}}>{r.detail}</span>
+              <div className="r g8" style={{alignItems:'center'}}>
+                <Chip style={{height:20, fontSize:10.5}}>{r.tag}</Chip>
+                <span className="t11 muted">{r.time}</span>
+              </div>
+            </div>
+            <b className="t13" style={{color: isErr ? '#DC2626' : '#10B981', flex:'none'}}>{r.pts}</b>
+          </div>
+        );
+      })}
+      {list.length === 0 && (
+        <div className="center-text muted t12" style={{padding:'24px 0'}}>Không có giao dịch phù hợp bộ lọc.</div>
+      )}
+    </div>
+  );
+}
+
+function nLoyHistoryHiFi() {
+  return nLoy('Lịch sử điểm', 2, 'npp-rewards', <NppLoyHistoryBody />, null);
+}
+
+/* ----- Live loyalty chrome wrappers -----
+   The original loyWeb / loyMobile hard-code "9.842" in the header pill.
+   We replace them with components that subscribe to LoyaltyState so the
+   pill updates real-time when shop scans arrive. Same structure as the
+   wireframe original (it IS the CMS opened in browser / responsive on
+   mobile) — only the points value becomes live. */
+function LoyalChromeWeb({ title, active, back, body }) {
+  const state = useLoyaltyState();
+  return (
+    <div className="c g8" style={{alignItems:'center'}}>
+      <span className="tt">Trên web · desktop (mở trong CMS)</span>
+      <Browser url="loyalty.idemitsu.vn/npp">
+        <div style={{background:'#fff', height:720, display:'flex', flexDirection:'column'}}>
+          <div className="r between" style={{padding:'0 20px', height:58, borderBottom:'1px solid var(--w-line)', flex:'none'}}>
+            <div className="r g10">
+              <span className="w-icon" style={{width:26, height:26, borderRadius:7}} />
+              <b>Loyalty Idemitsu</b>
+            </div>
+            <div className="r" style={{gap:4, height:'100%'}}>
+              {NPP_LOY_NAV.map((n, i) => (
+                <span key={i} data-hot onClick={() => WF.go(n.to)}
+                  className={i === active ? 't13' : 't13 muted'}
+                  style={{display:'flex', alignItems:'center', padding:'0 12px', height:'100%', fontWeight: i === active ? 700 : 500, cursor:'pointer', borderBottom: i === active ? '2px solid var(--w-ink)' : '2px solid transparent'}}>
+                  {n.label}
+                </span>
+              ))}
+            </div>
+            <div className="r g10">
+              <span className="w-chip solid">◆ {fmtNum(state.nppPoints)} điểm</span>
+              <span className="w-avatar" style={{width:30, height:30}} />
+            </div>
+          </div>
+          <div className="r between" style={{padding:'7px 20px', borderBottom:'1px solid var(--w-line)', background:'var(--w-fill-3)', flex:'none'}}>
+            {back
+              ? <span className="r g6 t12 muted" data-hot onClick={() => WF.go(back)} style={{cursor:'pointer'}}><span>‹</span> Quay lại</span>
+              : <span className="r g6 t12 muted" data-hot onClick={() => WF.go('npp-shop-list')} style={{cursor:'pointer'}}><span>‹</span> Thoát về CMS</span>}
+            <span className="t11 muted">{title}</span>
+          </div>
+          <div style={{flex:1, overflowY:'auto'}}>
+            <div style={{maxWidth:820, margin:'0 auto'}}>{body}</div>
+          </div>
+        </div>
+      </Browser>
+    </div>
+  );
+}
+
+function LoyalChromeMobile({ title, active, back, body }) {
+  const state = useLoyaltyState();
+  return (
+    <div className="c g8" style={{alignItems:'center'}}>
+      <span className="tt">Responsive · mobile browser (cùng URL, layout thu gọn)</span>
+      <Phone noStatus>
+        <div style={{display:'flex', flexDirection:'column', height:740}}>
+          {/* Mobile browser address bar */}
+          <div className="r g8" style={{height:36, padding:'0 12px', background:'#E9E9EC', borderBottom:'1px solid var(--w-line)', flex:'none'}}>
+            <span className="w-icon" style={{width:14, height:14, borderRadius:'50%', flex:'none'}} />
+            <div className="grow r" style={{height:22, background:'#fff', borderRadius:11, padding:'0 10px', alignItems:'center'}}>
+              <span className="t11 muted">loyalty.idemitsu.vn</span>
+            </div>
+            <span className="muted t12">⟳</span>
+          </div>
+          {/* CMS top header — same brand + points pill, just stacked */}
+          <div className="r between" style={{padding:'8px 12px', borderBottom:'1px solid var(--w-line)', flex:'none', background:'#fff'}}>
+            <div className="r g8" style={{minWidth:0}}>
+              {back
+                ? <span data-hot onClick={() => WF.go(back)} style={{fontSize:18, color:'var(--w-ink-2)', cursor:'pointer', flex:'none'}}>‹</span>
+                : <span className="w-icon" style={{width:24, height:24, borderRadius:6, flex:'none'}} />}
+              <div className="c g2" style={{minWidth:0}}>
+                <b className="t13" style={{lineHeight:1.15}}>{back ? title : 'Loyalty Idemitsu'}</b>
+                {!back && <span className="t11 muted" style={{lineHeight:1}}>NPP Miền Bắc 01</span>}
+              </div>
+            </div>
+            <span className="w-chip solid" style={{height:24, fontSize:11.5, flex:'none'}}>◆ {fmtNum(state.nppPoints)}</span>
+          </div>
+          {/* Content */}
+          <div style={{flex:1, overflowY:'auto'}}>{body}</div>
+          {/* Bottom tab bar — responsive pattern: desktop top-nav → mobile bottom-nav */}
+          {active != null && <BotNav active={active} items={NPP_LOY_NAV.map((n, i) => i === active ? n.label : { label: n.label, to: n.to })} />}
+        </div>
+      </Phone>
+    </div>
+  );
+}
+
+// Reassign the original loyWeb / loyMobile so nLoy(...) picks up the live
+// versions. Function declarations in non-strict script mode are reassignable.
+loyWeb    = (title, active, back, body) => <LoyalChromeWeb    title={title} active={active} back={back} body={body} />;
+loyMobile = (title, active, back, body) => <LoyalChromeMobile title={title} active={active} back={back} body={body} />;
+
+/* mutate NPP_SCREENS to use live versions */
+(function(){
+  const map = { 'npp-rewards': nRewardsHiFi, 'npp-loy-history': nLoyHistoryHiFi };
+  for (const s of NPP_SCREENS) { if (map[s.id]) s.render = map[s.id]; }
+})();
+
+
+
+function HiFiApp({ mode, role, title, sub, screens, defaultId }){
+  const ids = screens.map(s => s.id);
+  const first = defaultId || ids[0];
+  const read = () => {
+    const h = decodeURIComponent((location.hash||'').replace(/^#/,''));
+    if(h && ids.includes(h)) return h;
+    return first;
+  };
+  const [cur, setCur] = useState(read);
+  const [open, setOpen] = useState(false);
+
+  const go = useCallback((id) => {
+    if(id === 'home'){ location.href = '../'; return; }
+    if(!ids.includes(id)){ console.warn('no screen', id); return; }
+    setCur(id);
+    location.hash = encodeURIComponent(id);
+    window.scrollTo(0,0);
+  }, []);
+
+  useEffect(() => { WF.go = go; }, [go]);
+  useEffect(() => {
+    const on = () => {
+      const h = decodeURIComponent((location.hash||'').replace(/^#/,''));
+      if(h && ids.includes(h)) setCur(h);
+    };
+    window.addEventListener('hashchange', on);
+    return () => window.removeEventListener('hashchange', on);
+  }, []);
+
+  // group by .group field for the picker
+  const groups = [];
+  screens.forEach(s => {
+    let g = groups.find(x => x.name === (s.group||''));
+    if(!g){ g = { name:s.group||'', items:[] }; groups.push(g); }
+    g.items.push(s);
+  });
+
+  const screen = screens.find(s => s.id === cur) || screens[0];
+  const idx = screens.indexOf(screen) + 1;
+
+  const hasBus = typeof LoyaltyState !== 'undefined';
+  const hasToast = typeof LoyaltyToast === 'function';
+  // Render the screen as a proper React component (not a function call) so
+  // hooks inside it get their own per-screen state. The key forces an
+  // unmount/remount on navigation — important for screens that compute
+  // something fresh on mount (e.g. shop scan-success records a new scan).
+  const ScreenComp = screen.render;
+
+  return (
+    <div className={cx('wf-shell hifi', 'mode-' + mode)}>
+      <div className="wf-stage">
+        <div className="wf-stage-pad"><ScreenComp key={screen.id} /></div>
+      </div>
+
+      <button className="hf-pick-btn" onClick={() => setOpen(o => !o)} title="Đổi màn demo">
+        <span className="hf-dot" />
+        <span>{screen.title}</span>
+        <span className="hf-meta">· {idx}/{screens.length}</span>
+      </button>
+
+      {open && (
+        <>
+          <div onClick={() => setOpen(false)}
+            style={{position:'fixed', inset:0, zIndex:999, background:'transparent'}} />
+          <div className="hf-pick-panel">
+            <div className="hf-pick-head">
+              <b>{role}</b>
+              <div className="r g8" style={{alignItems:'center'}}>
+                {hasBus && (
+                  <button className="hf-reset-btn"
+                    onClick={() => { LoyaltyState.reset(); }}
+                    title="Reset demo points & history">↻ Reset demo</button>
+                )}
+                <a href="../">‹ Tất cả role</a>
+              </div>
+            </div>
+            <div className="hf-pick-list">
+              {groups.map((g, gi) => (
+                <div key={gi}>
+                  {g.name && <div className="hf-pick-group">{g.name}</div>}
+                  {g.items.map(s => {
+                    const n = screens.indexOf(s) + 1;
+                    return (
+                      <button key={s.id}
+                        className={cx('hf-pick-item', s.id === cur && 'active')}
+                        onClick={() => { go(s.id); setOpen(false); }}>
+                        <span className="hf-pick-num">{n}</span>
+                        <span>{s.title}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+
+      {hasToast && <LoyaltyToast />}
+    </div>
+  );
+}
+
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <HiFiApp
+    mode="cms"
+    role="NPP · Nhà phân phối"
+    title="NPP CMS"
+    sub="Whitelist · Loyalty · Cashback"
+    screens={NPP_SCREENS}
+    defaultId="npp-rewards"
+  />
+);
+</script>
+</body>
+</html>

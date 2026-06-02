@@ -1,0 +1,2493 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repair Shop — Idemitsu Loyalty</title>
+<meta name="description" content="Zalo Mini App · Tích điểm · Đổi quà">
+<meta name="theme-color" content="#C8102E">
+<meta property="og:title" content="Repair Shop — Idemitsu Loyalty">
+<meta property="og:description" content="Zalo Mini App · Tích điểm · Đổi quà">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23C8102E%22/><text x=%2250%22 y=%2266%22 font-size=%2244%22 font-family=%22Inter,sans-serif%22 font-weight=%22700%22 fill=%22%23fff%22 text-anchor=%22middle%22>IL</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>/* =====================================================================
+ * Idemitsu Loyalty — Wireframe Kit
+ * Low-fi grayscale. Structure-first. One restrained "annotation" amber
+ * and one "hotspot" blue are the only non-gray hues.
+ * ===================================================================== */
+
+:root{
+  --w-ink:      #2E2E2E;   /* primary text */
+  --w-ink-2:    #6B6B6B;   /* secondary text */
+  --w-ink-3:    #9A9A9A;   /* meta / hint */
+  --w-line:     #C9C9C9;   /* borders */
+  --w-line-2:   #B0B0B0;   /* stronger borders */
+  --w-fill:     #ECECEC;   /* placeholder block */
+  --w-fill-2:   #E0E0E0;   /* darker placeholder */
+  --w-fill-3:   #F4F4F4;   /* subtle wash */
+  --w-paper:    #FFFFFF;
+  --w-canvas:   #D8DAde;   /* stage behind frames */
+  --w-solid:    #C8102E;   /* Idemitsu red — primary filled control */
+  --w-brand:    #C8102E;   /* Idemitsu red */
+  --w-brand-2:  #EF7D00;   /* Apollo orange accent */
+  --w-brand-bg: #FBE9EB;   /* red tint wash */
+  --w-hot:      #3F6CFF;   /* clickable affordance */
+  --w-hot-bg:   #EAF0FF;
+  --w-note:     #B5781A;   /* annotation ink */
+  --w-note-bg:  #FFF6E2;
+  --w-note-line:#EAD4A0;
+  --w-bar:      #DBDBDB;   /* text-line bars */
+  --w-r:        6px;
+  --w-r-lg:     10px;
+  --w-font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  font-family:var(--w-font);
+  color:var(--w-ink);
+  background:#F0F1F3;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- App shell (per-role page) ---------- */
+.wf-shell{ display:flex; height:100vh; overflow:hidden; }
+
+.wf-rail{
+  width:248px; flex:none; background:#fff; border-right:1px solid var(--w-line);
+  display:flex; flex-direction:column; height:100vh;
+}
+.wf-rail-head{ padding:16px 16px 12px; border-bottom:1px solid var(--w-line); }
+.wf-rail-role{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--w-brand); font-weight:700; }
+.wf-rail-title{ font-size:16px; font-weight:700; margin-top:3px; color:var(--w-ink); }
+.wf-rail-sub{ font-size:11px; color:var(--w-ink-3); margin-top:2px; }
+.wf-rail-scroll{ overflow-y:auto; flex:1; padding:8px 8px 24px; }
+.wf-group{ font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--w-ink-3); font-weight:700; padding:14px 10px 6px; }
+.wf-navitem{
+  display:flex; align-items:center; gap:8px; padding:7px 10px; border-radius:6px;
+  font-size:12.5px; color:var(--w-ink-2); cursor:pointer; user-select:none; line-height:1.3;
+}
+.wf-navitem:hover{ background:var(--w-fill-3); color:var(--w-ink); }
+.wf-navitem.active{ background:var(--w-brand); color:#fff; }
+.wf-navitem.active .wf-navnum{ color:#fff; border-color:#fff; }
+.wf-navnum{
+  flex:none; width:18px; height:18px; border:1px solid var(--w-line-2); border-radius:50%;
+  font-size:10px; display:flex; align-items:center; justify-content:center; color:var(--w-ink-3);
+}
+
+.wf-main{ flex:1; display:flex; flex-direction:column; min-width:0; }
+.wf-topbar{
+  height:46px; flex:none; background:#fff; border-bottom:1px solid var(--w-line);
+  display:flex; align-items:center; gap:14px; padding:0 16px;
+}
+.wf-topbar a.wf-back{ font-size:12.5px; color:var(--w-ink-2); text-decoration:none; display:flex; align-items:center; gap:5px; }
+.wf-topbar a.wf-back:hover{ color:var(--w-ink); }
+.wf-crumbs{ font-size:12.5px; color:var(--w-ink-3); }
+.wf-crumbs b{ color:var(--w-ink); font-weight:600; }
+.wf-top-spacer{ flex:1; }
+.wf-toggle{
+  display:flex; align-items:center; gap:7px; font-size:12px; color:var(--w-ink-2); cursor:pointer; user-select:none;
+}
+.wf-toggle .dot{ width:30px; height:17px; border-radius:9px; background:var(--w-line); position:relative; transition:.15s; }
+.wf-toggle .dot::after{ content:""; position:absolute; top:2px; left:2px; width:13px; height:13px; border-radius:50%; background:#fff; transition:.15s; }
+.wf-toggle.on .dot{ background:var(--w-note); }
+.wf-toggle.on .dot::after{ left:15px; }
+
+.wf-stage{ flex:1; overflow:auto; background:var(--w-canvas); }
+.wf-stage-pad{ min-height:100%; display:flex; align-items:flex-start; justify-content:center; padding:28px; }
+
+/* ---------- Browser chrome (CMS desktop) ---------- */
+.w-browser{ flex:none; width:1180px; background:#fff; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,.14); overflow:hidden; }
+.w-browser.wide{ width:1280px; }
+.w-browser-bar{ height:38px; background:#E9E9EC; border-bottom:1px solid var(--w-line); display:flex; align-items:center; gap:8px; padding:0 12px; }
+.w-dots{ display:flex; gap:6px; }
+.w-dots i{ width:11px; height:11px; border-radius:50%; background:#CFCFD3; display:block; }
+.w-url{ flex:1; height:22px; background:#fff; border:1px solid var(--w-line); border-radius:11px; display:flex; align-items:center; padding:0 12px; font-size:11px; color:var(--w-ink-3); max-width:520px; margin:0 auto; }
+
+/* ---------- Phone frame (mobile / Zalo) ---------- */
+.w-phone{ flex:none; width:375px; background:#fff; border-radius:30px; box-shadow:0 10px 36px rgba(0,0,0,.20); border:8px solid #2A2A2A; overflow:hidden; position:relative; }
+.w-phone.tablet{ width:620px; border-radius:22px; }
+.w-statusbar{ height:30px; display:flex; align-items:center; justify-content:space-between; padding:0 18px; font-size:11px; font-weight:600; color:var(--w-ink); }
+.w-statusbar .sb-r{ display:flex; gap:5px; align-items:center; }
+.w-statusbar .sb-r i{ width:15px; height:9px; border:1px solid var(--w-ink-2); border-radius:2px; display:block; }
+.w-screen{ display:flex; flex-direction:column; height:720px; overflow:hidden; }
+.w-screen.scroll .w-screen-body{ overflow-y:auto; }
+.w-screen-body{ flex:1; min-height:0; }
+
+/* Zalo mini-app top bar */
+.w-zalo-bar{ height:44px; display:flex; align-items:center; gap:10px; padding:0 12px; border-bottom:1px solid var(--w-line); background:#fff; }
+.w-zalo-bar .ztitle{ font-size:14px; font-weight:700; flex:1; text-align:center; }
+.w-zalo-cluster{ display:flex; align-items:center; gap:2px; border:1px solid var(--w-line); border-radius:14px; padding:2px 4px; }
+.w-zalo-cluster i{ width:5px; height:5px; border-radius:50%; background:var(--w-ink-2); display:block; }
+.w-zalo-divider{ width:1px; height:14px; background:var(--w-line); }
+
+/* mobile bottom nav */
+.w-botnav{ height:58px; flex:none; border-top:1px solid var(--w-line); display:flex; background:#fff; }
+.w-botnav .nav-i{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; font-size:9.5px; color:var(--w-ink-3); cursor:pointer; }
+.w-botnav .nav-i .gi{ width:20px; height:20px; border:1.5px solid var(--w-line-2); border-radius:5px; }
+.w-botnav .nav-i.active{ color:var(--w-ink); }
+.w-botnav .nav-i.active .gi{ border-color:var(--w-ink); background:var(--w-fill); }
+
+/* ---------- Wire primitives ---------- */
+.w-box{ background:var(--w-paper); border:1.5px solid var(--w-line); border-radius:var(--w-r); }
+.w-card{ background:var(--w-paper); border:1.5px solid var(--w-line); border-radius:var(--w-r-lg); padding:14px; }
+.w-fill{ background:var(--w-fill); border-radius:var(--w-r); }
+.w-img{
+  background:var(--w-fill); border:1.5px solid var(--w-line); border-radius:var(--w-r);
+  position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center;
+  color:var(--w-ink-3); font-size:11px;
+}
+.w-img::before, .w-img::after{ content:""; position:absolute; top:0; left:0; width:100%; height:100%;
+  background:linear-gradient(to top right, transparent calc(50% - 1px), var(--w-line) 50%, transparent calc(50% + 1px)); }
+.w-img::after{ background:linear-gradient(to top left, transparent calc(50% - 1px), var(--w-line) 50%, transparent calc(50% + 1px)); }
+.w-img > span{ position:relative; z-index:1; background:var(--w-fill); padding:2px 6px; border-radius:4px; }
+.w-img.plain::before, .w-img.plain::after{ display:none; }
+
+.w-line{ height:9px; background:var(--w-bar); border-radius:5px; }
+.w-line.sm{ height:7px; }
+.w-line.dk{ background:var(--w-fill-2); }
+
+.w-btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:7px;
+  height:38px; padding:0 18px; border-radius:var(--w-r); font-size:13px; font-weight:600;
+  background:var(--w-solid); color:#fff; border:1.5px solid var(--w-solid); cursor:pointer; white-space:nowrap;
+}
+.w-btn.lg{ height:46px; font-size:14px; padding:0 22px; }
+.w-btn.sm{ height:30px; font-size:12px; padding:0 12px; }
+.w-btn.block{ width:100%; }
+.w-btn.ghost{ background:#fff; color:var(--w-ink); border-color:var(--w-line-2); }
+.w-btn.disabled{ background:var(--w-fill-2); color:var(--w-ink-3); border-color:var(--w-fill-2); cursor:not-allowed; }
+
+.w-input{
+  height:38px; border:1.5px solid var(--w-line); border-radius:var(--w-r); background:#fff;
+  display:flex; align-items:center; padding:0 12px; font-size:12.5px; color:var(--w-ink-3); width:100%;
+}
+.w-input.lg{ height:44px; }
+.w-input.area{ height:auto; min-height:74px; align-items:flex-start; padding:10px 12px; }
+.w-label{ font-size:12px; color:var(--w-ink-2); font-weight:600; margin-bottom:6px; display:block; }
+.w-label .req{ color:#C0392B; }
+
+.w-chip{ display:inline-flex; align-items:center; gap:6px; height:28px; padding:0 12px; border:1.5px solid var(--w-line); border-radius:1000px; font-size:12px; color:var(--w-ink-2); background:#fff; }
+.w-chip.solid{ background:var(--w-brand-bg); color:var(--w-brand); border-color:var(--w-brand-bg); }
+
+.w-badge{ display:inline-flex; align-items:center; gap:5px; padding:2px 9px; border-radius:1000px; font-size:11px; font-weight:600; background:var(--w-fill); color:var(--w-ink-2); border:1px solid var(--w-line); }
+.w-badge .led{ width:7px; height:7px; border-radius:50%; background:var(--w-ink-3); }
+.w-badge.ok .led{ background:#3FA34D; }
+.w-badge.warn .led{ background:#D08A1E; }
+.w-badge.err .led{ background:#C0392B; }
+
+.w-icon{ width:22px; height:22px; border:1.5px solid var(--w-line-2); border-radius:5px; flex:none; display:inline-block; }
+.w-icon.circle{ border-radius:50%; }
+.w-avatar{ width:34px; height:34px; border-radius:50%; background:var(--w-fill); border:1.5px solid var(--w-line); flex:none; }
+
+/* tables */
+.w-table{ width:100%; border-collapse:collapse; font-size:12.5px; }
+.w-table th{ text-align:left; font-weight:700; color:var(--w-ink-2); font-size:11px; letter-spacing:.04em; text-transform:uppercase; padding:10px 12px; border-bottom:1.5px solid var(--w-line-2); background:var(--w-fill-3); }
+.w-table td{ padding:11px 12px; border-bottom:1px solid var(--w-line); color:var(--w-ink); vertical-align:middle; }
+.w-table tr:hover td{ background:var(--w-fill-3); }
+
+/* annotation pins + notes */
+.w-note{
+  background:var(--w-note-bg); border:1px solid var(--w-note-line); border-left:3px solid var(--w-note);
+  border-radius:6px; padding:9px 11px; font-size:11.5px; color:#7A5410; line-height:1.45;
+}
+.w-note b{ color:var(--w-note); }
+.w-pin{
+  display:inline-flex; align-items:center; justify-content:center; min-width:18px; height:18px; padding:0 5px;
+  border-radius:9px; background:var(--w-note); color:#fff; font-size:10.5px; font-weight:700; vertical-align:middle;
+}
+.anno-hidden .w-note, .anno-hidden .w-pin, .anno-hidden .w-anno{ display:none !important; }
+
+/* hotspot affordance */
+[data-hot]{ cursor:pointer; position:relative; transition:box-shadow .12s, background .12s; }
+[data-hot]:hover{ box-shadow:0 0 0 2px var(--w-hot); }
+.show-hot [data-hot]{ box-shadow:0 0 0 1.5px rgba(63,108,255,.45); }
+.show-hot [data-hot]:hover{ box-shadow:0 0 0 2px var(--w-hot); background:var(--w-hot-bg); }
+
+/* utility */
+.r{ display:flex; align-items:center; }
+.r.g6{ gap:6px; } .r.g8{ gap:8px; } .r.g10{ gap:10px; } .r.g12{ gap:12px; } .r.g16{ gap:16px; } .r.g20{ gap:20px; }
+.r.between{ justify-content:space-between; }
+.r.center{ justify-content:center; }
+.r.start{ align-items:flex-start; }
+.r.wrap{ flex-wrap:wrap; }
+.c{ display:flex; flex-direction:column; }
+.c.g4{ gap:4px; } .c.g6{ gap:6px; } .c.g8{ gap:8px; } .c.g10{ gap:10px; } .c.g12{ gap:12px; } .c.g16{ gap:16px; } .c.g20{ gap:20px; } .c.g24{ gap:24px; }
+.grow{ flex:1; min-width:0; }
+.r.g12 > .c, .r.g16 > .c.eq{ flex:1 1 0; min-width:0; }
+.muted{ color:var(--w-ink-3); }
+.sec{ color:var(--w-ink-2); }
+.tt{ font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--w-ink-3); font-weight:700; }
+.h1{ font-size:22px; font-weight:700; }
+.h2{ font-size:17px; font-weight:700; }
+.h3{ font-size:14px; font-weight:700; }
+.t13{ font-size:13px; } .t12{ font-size:12px; } .t11{ font-size:11px; }
+.center-text{ text-align:center; }
+.divider{ height:1px; background:var(--w-line); }
+.divider.dash{ height:0; border-top:1.5px dashed var(--w-line); background:none; }
+.fill-w{ width:100%; }
+
+/* CMS layout helpers */
+.cms{ display:flex; height:760px; }
+.cms-side{ width:208px; flex:none; background:#fff; border-right:1px solid var(--w-line); padding:14px 10px; }
+.cms-side .logo{ display:flex; align-items:center; gap:8px; padding:6px 8px 14px; }
+.cms-side .logo .mk{ width:26px; height:26px; border-radius:6px; background:var(--w-brand); border:1.5px solid var(--w-brand); }
+.cms-nav{ display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:7px; font-size:12.5px; color:var(--w-ink-2); cursor:pointer; }
+.cms-nav .ci{ width:18px; height:18px; border:1.5px solid var(--w-line-2); border-radius:5px; flex:none; }
+.cms-nav:hover{ background:var(--w-fill-3); }
+.cms-nav.active{ background:var(--w-brand-bg); color:var(--w-brand); font-weight:600; box-shadow:inset 2px 0 0 var(--w-brand); }
+.cms-nav.active .ci{ border-color:var(--w-brand); background:#fff; }
+.cms-body{ flex:1; display:flex; flex-direction:column; min-width:0; background:#FBFBFC; }
+.cms-topbar{ height:54px; flex:none; border-bottom:1px solid var(--w-line); display:flex; align-items:center; gap:14px; padding:0 22px; background:#fff; }
+.cms-content{ flex:1; overflow-y:auto; padding:22px; }
+.cms-pagetitle{ font-size:18px; font-weight:700; }
+
+/* mini cards / stats */
+.w-stat{ border:1.5px solid var(--w-line); border-radius:8px; padding:13px 14px; background:#fff; flex:1; }
+.w-stat .num{ font-size:22px; font-weight:700; }
+.w-stat .lbl{ font-size:11px; color:var(--w-ink-3); margin-top:2px; }
+
+/* bar chart placeholder */
+.w-chart{ display:flex; align-items:flex-end; gap:10px; height:160px; padding:10px; border:1.5px solid var(--w-line); border-radius:8px; background:#fff; }
+.w-chart .bar{ flex:1; background:var(--w-fill-2); border-radius:4px 4px 0 0; }
+
+/* action card (NPP home) */
+.w-actioncard{ border:1.5px solid var(--w-line); border-radius:12px; padding:22px; background:#fff; cursor:pointer; }
+.w-actioncard .ico{ width:46px; height:46px; border:1.5px solid var(--w-line-2); border-radius:10px; background:var(--w-fill-3); }
+
+/* phone scan viewport */
+.w-scanview{ background:#1E1E1E; border-radius:8px; position:relative; display:flex; align-items:center; justify-content:center; }
+.w-scanframe{ width:62%; aspect-ratio:1; border:2px solid #fff; border-radius:14px; position:relative; }
+.w-scanframe::before,.w-scanframe::after{ content:""; position:absolute; width:22px; height:22px; border:3px solid #fff; }
+.w-scanframe::before{ top:-2px; left:-2px; border-right:none; border-bottom:none; border-radius:14px 0 0 0; }
+.w-scanframe::after{ bottom:-2px; right:-2px; border-left:none; border-top:none; border-radius:0 0 14px 0; }
+
+/* progress meter (quota) */
+.w-meter{ height:9px; border-radius:5px; background:var(--w-fill-2); overflow:hidden; }
+.w-meter > i{ display:block; height:100%; background:var(--w-ink-3); }
+.w-meter.warn > i{ background:#D08A1E; }
+.w-meter.full > i{ background:#C0392B; }
+
+/* hub */
+.hub{ max-width:1080px; margin:0 auto; padding:48px 28px 80px; }
+</style>
+<style>
+/* ============================================================
+ * HI-FI THEME — overrides on top of the wireframe kit.
+ *   • Refined neutral palette + product-grade depth/shadows
+ *   • Drops low-fi affordances (X-cross image placeholders,
+ *     amber annotation pins/notes, wireframe screen rail)
+ *   • CMS mode: full-bleed CMS, browser chrome hidden
+ *   • Mobile mode: phone frame centered on soft canvas
+ * ============================================================ */
+:root{
+  --w-canvas:#EEF2F7; --w-paper:#FFFFFF;
+  --w-line:#E5E7EB;   --w-line-2:#D1D5DB;
+  --w-fill:#F1F5F9;   --w-fill-2:#E5E7EB; --w-fill-3:#F8FAFC;
+  --w-bar:#E5E7EB;
+  --w-ink:#0F172A; --w-ink-2:#475569; --w-ink-3:#94A3B8;
+}
+body{ background:var(--w-canvas); }
+
+/* hide wireframe shell chrome (rail + topbar with toggles) */
+.wf-rail, .wf-topbar { display:none !important; }
+.wf-shell{ display:block !important; height:100vh; overflow:auto; }
+.wf-main{ display:block; }
+.wf-stage{ background:var(--w-canvas); overflow:visible; }
+.wf-stage-pad{ padding:0; min-height:100vh; align-items:stretch; display:block; }
+
+/* hide annotation system (pins, notes) */
+.w-note, .w-pin { display:none !important; }
+
+/* image placeholders — drop the X-cross diagonal pattern */
+.w-img::before, .w-img::after { display:none; }
+.w-img{
+  background:linear-gradient(135deg, #F8FAFC, #E2E8F0);
+  border:1px solid var(--w-line); color:#94A3B8;
+}
+.w-img > span{
+  background:rgba(255,255,255,0.85); border-radius:6px;
+  padding:3px 9px; font-weight:500; font-size:11px; color:#64748B;
+}
+
+/* icon placeholders — soft chip with subtle inner highlight */
+.w-icon, .cms-side .ci, .w-botnav .gi{
+  background:linear-gradient(135deg, #FFFFFF, #F1F5F9);
+  border:1px solid var(--w-line);
+  box-shadow:inset 0 -1px 0 rgba(0,0,0,0.02);
+}
+
+/* avatar — soft gradient ring */
+.w-avatar{
+  background:linear-gradient(135deg, #CBD5E1, #94A3B8);
+  border:2px solid #FFFFFF;
+  box-shadow:0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* line text-bars */
+.w-line{ background:var(--w-bar); }
+
+/* cards & boxes */
+.w-card{
+  border:1px solid var(--w-line); border-radius:12px;
+  box-shadow:0 1px 2px rgba(15,23,42,.04), 0 1px 1px rgba(15,23,42,.06);
+}
+.w-box{
+  border:1px solid var(--w-line); border-radius:8px;
+  box-shadow:0 1px 0 rgba(15,23,42,.03);
+}
+
+/* buttons */
+.w-btn{
+  border:none; background:var(--w-brand); color:#fff;
+  box-shadow:0 1px 2px rgba(200,16,46,.15), 0 1px 3px rgba(200,16,46,.10);
+  transition:transform .12s, box-shadow .12s, background .12s;
+}
+.w-btn:not(.disabled):hover{
+  background:#B30E29; transform:translateY(-1px);
+  box-shadow:0 4px 10px rgba(200,16,46,.28), 0 2px 4px rgba(200,16,46,.15);
+}
+.w-btn.ghost{
+  background:#FFFFFF; color:var(--w-ink);
+  border:1px solid var(--w-line-2);
+  box-shadow:0 1px 2px rgba(15,23,42,.04);
+}
+.w-btn.ghost:not(.disabled):hover{
+  background:#F8FAFC; border-color:#94A3B8;
+  transform:translateY(-1px);
+}
+.w-btn.disabled{ background:#E5E7EB; color:#94A3B8; box-shadow:none; }
+
+/* inputs */
+.w-input{
+  background:#FFFFFF; border:1px solid var(--w-line);
+  transition:border-color .12s, box-shadow .12s;
+}
+.w-input:hover{ border-color:#94A3B8; }
+.w-input:focus-within{ border-color:var(--w-brand); box-shadow:0 0 0 3px rgba(200,16,46,.12); }
+
+/* chips */
+.w-chip{
+  background:#FFFFFF; border:1px solid var(--w-line); font-weight:500;
+  transition:background .12s, border-color .12s;
+}
+.w-chip:hover{ background:#F8FAFC; border-color:#94A3B8; }
+.w-chip.solid{
+  background:rgba(200,16,46,.08); border-color:rgba(200,16,46,.18);
+  color:var(--w-brand); font-weight:600;
+}
+
+/* badges (status pills) */
+.w-badge{ background:#F1F5F9; border:1px solid #E2E8F0; color:#475569; font-weight:600; }
+.w-badge.ok   { background:rgba(16,185,129,.08); border-color:rgba(16,185,129,.18); color:#047857; }
+.w-badge.warn { background:rgba(245,158,11,.10); border-color:rgba(245,158,11,.22); color:#B45309; }
+.w-badge.err  { background:rgba(239,68,68,.08);  border-color:rgba(239,68,68,.20); color:#B91C1C; }
+.w-badge.ok .led   { background:#10B981; }
+.w-badge.warn .led { background:#F59E0B; }
+.w-badge.err .led  { background:#EF4444; }
+
+/* tables */
+.w-table th{
+  background:#F8FAFC; color:#64748B; font-weight:600;
+  font-size:11px; letter-spacing:.04em; text-transform:uppercase;
+  border-bottom:1px solid var(--w-line);
+}
+.w-table td{ border-bottom:1px solid #F1F5F9; }
+.w-table tr:hover td{ background:#F8FAFC; }
+
+/* progress meter */
+.w-meter{ background:#F1F5F9; border-radius:999px; }
+.w-meter > i{ background:linear-gradient(90deg, var(--w-brand), #EF7D00); border-radius:999px; }
+.w-meter.warn > i{ background:linear-gradient(90deg, #F59E0B, #FB923C); }
+.w-meter.full > i{ background:linear-gradient(90deg, #EF4444, #DC2626); }
+
+/* stat cards */
+.w-stat{
+  border:1px solid var(--w-line); border-radius:12px;
+  box-shadow:0 1px 2px rgba(15,23,42,.04);
+  padding:14px 16px;
+}
+.w-stat .num{ color:var(--w-ink); }
+.w-stat .lbl{ color:#64748B; }
+
+/* chart */
+.w-chart{ background:#FFFFFF; border-color:var(--w-line); border-radius:10px; }
+.w-chart .bar{
+  background:linear-gradient(180deg, #FFB7C4, #C8102E);
+  border-radius:4px 4px 0 0;
+}
+
+/* divider */
+.divider{ background:#F1F5F9; }
+
+/* ============================================================
+ * MODE: CMS (admin, npp)
+ * Drop the simulated browser chrome — real CMS fills viewport.
+ * ============================================================ */
+.hifi.mode-cms .w-browser{
+  width:100% !important; border-radius:0;
+  box-shadow:none; background:#FFFFFF;
+}
+.hifi.mode-cms .w-browser-bar{ display:none; }
+.hifi.mode-cms .cms{ height:100vh; }
+.hifi.mode-cms .cms-side{
+  background:#FFFFFF; border-right:1px solid var(--w-line);
+  padding:14px 8px;
+}
+.hifi.mode-cms .cms-side .logo{
+  padding:6px 10px 14px;
+  border-bottom:1px solid #F1F5F9;
+  margin-bottom:6px;
+}
+.hifi.mode-cms .cms-side .logo .mk{
+  background:linear-gradient(135deg, #C8102E, #8B0E22);
+  box-shadow:0 2px 6px rgba(200,16,46,.25);
+  border:none; border-radius:8px;
+}
+.hifi.mode-cms .cms-nav{
+  padding:9px 11px; border-radius:8px; margin:1px 4px;
+  transition:background .12s, color .12s;
+}
+.hifi.mode-cms .cms-nav:hover{ background:#F8FAFC; color:var(--w-ink); }
+.hifi.mode-cms .cms-nav.active{
+  background:rgba(200,16,46,.08); color:var(--w-brand);
+  font-weight:600; box-shadow:none;
+}
+.hifi.mode-cms .cms-nav.active .ci{
+  background:#FFFFFF; border-color:var(--w-brand);
+  box-shadow:0 0 0 2px rgba(200,16,46,.15);
+}
+.hifi.mode-cms .cms-topbar{
+  height:60px; padding:0 28px; background:#FFFFFF;
+  box-shadow:0 1px 0 rgba(15,23,42,.04);
+}
+.hifi.mode-cms .cms-content{ padding:24px 28px 80px; background:#F8FAFC; }
+.hifi.mode-cms .cms-pagetitle{
+  font-size:22px; font-weight:700; color:var(--w-ink); letter-spacing:-.01em;
+}
+
+/* Login pages (centered card inside Browser, no Cms) — fill viewport */
+.hifi.mode-cms .w-browser > div[style*="height:760"],
+.hifi.mode-cms .w-browser > div[style*="height: 760"]{
+  height:100vh !important;
+}
+
+/* ============================================================
+ * MODE: MINI APP (shop, sales)
+ * Phone frame on a soft branded canvas.
+ * ============================================================ */
+.hifi.mode-mobile .wf-stage-pad{
+  display:flex; align-items:flex-start; justify-content:center;
+  padding:32px 16px 80px; min-height:100vh;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, #FDE2E5 0%, transparent 60%),
+    linear-gradient(180deg, #EEF2F7, #E2E8F0);
+}
+.hifi.mode-mobile .w-phone{
+  box-shadow:
+    0 28px 70px rgba(15,23,42,.18),
+    0 10px 24px rgba(15,23,42,.10);
+}
+/* Hide the dev notes (".tt — Trên web · desktop") that the npp loyalty
+   web/mobile dual-view emits — those are wireframe annotations. */
+.hifi.mode-cms .tt:first-child + .w-browser{ /* tighten spacing */ }
+
+/* ============================================================
+ * FLOATING SCREEN PICKER (demo navigation)
+ * ============================================================ */
+.hf-pick-btn{
+  position:fixed; right:18px; bottom:18px; z-index:1000;
+  display:inline-flex; align-items:center; gap:9px;
+  padding:11px 18px; max-width:calc(100vw - 36px);
+  background:#0F172A; color:#FFFFFF; border:none; border-radius:999px;
+  font:600 13px/1 var(--w-font); cursor:pointer;
+  box-shadow:0 8px 22px rgba(15,23,42,.28), 0 3px 6px rgba(15,23,42,.16);
+  transition:transform .12s, box-shadow .12s;
+}
+.hf-pick-btn:hover{ transform:translateY(-1px); box-shadow:0 10px 26px rgba(15,23,42,.32), 0 4px 8px rgba(15,23,42,.18); }
+.hf-pick-btn .hf-dot{
+  width:8px; height:8px; background:#4ADE80; border-radius:50%;
+  box-shadow:0 0 0 3px rgba(74,222,128,.25);
+}
+.hf-pick-btn .hf-meta{ opacity:.55; font-weight:500; font-size:11.5px; }
+.hf-pick-panel{
+  position:fixed; right:18px; bottom:72px; z-index:1000;
+  width:330px; max-height:74vh;
+  background:#FFFFFF; border:1px solid var(--w-line); border-radius:14px;
+  box-shadow:0 24px 60px rgba(15,23,42,.22), 0 8px 20px rgba(15,23,42,.10);
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.hf-pick-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 14px; border-bottom:1px solid #F1F5F9;
+}
+.hf-pick-head b{ font-size:13px; font-weight:700; color:var(--w-ink); }
+.hf-pick-head a{ font-size:12px; color:var(--w-ink-3); text-decoration:none; }
+.hf-pick-head a:hover{ color:var(--w-brand); }
+.hf-pick-list{ overflow-y:auto; padding:6px; }
+.hf-pick-group{
+  font-size:10.5px; font-weight:700; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--w-ink-3);
+  padding:10px 10px 4px;
+}
+.hf-pick-item{
+  display:flex; align-items:center; gap:10px; width:100%;
+  padding:8px 10px; background:none; border:none; border-radius:7px;
+  text-align:left; font:500 12.5px/1.35 var(--w-font);
+  color:var(--w-ink-2); cursor:pointer;
+  transition:background .12s, color .12s;
+}
+.hf-pick-item:hover{ background:#F8FAFC; color:var(--w-ink); }
+.hf-pick-item.active{
+  background:rgba(200,16,46,.08); color:var(--w-brand); font-weight:600;
+}
+.hf-pick-num{
+  flex:none; width:22px; height:22px; border-radius:50%;
+  background:#F1F5F9; border:1px solid var(--w-line);
+  font-size:10.5px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--w-ink-3);
+}
+.hf-pick-item.active .hf-pick-num{
+  background:var(--w-brand); border-color:var(--w-brand); color:#FFFFFF;
+}
+</style>
+<style>
+/* hi-fi scanner viewport */
+.hf-scanview{
+  position:relative; width:100%; height:360px;
+  background:radial-gradient(ellipse at center, #1F2937 0%, #0B1220 85%), #0B1220;
+  border-radius:18px; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:inset 0 0 80px rgba(0,0,0,.55), 0 10px 30px rgba(15,23,42,.18);
+}
+.hf-scanview::before{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(99,102,241,.10), transparent 55%),
+    radial-gradient(ellipse at 85% 90%, rgba(236,72,153,.08), transparent 55%);
+}
+.hf-scan-target{
+  position:relative; width:min(220px, 60%); aspect-ratio:1;
+}
+.hf-scan-corner{
+  position:absolute; width:28px; height:28px; border:3px solid #fff;
+  filter:drop-shadow(0 0 6px rgba(255,255,255,.35));
+}
+.hf-scan-corner.tl{ top:-3px; left:-3px; border-right:none; border-bottom:none; border-radius:10px 0 0 0; }
+.hf-scan-corner.tr{ top:-3px; right:-3px; border-left:none; border-bottom:none; border-radius:0 10px 0 0; }
+.hf-scan-corner.bl{ bottom:-3px; left:-3px; border-right:none; border-top:none; border-radius:0 0 0 10px; }
+.hf-scan-corner.br{ bottom:-3px; right:-3px; border-left:none; border-top:none; border-radius:0 0 10px 0; }
+.hf-qr-wrap{
+  position:absolute; inset:18px; background:#FFFFFF;
+  border-radius:6px; padding:12px; overflow:hidden;
+  box-shadow:0 8px 24px rgba(0,0,0,.4);
+}
+.hf-qr-wrap > svg{ display:block; width:100%; height:100%; }
+.hf-scanline{
+  position:absolute; left:8px; right:8px; height:2px;
+  background:linear-gradient(90deg, transparent, #FF4757 20%, #FFB3BC 50%, #FF4757 80%, transparent);
+  box-shadow:0 0 14px rgba(255,71,87,.85), 0 0 30px rgba(255,71,87,.4);
+  animation:hf-scan 2s ease-in-out infinite;
+  pointer-events:none; z-index:3;
+}
+@keyframes hf-scan{
+  0%, 100% { top:4px; opacity:0; }
+  10%, 90% { opacity:1; }
+  50% { top:calc(100% - 6px); }
+}
+.hf-scan-hint{
+  position:absolute; bottom:14px; left:50%; transform:translateX(-50%);
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(15,23,42,.55); color:#fff; font:600 11px/1 var(--w-font);
+  padding:7px 13px; border-radius:999px; backdrop-filter:blur(8px);
+}
+.hf-scan-hint .led{ width:6px; height:6px; border-radius:50%; background:#4ADE80; box-shadow:0 0 0 3px rgba(74,222,128,.25); }
+
+/* success / error big badges */
+.hf-badge{
+  position:relative; width:120px; height:120px; flex:none;
+}
+.hf-badge .halo{
+  position:absolute; inset:0; border-radius:50%;
+  background:radial-gradient(circle, var(--c1) 0%, transparent 70%);
+  opacity:.35;
+}
+.hf-badge .core{
+  position:absolute; inset:18px; border-radius:50%;
+  background:linear-gradient(135deg, var(--c0), var(--c1));
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 14px 30px var(--c-shadow);
+}
+.hf-badge .spark{
+  position:absolute; width:8px; height:8px; border-radius:50%;
+  background:#FBBF24; box-shadow:0 0 10px rgba(251,191,36,.65);
+}
+.hf-badge.ok{ --c0:#34D399; --c1:#10B981; --c-shadow:rgba(16,185,129,.35); }
+.hf-badge.err{ --c0:#FB7185; --c1:#EF4444; --c-shadow:rgba(239,68,68,.35); }
+
+/* product card with bottle */
+.hf-bottle{ display:block; flex:none; }
+
+/* details mono key */
+.hf-mono{ font-family:ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-weight:600; }
+
+/* ===== Repair Shop UI · Idemitsu brand + premium-member template =====
+ *  • Hero: brown→gold gradient (premium "Hội viên vàng" vibe)
+ *  • CTAs / accent: Idemitsu red
+ *  • Cards: clean white with subtle product framing
+ * ============================================================ */
+
+/* Premium hero block (home + profile) */
+.shop-hero, .shop-profile-hero{
+  position:relative; overflow:hidden;
+  color:#fff;
+  background:
+    radial-gradient(ellipse 80% 60% at 85% 15%, rgba(252,211,77,.45) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 15% 85%, rgba(220,38,38,.22) 0%, transparent 55%),
+    linear-gradient(135deg, #261609 0%, #5C3416 30%, #9C5C12 65%, #C57A1B 100%);
+  border-radius:0 0 26px 26px;
+}
+.shop-hero::before, .shop-profile-hero::before{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(circle at 90% 0%, rgba(255,213,128,.35), transparent 40%),
+    repeating-linear-gradient(135deg, transparent 0, transparent 6px, rgba(255,255,255,.018) 6px, rgba(255,255,255,.018) 7px);
+}
+.shop-hero > *, .shop-profile-hero > *{ position:relative; z-index:1; }
+
+/* Got It logo chip */
+.shop-got-it{
+  display:inline-flex; align-items:baseline;
+  padding:5px 10px;
+  background:rgba(0,0,0,.28);
+  border-radius:8px;
+  backdrop-filter:blur(8px);
+  font-style:italic; letter-spacing:-.02em;
+}
+.shop-got-it .got{ color:#FCD34D; font-weight:800; font-size:16px; }
+.shop-got-it .it{ color:#fff; font-weight:800; font-size:16px; margin-left:1px; }
+
+/* Avatar circle */
+.shop-avatar-sm, .shop-avatar-lg{
+  border-radius:50%; overflow:hidden; flex:none;
+  background:linear-gradient(135deg, #FCD34D, #F59E0B);
+  border:2px solid rgba(255,255,255,.6);
+  box-shadow:0 3px 8px rgba(0,0,0,.25);
+}
+.shop-avatar-sm{ width:32px; height:32px; }
+.shop-avatar-lg{ width:64px; height:64px; }
+
+/* Gold "Hội viên vàng" tier pill */
+.shop-tier-pill{
+  display:inline-flex; align-items:center; gap:5px;
+  padding:3px 10px;
+  background:linear-gradient(135deg, #FCD34D, #F59E0B);
+  color:#7C2D12; font-size:10.5px; font-weight:800;
+  border-radius:999px; letter-spacing:.05em;
+  box-shadow:0 2px 6px rgba(245,158,11,.45), inset 0 1px 0 rgba(255,255,255,.4);
+  align-self:flex-start; white-space:nowrap;
+}
+.shop-tier-pill svg{ flex:none; }
+
+/* "Nhập mã" overlapping card */
+.shop-input-card{
+  background:#fff; color:#0F172A;
+  border-radius:14px; padding:14px;
+  box-shadow:0 6px 20px rgba(0,0,0,.18), 0 2px 6px rgba(0,0,0,.08);
+}
+.shop-input-card .field-input{
+  flex:1; height:44px; padding:0 14px;
+  background:#F8FAFC; border:1px solid #E2E8F0;
+  border-radius:12px; color:#94A3B8; font-size:13px;
+  display:flex; align-items:center;
+}
+.shop-input-card .submit-btn{
+  width:44px; height:44px; flex:none;
+  border-radius:50%; border:none;
+  background:linear-gradient(135deg, #FBBF24, #F59E0B);
+  color:#fff; cursor:pointer;
+  box-shadow:0 4px 10px rgba(245,158,11,.4), inset 0 1px 0 rgba(255,255,255,.2);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .12s, box-shadow .12s;
+}
+.shop-input-card .submit-btn:hover{ transform:translateY(-1px); }
+
+/* Promo banner with dark "premium product" look */
+.shop-promo-banner{
+  position:relative; height:170px; border-radius:14px; overflow:hidden;
+  background:
+    radial-gradient(ellipse 70% 50% at 30% 50%, rgba(120,80,40,.6), transparent 65%),
+    linear-gradient(135deg, #1F2937 0%, #0F172A 80%);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 6px 18px rgba(15,23,42,.18);
+}
+.shop-promo-banner .promo-text{
+  position:absolute; left:18px; bottom:24px; z-index:2; color:#fff;
+}
+.shop-promo-banner .promo-text .label{
+  font-size:22px; font-weight:800; letter-spacing:-.02em; line-height:1.1;
+  background:linear-gradient(135deg, #fff, #CBD5E1);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.shop-promo-banner .promo-text .tag{
+  font-size:11px; color:rgba(255,255,255,.65); margin-top:4px; letter-spacing:.01em;
+}
+.shop-promo-banner .promo-device{
+  position:absolute; right:22px; top:50%; transform:translateY(-50%);
+  display:flex; align-items:center; justify-content:center;
+}
+.shop-promo-banner .promo-dots{
+  position:absolute; bottom:10px; left:0; right:0;
+  display:flex; gap:6px; justify-content:center;
+}
+.shop-promo-banner .promo-dots i{
+  width:6px; height:6px; border-radius:50%;
+  background:rgba(255,255,255,.35);
+}
+.shop-promo-banner .promo-dots i.on{
+  width:18px; border-radius:3px; background:rgba(255,255,255,.95);
+}
+
+/* Product card (grid items) */
+.shop-product-card{
+  padding:0; overflow:hidden; cursor:pointer;
+  transition:transform .14s, box-shadow .14s;
+  display:flex; flex-direction:column;
+}
+.shop-product-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 22px rgba(200,16,46,.15), 0 3px 6px rgba(15,23,42,.08);
+}
+.shop-product-img{
+  position:relative; aspect-ratio:1; border-radius:12px 12px 0 0; overflow:hidden;
+}
+.shop-product-brand{
+  position:absolute; top:8px; left:8px;
+  padding:3px 9px;
+  background:rgba(255,255,255,.95);
+  border-radius:6px;
+  font-size:10px; font-weight:700; color:#0F172A;
+  box-shadow:0 1px 3px rgba(0,0,0,.12);
+  letter-spacing:.02em;
+}
+.shop-product-info{
+  padding:10px 12px 12px;
+  display:flex; flex-direction:column; gap:6px;
+  background:#fff; flex:1; min-height:72px;
+}
+.shop-product-name{
+  font-size:12px; line-height:1.35; color:#1F2937;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+  overflow:hidden; min-height:32px;
+}
+.shop-product-pts{
+  font-size:13px; font-weight:700; color:#C8102E;
+  margin-top:auto;
+}
+
+/* Profile contact rows */
+.shop-profile-contact{
+  display:flex; align-items:center; gap:8px;
+  color:rgba(255,255,255,.95); font-size:12px;
+}
+.shop-profile-contact svg{
+  flex:none; opacity:.9;
+}
+
+/* Section titles in profile */
+.w-phone .tt{ color:#94A3B8; letter-spacing:.12em; font-size:10.5px; font-weight:700; }
+
+/* List rows in mini app */
+.w-phone .w-box[data-hot]{
+  transition:background .12s;
+}
+.w-phone .w-box[data-hot]:hover{ background:#FFF5F6; }
+
+/* ===== Original mini-app polish (zalo bar, bot nav, etc) ===== */
+
+/* Zalo mini-app top bar polish */
+.w-phone .w-zalo-bar{ background:#fff; box-shadow:0 1px 0 rgba(15,23,42,.04); }
+.w-phone .w-zalo-bar .ztitle{ font-weight:700; color:#0F172A; letter-spacing:-.005em; }
+
+/* Bottom nav active state → Idemitsu red */
+.w-phone .w-botnav{ background:#fff; border-top:1px solid #F1F5F9; box-shadow:0 -1px 0 rgba(15,23,42,.03); }
+.w-phone .w-botnav .nav-i{ color:#94A3B8; transition:color .12s; }
+.w-phone .w-botnav .nav-i.active{ color:#C8102E; font-weight:600; }
+.w-phone .w-botnav .nav-i svg{ transition:transform .12s; }
+.w-phone .w-botnav .nav-i.active svg{ transform:scale(1.08); }
+.w-phone .w-botnav .nav-i .gi{ background:transparent; border-color:transparent; }
+
+/* Cards polish */
+.w-phone .w-card{
+  border:1px solid #F1F5F9;
+  box-shadow:0 1px 2px rgba(15,23,42,.04), 0 1px 1px rgba(15,23,42,.06);
+}
+.w-phone .w-box{ border-color:#F1F5F9; }
+.w-phone .w-card[data-hot]{ transition:transform .12s, box-shadow .12s; }
+.w-phone .w-card[data-hot]:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 18px rgba(200,16,46,.12), 0 2px 6px rgba(15,23,42,.08);
+}
+
+/* Buttons — Idemitsu gradient red */
+.w-phone .w-btn{
+  background:linear-gradient(180deg, #DA1B3A, #C8102E);
+  border:none; color:#fff;
+  box-shadow:0 3px 8px rgba(200,16,46,.30), inset 0 1px 0 rgba(255,255,255,.12);
+}
+.w-phone .w-btn:not(.disabled):hover{
+  background:linear-gradient(180deg, #C8102E, #A30E22);
+  box-shadow:0 5px 12px rgba(200,16,46,.4), inset 0 1px 0 rgba(255,255,255,.12);
+  transform:translateY(-1px);
+}
+.w-phone .w-btn.ghost{
+  background:#fff; color:#0F172A; border:1px solid #E2E8F0;
+  box-shadow:0 1px 2px rgba(15,23,42,.04);
+}
+.w-phone .w-btn.ghost:not(.disabled):hover{
+  background:#FFF5F6; border-color:#FECDD3; color:#C8102E;
+}
+.w-phone .w-btn.disabled{
+  background:#F1F5F9; color:#94A3B8; box-shadow:none;
+}
+
+/* Chip solid → Idemitsu gradient pill */
+.w-phone .w-chip.solid{
+  background:linear-gradient(135deg, #C8102E, #A30E22);
+  color:#fff; border:none;
+  box-shadow:0 2px 6px rgba(200,16,46,.25);
+  font-weight:600;
+}
+.w-phone .w-chip{
+  background:#fff; border:1px solid #E2E8F0; color:#475569;
+  transition:background .12s, border-color .12s, color .12s;
+}
+.w-phone .w-chip:not(.solid):hover{
+  background:#FFF5F6; border-color:#FECDD3; color:#C8102E;
+}
+
+/* Search-style inputs */
+.w-phone .w-input{
+  background:#F8FAFC;
+  border:1px solid #E2E8F0;
+  border-radius:12px;
+}
+.w-phone .w-input:focus-within{
+  background:#fff;
+  border-color:#C8102E;
+  box-shadow:0 0 0 3px rgba(200,16,46,.12);
+}
+
+/* Status badges polish */
+.w-phone .w-badge{
+  font-weight:600; padding:3px 10px;
+  border-radius:999px;
+}
+
+/* Lines in lists */
+.w-phone .w-line{ background:#F1F5F9; }
+
+/* Section headings tighter */
+.w-phone .h3{ letter-spacing:-.01em; color:#0F172A; }
+.w-phone .tt{ color:#94A3B8; letter-spacing:.12em; font-size:10.5px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.24.7/babel.min.js"></script>
+
+<script type="text/babel" data-presets="env,react">
+/* ============================================================
+ * Repair Shop — Idemitsu Loyalty (hi-fi from wireframe Phase 1)
+ *   mode: mobile
+ * ============================================================ */
+
+/* =====================================================================
+ * Wire Kit — shared React primitives, device frames & screen router.
+ * Loaded after React + Babel. Exposes components on window + window.WF.
+ * ===================================================================== */
+const { useState, useEffect, useCallback } = React;
+
+/* ---------- low-fi primitives ---------- */
+const cx = (...a) => a.filter(Boolean).join(' ');
+
+function Box(p){ return <div className={cx('w-box', p.className)} style={p.style} {...hot(p)}>{p.children}</div>; }
+function Card(p){ return <div className={cx('w-card', p.className)} style={p.style} {...hot(p)}>{p.children}</div>; }
+function Img(p){ return (
+  <div className={cx('w-img', p.plain && 'plain', p.className)} style={{height:p.h, width:p.w, ...p.style}} {...hot(p)}>
+    {p.label ? <span>{p.label}</span> : null}{p.children}
+  </div>
+); }
+function Line(p){ return <div className={cx('w-line', p.sm&&'sm', p.dk&&'dk', p.className)} style={{width:p.w, ...p.style}} />; }
+function Lines({n=3, last='60%', gap=8, w='100%'}){
+  return <div className="c" style={{gap}}>{Array.from({length:n}).map((_,i)=>
+    <Line key={i} w={i===n-1?last:w} sm />)}</div>;
+}
+function Btn(p){ return (
+  <button className={cx('w-btn', p.lg&&'lg', p.sm&&'sm', p.block&&'block', p.ghost&&'ghost', p.disabled&&'disabled', p.className)}
+    style={p.style} {...hot(p)}>{p.children}</button>
+); }
+function Input(p){ return (
+  <div className={cx('w-input', p.lg&&'lg', p.area&&'area', p.className)} style={p.style} {...hot(p)}>
+    {p.children || <span>{p.placeholder||''}</span>}
+  </div>
+); }
+function Field({label, req, children, hint}){ return (
+  <div className="c">
+    {label && <span className="w-label">{label}{req && <span className="req"> *</span>}</span>}
+    {children}
+    {hint && <span className="t11 muted" style={{marginTop:5}}>{hint}</span>}
+  </div>
+); }
+function Chip(p){ return <span className={cx('w-chip', p.solid&&'solid', p.className)} style={p.style} {...hot(p)}>{p.children}</span>; }
+function Badge(p){ return <span className={cx('w-badge', p.kind, p.className)} style={p.style}><i className="led" />{p.children}</span>; }
+function Icon(p){ return <span className={cx('w-icon', p.circle&&'circle', p.className)} style={{width:p.size,height:p.size,...p.style}} />; }
+function Avatar(p){ return <span className="w-avatar" style={{width:p.size,height:p.size,...p.style}} />; }
+function Divider(p){ return <div className={cx('divider', p.dash&&'dash', p.className)} style={p.style} />; }
+function Note(p){ return <div className={cx('w-note', p.className)} style={p.style}>{p.children}</div>; }
+function Pin({n}){ return <span className="w-pin">{n}</span>; }
+function Stat({num, lbl}){ return <div className="w-stat"><div className="num">{num}</div><div className="lbl">{lbl}</div></div>; }
+function Meter({pct, kind}){ return <div className={cx('w-meter', kind)}><i style={{width:pct+'%'}} /></div>; }
+
+function Table({cols, rows, onRow}){
+  return (
+    <div className="w-box" style={{overflow:'hidden'}}>
+      <table className="w-table">
+        <thead><tr>{cols.map((c,i)=><th key={i} style={{width:c.w, textAlign:c.align}}>{c.t}</th>)}</tr></thead>
+        <tbody>{rows.map((r,ri)=>
+          <tr key={ri} {...(onRow?{'data-hot':true, onClick:()=>onRow(ri)}:{})}>
+            {r.map((cell,ci)=><td key={ci} style={{textAlign:cols[ci]&&cols[ci].align}}>{cell}</td>)}
+          </tr>)}</tbody>
+      </table>
+    </div>
+  );
+}
+
+/* hotspot helper: any primitive with `to` becomes clickable */
+function hot(p){
+  if(p.to) return { 'data-hot':true, onClick:(e)=>{ e.stopPropagation(); WF.go(p.to); } };
+  if(p.onClick) return { 'data-hot':true, onClick:p.onClick };
+  return {};
+}
+function Hot({to, onClick, children, style, className, block}){
+  return <div className={cx(className)} style={{display:block?'block':'contents', ...style}}
+    data-hot onClick={(e)=>{ e.stopPropagation(); if(to) WF.go(to); else if(onClick) onClick(e); }}>{children}</div>;
+}
+
+/* ---------- device frames ---------- */
+function StatusBar(){ return (
+  <div className="w-statusbar">
+    <span>9:41</span>
+    <span className="sb-r"><i style={{borderRadius:2}} /><i style={{width:9}} /><i style={{width:18}} /></span>
+  </div>
+); }
+
+function Browser({url, wide, children}){ return (
+  <div className={cx('w-browser', wide&&'wide')}>
+    <div className="w-browser-bar">
+      <span className="w-dots"><i/><i/><i/></span>
+      <span className="w-url">{url||'reward-hub.gotit.vn'}</span>
+    </div>
+    {children}
+  </div>
+); }
+
+function Phone({children, tablet, noStatus}){ return (
+  <div className={cx('w-phone', tablet&&'tablet')}>
+    {!noStatus && <StatusBar/>}
+    {children}
+  </div>
+); }
+
+function ZaloBar({title}){ return (
+  <div className="w-zalo-bar">
+    <span className="w-zalo-cluster"><i/><i/><i/><span className="w-zalo-divider"/><span style={{width:8,height:8,borderRadius:'50%',border:'1.5px solid var(--w-ink-2)',display:'block'}}/></span>
+    <span className="ztitle">{title}</span>
+    <span style={{width:54}} />
+  </div>
+); }
+
+function Screen({children, scroll=true, className}){
+  return <div className={cx('w-screen', scroll&&'scroll', className)}>{children}</div>;
+}
+function ScreenBody({children, style, pad=16}){
+  return <div className="w-screen-body" style={{padding:pad, ...style}}>{children}</div>;
+}
+
+function BotNav({active, items}){
+  const def = items || ['Trang chủ','Kho quà','Quét QR','Lịch sử','Tài khoản'];
+  return (
+    <div className="w-botnav">
+      {def.map((t,i)=>
+        <div key={i} className={cx('nav-i', i===active&&'active')} {...(typeof t==='object'?hot(t):{})}>
+          <span className="gi" style={i===2?{borderRadius:'50%'}:{}} />
+          <span>{typeof t==='object'?t.label:t}</span>
+        </div>)}
+    </div>
+  );
+}
+
+/* CMS scaffold */
+function Cms({nav, active, title, actions, children, breadcrumb, topRight}){
+  return (
+    <div className="cms">
+      <div className="cms-side">
+        <div className="logo"><span className="mk" /><b style={{fontSize:13}}>Got It · Idemitsu</b></div>
+        {nav.map((g,gi)=>
+          <div key={gi}>
+            {g.group && <div className="wf-group" style={{padding:'12px 8px 4px'}}>{g.group}</div>}
+            {g.items.map((it,i)=>
+              <div key={i} className={cx('cms-nav', it.id===active&&'active')} {...(it.to?{'data-hot':true,onClick:()=>WF.go(it.to)}:{})}>
+                <span className="ci" />{it.label}
+              </div>)}
+          </div>)}
+      </div>
+      <div className="cms-body">
+        <div className="cms-topbar">
+          {breadcrumb && <span className="wf-crumbs">{breadcrumb}</span>}
+          <span className="grow" />
+          {topRight}
+          <span className="w-icon" style={{borderRadius:'50%'}} />
+          <span className="w-avatar" />
+        </div>
+        <div className="cms-content">
+          <div className="r between" style={{marginBottom:18}}>
+            <div className="cms-pagetitle">{title}</div>
+            <div className="r g8">{actions}</div>
+          </div>
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- screen router ---------- */
+function WireApp({role, title, sub, screens, defaultId}){
+  const ids = screens.map(s=>s.id);
+  const first = defaultId || ids[0];
+  const read = () => {
+    const h = decodeURIComponent((location.hash||'').replace('#','')); 
+    if(h && ids.includes(h)) return h;
+    const ls = localStorage.getItem('wf_'+role);
+    if(ls && ids.includes(ls)) return ls;
+    return first;
+  };
+  const [cur, setCur] = useState(read);
+  const [anno, setAnno] = useState(true);
+  const [hints, setHints] = useState(false);
+
+  const go = useCallback((id)=>{
+    if(!ids.includes(id)) { console.warn('no screen', id); return; }
+    setCur(id); location.hash = encodeURIComponent(id); localStorage.setItem('wf_'+role, id);
+    const st = document.querySelector('.wf-stage'); if(st) st.scrollTop=0;
+  },[]);
+  useEffect(()=>{ WF.go = go; },[go]);
+  useEffect(()=>{
+    const onHash=()=>{ const h=decodeURIComponent((location.hash||'').replace('#','')); if(h&&ids.includes(h)) setCur(h); };
+    window.addEventListener('hashchange', onHash); return ()=>window.removeEventListener('hashchange', onHash);
+  },[]);
+
+  // group screens
+  const groups = [];
+  screens.forEach(s=>{ let g=groups.find(x=>x.name===(s.group||'')); if(!g){g={name:s.group||'', items:[]}; groups.push(g);} g.items.push(s); });
+  const screen = screens.find(s=>s.id===cur) || screens[0];
+  const idx = screens.indexOf(screen);
+
+  return (
+    <div className={cx('wf-shell', !anno&&'anno-hidden', hints&&'show-hot')}>
+      <div className="wf-rail">
+        <div className="wf-rail-head">
+          <div className="wf-rail-role">{role}</div>
+          <div className="wf-rail-title">{title}</div>
+          {sub && <div className="wf-rail-sub">{sub}</div>}
+        </div>
+        <div className="wf-rail-scroll">
+          {groups.map((g,gi)=>
+            <div key={gi}>
+              {g.name && <div className="wf-group">{g.name}</div>}
+              {g.items.map((s)=>{
+                const n = screens.indexOf(s)+1;
+                return <div key={s.id} className={cx('wf-navitem', s.id===cur&&'active')} onClick={()=>go(s.id)}>
+                  <span className="wf-navnum">{n}</span><span>{s.title}</span>
+                </div>;
+              })}
+            </div>)}
+        </div>
+      </div>
+      <div className="wf-main">
+        <div className="wf-topbar">
+          <a className="wf-back" href="index.html">‹ Tất cả role</a>
+          <span className="wf-crumbs"><b>{screen.title}</b> · màn {idx+1}/{screens.length}</span>
+          <span className="wf-top-spacer" />
+          <span className={cx('wf-toggle', hints&&'on')} onClick={()=>setHints(h=>!h)}><span className="dot"/>Vùng bấm</span>
+          <span className={cx('wf-toggle', anno&&'on')} onClick={()=>setAnno(a=>!a)}><span className="dot"/>Chú thích</span>
+        </div>
+        <div className="wf-stage">
+          <div className="wf-stage-pad">{screen.render()}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const WF = { go:()=>{}, mount(opts){
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(<WireApp {...opts} />);
+}};
+
+/* download a real CSV template (Excel-openable) */
+function dlTemplate(filename, headers, sample){
+  const rows = [headers];
+  if(sample) sample.forEach(r=>rows.push(r));
+  const csv = '\uFEFF' + rows.map(r=>r.map(c=>{
+    const s = String(c==null?'':c);
+    return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s;
+  }).join(',')).join('\r\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{ document.body.removeChild(a); URL.revokeObjectURL(url); }, 0);
+}
+
+Object.assign(window, {
+  cx, Box, Card, Img, Line, Lines, Btn, Input, Field, Chip, Badge, Icon, Avatar,
+  Divider, Note, Pin, Stat, Meter, Table, Hot, hot, dlTemplate,
+  StatusBar, Browser, Phone, ZaloBar, Screen, ScreenBody, BotNav, Cms, WireApp, WF
+});
+
+
+/* ===================== REPAIR SHOP — Zalo Mini App (mobile 375) ===================== */
+
+const SHOP_NAV = [
+  {label:'Trang chủ', to:'shop-home'},
+  {label:'Danh mục quà', to:'shop-rewards'},
+  {label:'Quét QR', to:'shop-scan'},
+  {label:'Quà của tôi', to:'shop-mygifts'},
+  {label:'Tài khoản', to:'shop-profile'},
+];
+function navWith(active){ return SHOP_NAV.map((n,i)=> i===active ? n.label : n); }
+
+/* illustrative branded image placeholder (vẽ sẵn, không cần chọn ảnh) */
+function Illus({kind='gift', h, w, r=10, style}){
+  const grads = {
+    banner:['#FFB36B','#EF5A2A'], oil:['#C8102E','#7A0A1C'],
+    gift:['#FF8A3D','#E0431F'], voucher:['#4B9FE1','#1F6FB8'], qr:['#3A3A3A','#111']
+  };
+  const g = grads[kind] || grads.gift;
+  const icons = {
+    oil:'M9 2h6v3l2 2v13a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V7l2-2V2Z M9 11h6',
+    gift:'M3 8h18v4H3V8Zm1 4h16v9H4v-9Zm8-9c2 0 3 2 0 5-3-3-2-5 0-5Zm0 0v18',
+    voucher:'M3 7h18v4a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4V7Zm7 0v13',
+    banner:'M4 5h16v10H4z M4 19h16 M8 11l3-3 2 2 3-4',
+    qr:'M4 4h6v6H4z M14 4h6v6h-6z M4 14h6v6H4z M14 14h2v2h-2z M18 18h2v2h-2z'
+  };
+  return <div style={{display:'flex', alignItems:'center', justifyContent:'center', height:h, width:w||'100%',
+      borderRadius:r, background:`linear-gradient(135deg,${g[0]},${g[1]})`, overflow:'hidden', position:'relative', ...style}}>
+    <svg viewBox="0 0 24 24" width={Math.min(h*0.4,56)} height={Math.min(h*0.4,56)} fill="none"
+      stroke="rgba(255,255,255,.92)" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><path d={icons[kind]||icons.gift}/></svg>
+  </div>;
+}
+
+/* success tick icon */
+function Tick({size=72, color='#3FA34D'}){
+  return <span style={{width:size,height:size,borderRadius:'50%',background:'#EAF7EE',border:`2px solid ${color}`,display:'flex',alignItems:'center',justifyContent:'center',flex:'none'}}>
+    <svg viewBox="0 0 24 24" width={size*0.5} height={size*0.5} fill="none" stroke={color} strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+  </span>;
+}
+/* category illustration icon */
+const CAT_DEF = {
+  'Tất cả':   ['#C8102E','M4 4h7v7H4z M13 4h7v7h-7z M4 13h7v7H4z M13 13h7v7h-7z'],
+  'Mới':      ['#EF7D00','M12 3l2.5 5 5.5.8-4 3.9 1 5.5L12 21l-5-2.8 1-5.5-4-3.9 5.5-.8z'],
+  'Cafe & Bánh':['#9A5B2E','M4 8h13v5a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z M17 9h2a2 2 0 0 1 0 4h-2 M7 3v2 M11 3v2'],
+  'Tiện ích': ['#1F8A5B','M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z M9 12l2 2 4-4'],
+  'Thực phẩm':['#2A6FDB','M6 2v8a3 3 0 0 0 6 0V2 M9 2v20 M17 2c-2 1-3 3-3 6v4h3z M17 12v10'],
+};
+function CatIcon({label, active}){
+  const d = CAT_DEF[label] || CAT_DEF['Tất cả'];
+  return <span style={{width:46,height:46,borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',
+      background: active?d[0]:'#FBE9EB', flex:'none'}}>
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke={active?'#fff':d[0]} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d={d[1]}/></svg>
+  </span>;
+}
+/* bottom nav with brand icons */
+const NAV_ICON = [
+  'M3 11l9-7 9 7 M5 10v10h14V10',
+  'M3 8h18v4H3z M4 12h16v9H4z M12 3c2 0 3 2 0 5-3-3-2-5 0-5 M12 3v18',
+  'M4 7V4h3 M17 4h3v3 M20 17v3h-3 M7 20H4v-3 M4 12h16',
+  'M3 7h18v4a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4z M10 7v13',
+  'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M4 21c0-4 4-6 8-6s8 2 8 6',
+];
+function SBotNav({active}){
+  return <div className="w-botnav">
+    {SHOP_NAV.map((n,i)=>
+      <div key={i} className={cx('nav-i', i===active&&'active')} data-hot onClick={()=>WF.go(n.to)}>
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{display:'block'}}><path d={NAV_ICON[i]}/></svg>
+        <span>{n.label}</span>
+      </div>)}
+  </div>;
+}
+
+function SPhone({title, body, nav, scroll=true, note}){
+  return <div className="c g16" style={{alignItems:'center'}}>
+    {note && <Note style={{maxWidth:420}}>{note}</Note>}
+    <Phone>
+      <Screen scroll={scroll}>
+        {title!==null && <ZaloBar title={title} />}
+        <div className="w-screen-body" style={{overflowY: scroll?'auto':'hidden'}}>{body}</div>
+        {nav!=null && <SBotNav active={nav} />}
+      </Screen>
+    </Phone>
+  </div>;
+}
+
+/* 1 — ZNS invite (Zalo chat) */
+function sInvite(){
+  return <div className="c g16" style={{alignItems:'center'}}>
+    <Note style={{maxWidth:420}}><Pin n="1"/> Shop nhận <b>ZNS</b> (tin Zalo) từ Got It kèm link mời. Bấm link để mở <b>Zalo Mini App Loyalty Idemitsu</b>.</Note>
+    <Phone>
+      <Screen scroll={false}>
+        <div className="w-zalo-bar"><span className="muted" style={{fontSize:18}}>‹</span><span className="ztitle">Got It · Idemitsu</span><span style={{width:20}}/></div>
+        <div className="w-screen-body" style={{padding:16, background:'#EEF1F5', display:'flex', flexDirection:'column', gap:12}}>
+          <div className="center-text t11 muted">Hôm nay</div>
+          <div className="w-card" style={{maxWidth:'85%', padding:14, borderRadius:'4px 14px 14px 14px'}}>
+            <div className="r g8" style={{marginBottom:10}}><span className="w-icon" style={{width:26,height:26,borderRadius:6}}/><b className="t12">Idemitsu Loyalty</b></div>
+            <div className="t13" style={{lineHeight:1.5, color:'var(--w-ink-2)'}}>Chào shop! NPP Miền Bắc 01 mời bạn tham gia chương trình tích điểm Idemitsu. Quét tem sản phẩm để nhận điểm đổi quà.</div>
+            <Illus kind="banner" h={92} ph="banner mời" style={{margin:'12px 0'}} />
+            <Btn block to="shop-permission">Mở Mini App</Btn>
+          </div>
+          <div className="t11 muted" style={{maxWidth:'85%'}}>zns.zalo.me/idemitsu-loyalty?ref=npp-mb01</div>
+        </div>
+      </Screen>
+    </Phone>
+  </div>;
+}
+
+/* 2 — permission request */
+function sPermission(){
+  return <div className="c g16" style={{alignItems:'center'}}>
+    <Note style={{maxWidth:420}}><Pin n="2"/> Mini App xin quyền truy cập <b>Tên + SĐT Zalo</b>. Đồng ý xong, shop được ghi nhận vào whitelist của NPP (trạng thái → "đã tham gia").</Note>
+    <Phone>
+      <Screen scroll={false}>
+        <ZaloBar title="Loyalty Idemitsu" />
+        <div className="w-screen-body" style={{display:'flex', flexDirection:'column', justifyContent:'flex-end'}}>
+          <div className="grow" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+            <div className="c g10" style={{alignItems:'center'}}><span className="w-icon" style={{width:56,height:56,borderRadius:14}}/><div className="h3">Loyalty Idemitsu</div></div>
+          </div>
+          <div className="w-card" style={{borderRadius:'16px 16px 0 0', padding:18, boxShadow:'0 -2px 20px rgba(0,0,0,.08)'}}>
+            <div className="h3" style={{marginBottom:6}}>Cho phép truy cập</div>
+            <div className="t12 muted" style={{marginBottom:14}}>Mini App muốn sử dụng thông tin Zalo của bạn:</div>
+            <div className="c g10" style={{marginBottom:16}}>
+              <div className="r g10"><span className="w-icon" style={{width:20,height:20}}/><span className="t13">Tên hiển thị Zalo</span></div>
+              <div className="r g10"><span className="w-icon" style={{width:20,height:20}}/><span className="t13">Số điện thoại</span></div>
+            </div>
+            <div className="c g10"><Btn block to="shop-home">Đồng ý & tiếp tục</Btn><Btn block ghost>Từ chối</Btn></div>
+          </div>
+        </div>
+      </Screen>
+    </Phone>
+  </div>;
+}
+
+/* 3 — home */
+function sHome(){
+  const cats = ['Tất cả','Mới','Cafe & Bánh','Tiện ích','Thực phẩm'];
+  return SPhone({ title:'Loyalty Idemitsu', nav:0, body:
+    <div className="c" style={{padding:0}}>
+      {/* header "vàng" (stamp) */}
+      <div style={{background:'linear-gradient(135deg,#EF7D00,#C8102E)', color:'#fff', padding:'16px 16px 22px', borderRadius:'0 0 22px 22px'}}>
+        <div className="r between" style={{marginBottom:14}}>
+          <div className="r g10"><span className="w-avatar" style={{width:40,height:40, background:'rgba(255,255,255,.3)'}}/>
+            <div className="c g4"><b className="t13" style={{color:'#fff'}}>NGUYỄN HOÀNG NGỌC TÂM</b><span className="w-chip" style={{height:22, background:'#fff'}}>HỘI VIÊN VÀNG</span></div>
+          </div>
+          <span style={{color:'#fff'}}>⋯</span>
+        </div>
+        <div className="w-card" style={{padding:14}}>
+          <div className="r between" style={{marginBottom:4}}>
+            <div className="c g4"><span className="t11 muted">Điểm khả dụng</span><div className="h1">5.000</div></div>
+            <span className="t12 muted" data-hot onClick={()=>WF.go('shop-history')}>Lịch sử điểm ›</span>
+          </div>
+          <span className="t11 muted">HSD: 31/12/2026</span>
+        </div>
+      </div>
+
+      <div style={{padding:16, display:'flex', flexDirection:'column', gap:18}}>
+        {/* khuyến mãi cực lớn */}
+        <div className="c g10">
+          <div className="h3">Khuyến mãi cực lớn</div>
+          <Illus kind="banner" h={120} />
+          <div className="r g6 center">{[0,1,2,3].map(i=><span key={i} style={{width:6,height:6,borderRadius:'50%',background:i===0?'var(--w-ink-3)':'var(--w-line)'}} />)}</div>
+        </div>
+
+        {/* danh mục quà tặng */}
+        <div className="c g12">
+          <div className="r between"><div className="h3">Danh mục quà tặng</div><span className="muted" data-hot onClick={()=>WF.go('shop-rewards')}>›</span></div>
+          <div className="r g12 wrap">
+            {cats.map((c,i)=>
+              <div key={i} className="c g6" style={{alignItems:'center', width:58}} data-hot onClick={()=>WF.go('shop-rewards')}>
+                <CatIcon label={c} active={i===0} />
+                <span className="t11 center-text">{c}</span>
+              </div>)}
+          </div>
+        </div>
+
+        {/* quà nổi bật */}
+        <div className="c g12">
+          <div className="r between"><div className="h3">Quà nổi bật</div><span className="t12 muted" data-hot onClick={()=>WF.go('shop-rewards')}>Xem tất cả ›</span></div>
+          <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:12}}>
+            {Array.from({length:4}).map((_,i)=>
+              <div key={i} className="w-card" style={{padding:0, overflow:'hidden'}} data-hot onClick={()=>WF.go('shop-reward-detail')}>
+                <Illus kind={i%2?'voucher':'gift'} h={96} r={0} style={{borderBottom:'1px solid var(--w-line)'}} />
+                <div className="c g6" style={{padding:'9px 10px'}}>
+                  <div className="r g6"><span className="w-icon" style={{width:16,height:16,borderRadius:4,flex:'none'}}/><span className="t11 muted">Brand</span></div>
+                  <Line sm w="85%" />
+                  <b className="t12">1.000 điểm</b>
+                </div>
+              </div>)}
+          </div>
+        </div>
+      </div>
+    </div>
+  });
+}
+
+/* 4 — scan */
+function sScan(){
+  return SPhone({ title:null, nav:null, scroll:false, body:
+    <div className="c" style={{height:'100%'}}>
+      <div className="w-zalo-bar"><span className="muted" data-hot onClick={()=>WF.go('shop-home')} style={{fontSize:18}}>‹</span><span className="ztitle">Quét QR sản phẩm</span><span style={{width:20}}/></div>
+      <div style={{flex:1, padding:16, display:'flex', flexDirection:'column', gap:14}}>
+        <div className="w-scanview" style={{flex:1}}><div className="w-scanframe" /></div>
+        <div className="r g10" style={{alignItems:'center', justifyContent:'center'}}>
+          <Illus kind="oil" w={40} h={40} r={8} style={{flex:'none'}} />
+          <span className="t12 muted">Đưa tem QR trên sản phẩm Idemitsu vào khung</span>
+        </div>
+        <div className="r g10">
+          <Btn block ghost to="shop-scan-error">Mã lỗi</Btn>
+          <Btn block to="shop-scan-success">Quét OK</Btn>
+        </div>
+      </div>
+    </div>
+  });
+}
+
+/* 5 — scan success */
+function sScanSuccess(){
+  return SPhone({ title:null, nav:null, scroll:false, note:<><Pin n="3"/> Quét hợp lệ: cộng điểm cho shop <b>và</b> cross-award cho NPP. Mỗi tem chỉ tính 1 lần.</>, body:
+    <div className="c" style={{height:'100%'}}>
+      <div className="w-zalo-bar"><span style={{width:20}}/><span className="ztitle">Thành công</span><span className="muted" data-hot onClick={()=>WF.go('shop-home')} style={{fontSize:16}}>✕</span></div>
+      <div style={{flex:1, padding:20, display:'flex', flexDirection:'column', gap:16, alignItems:'center', justifyContent:'center'}}>
+        <Tick />
+        <div className="center-text"><div className="h1">+10 điểm</div><div className="t12 muted">Đã cộng vào tài khoản</div></div>
+        <div className="w-box fill-w c g10" style={{padding:14}}>
+          <div className="r between t12"><span className="muted">Sản phẩm</span><b>Zepro 0W-20</b></div>
+          <div className="r between t12"><span className="muted">Mã QR</span><b>IDMT-B0098-0001a4</b></div>
+          <div className="r between t12"><span className="muted">Thời gian</span><b>28/05 09:12</b></div>
+        </div>
+        <div className="r g10 fill-w"><Btn block ghost to="shop-history">Lịch sử</Btn><Btn block to="shop-scan">Quét tiếp</Btn></div>
+      </div>
+    </div>
+  });
+}
+
+/* 6 — scan error */
+function sScanError(){
+  return SPhone({ title:null, nav:null, scroll:false, body:
+    <div className="c" style={{height:'100%'}}>
+      <div className="w-zalo-bar"><span className="muted" data-hot onClick={()=>WF.go('shop-scan')} style={{fontSize:18}}>‹</span><span className="ztitle">Không hợp lệ</span><span style={{width:20}}/></div>
+      <div style={{flex:1, padding:20, display:'flex', flexDirection:'column', gap:16, alignItems:'center', justifyContent:'center'}}>
+        <span className="w-icon" style={{width:64,height:64,borderRadius:'50%',borderColor:'#C0392B'}} />
+        <div className="center-text"><div className="h3" style={{color:'#C0392B'}}>Mã QR đã được quét</div><div className="t12 muted" style={{marginTop:4}}>Tem này đã tính điểm trước đó. Mỗi tem chỉ dùng một lần.</div></div>
+        <div className="w-box fill-w c g8" style={{padding:14}}>
+          <div className="t11 muted">Các lỗi thường gặp</div>
+          <div className="t12">• Mã không thuộc sản phẩm Idemitsu</div>
+          <div className="t12">• Tem đã bị quét bởi shop khác</div>
+          <div className="t12">• Ảnh QR mờ / không đọc được</div>
+        </div>
+        <Btn block to="shop-scan">Quét lại</Btn>
+      </div>
+    </div>
+  });
+}
+
+/* 7 — scan limit (anti-fraud) */
+/* 8 — history */
+function histTabs(active){
+  return <div className="r g8" style={{marginBottom:4}}>
+    <Chip solid={active==='tich'} {...(active==='tich'?{}:{to:'shop-history'})}>Điểm tích</Chip>
+    <Chip solid={active==='doi'} {...(active==='doi'?{}:{to:'shop-history-redeem'})}>Điểm đổi</Chip>
+  </div>;
+}
+function histBar(){
+  return <div className="w-zalo-bar"><span className="muted" data-hot onClick={()=>WF.go('shop-profile')} style={{fontSize:18}}>‹</span><span className="ztitle">Lịch sử điểm</span><span style={{width:20}}/></div>;
+}
+/* 8a — lịch sử ĐIỂM TÍCH (quét QR) */
+function sHistory(){
+  const rows = [
+    ['Zepro 0W-20','IDMT-B0098-0001a4','+10','28/05 09:12'],
+    ['Touring 5W-30','IDMT-B0102-03f9c1','+8','27/05 16:40'],
+    ['Diesel 15W-40','IDMT-B0105-0a12bb','+12','27/05 11:05'],
+    ['Zepro 0W-20','IDMT-B0098-0001b7','+10','26/05 14:20'],
+  ];
+  return SPhone({ title:null, nav:4, body:
+    <div className="c" style={{height:'100%'}}>
+      {histBar()}
+      <div style={{padding:16, display:'flex', flexDirection:'column', gap:12}}>
+        {histTabs('tich')}
+        <div className="w-box r between" style={{padding:'10px 13px'}}><span className="t12 muted">Tổng điểm tích</span><b className="t13">+1.240</b></div>
+        {rows.map((r,i)=>
+          <div key={i} className="w-box r g12" style={{padding:'12px 13px'}}>
+            <Illus kind="gift" w={40} h={40} r={8} style={{flex:'none'}} />
+            <div className="grow c g4"><b className="t13">{r[0]}</b><span className="t11 muted">{r[1]}</span><span className="t11 muted">{r[3]}</span></div>
+            <Chip solid>{r[2]}đ</Chip>
+          </div>)}
+        <Note><Pin n="5"/> Điểm tích = lịch sử <b>quét QR</b> (tên SP, mã QR, điểm, thời gian) — không lộ thông tin batch nội bộ.</Note>
+      </div>
+    </div>
+  });
+}
+
+/* 8b — lịch sử ĐIỂM ĐỔI (đổi quà) */
+function sHistoryRedeem(){
+  const rows = [
+    ['Voucher Highlands Coffee','Voucher','-2.000','28/05 10:20'],
+    ['Robotek W600 Vacuum','Quà vật lý · #DG-20581','-3.000','25/05 09:05'],
+    ['Voucher xăng 100k','Voucher','-1.000','20/05 18:40'],
+  ];
+  return SPhone({ title:null, nav:4, body:
+    <div className="c" style={{height:'100%'}}>
+      {histBar()}
+      <div style={{padding:16, display:'flex', flexDirection:'column', gap:12}}>
+        {histTabs('doi')}
+        <div className="w-box r between" style={{padding:'10px 13px'}}><span className="t12 muted">Tổng điểm đã đổi</span><b className="t13">-6.000</b></div>
+        {rows.map((r,i)=>
+          <div key={i} className="w-box r g12" style={{padding:'12px 13px'}} data-hot onClick={()=>WF.go('shop-gift-detail')}>
+            <Illus kind="voucher" w={40} h={40} r={8} style={{flex:'none'}} />
+            <div className="grow c g4"><b className="t13">{r[0]}</b><span className="t11 muted">{r[1]}</span><span className="t11 muted">{r[3]}</span></div>
+            <Chip solid>{r[2]}đ</Chip>
+          </div>)}
+        <Note><Pin n="5"/> Điểm đổi = lịch sử <b>đổi quà/voucher</b> (điểm bị trừ). Bấm dòng để xem chi tiết quà đã đổi.</Note>
+      </div>
+    </div>
+  });
+}
+
+/* 8c — Tài khoản (Profile) */
+function sProfile(){
+  return SPhone({ title:'Tài khoản', nav:4, body:
+    <div className="c" style={{padding:0}}>
+      {/* header vàng */}
+      <div style={{background:'linear-gradient(135deg,#EF7D00,#C8102E)', color:'#fff', padding:'16px', borderRadius:'0 0 22px 22px'}}>
+        <div className="r g12 start">
+          <span className="w-avatar" style={{width:52,height:52}} />
+          <div className="grow c g6">
+            <div className="r between"><b className="t13">NGUYỄN HOÀNG NGỌC TÂM</b><span className="w-icon" style={{width:18,height:18,borderRadius:4}}/></div>
+            <span className="w-chip" style={{height:22, background:'#fff', alignSelf:'flex-start'}}>HỘI VIÊN VÀNG</span>
+            <span className="t12 muted">☎ 090 999 8876</span>
+            <span className="t12 muted">✉ jisoo.kim@gmail.com</span>
+          </div>
+        </div>
+      </div>
+
+      <div style={{padding:16, display:'flex', flexDirection:'column', gap:22}}>
+        <div className="c g10">
+          <div className="tt">Điểm</div>
+          <div className="w-box r between" style={{padding:'14px 14px'}} data-hot onClick={()=>WF.go('shop-history')}>
+            <span className="t13">Lịch sử điểm</span><span className="muted">›</span>
+          </div>
+        </div>
+        <div className="c g10">
+          <div className="tt">Thông tin</div>
+          <div className="w-box c">
+            <div className="r between" style={{padding:'14px'}} data-hot onClick={()=>{}}><span className="t13">Điều khoản & Điều kiện</span><span className="muted">›</span></div>
+            <Divider/>
+            <div className="r between" style={{padding:'14px'}} data-hot onClick={()=>{}}><span className="t13">Chính sách bảo mật</span><span className="muted">›</span></div>
+          </div>
+        </div>
+        <div className="c g10">
+          <div className="tt">Cài đặt</div>
+          <div className="w-box r between" style={{padding:'14px'}} data-hot onClick={()=>{}}>
+            <span className="t13">Ngôn ngữ</span><span className="r g8"><span className="t12 muted">Tiếng Việt</span><span className="muted">›</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  });
+}
+
+/* 9 — rewards catalog */
+function sRewards(){
+  return SPhone({ title:'Danh mục quà', nav:1, body:
+    <div style={{padding:16, display:'flex', flexDirection:'column', gap:16}}>
+      <Input placeholder="🔍 Tìm quà / voucher" />
+      <div className="r g8 wrap"><Chip solid>Tất cả</Chip><Chip>Cafe & Bánh</Chip><Chip>Tiện ích</Chip><Chip>Quà vật lý</Chip></div>
+      <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:12}}>
+        {Array.from({length:6}).map((_,i)=>
+          <div key={i} className="w-card" style={{padding:8}} data-hot onClick={()=>WF.go('shop-reward-detail')}>
+            <Illus kind={i%2?'voucher':'gift'} h={92} style={{marginBottom:8}}/>
+            <Line sm w="85%" /><div style={{height:6}}/><Line sm w="55%" />
+            <div className="r between" style={{marginTop:10}}><Chip solid>{[2000,5000,1500,8000,3000,1000][i].toLocaleString('vi')}đ</Chip><span className="muted">›</span></div>
+          </div>)}
+      </div>
+      <Note><Pin n="6"/> Danh mục quà do Got It cung cấp — tận dụng <b>catalog Campaign tool</b>.</Note>
+    </div>
+  });
+}
+
+/* 10 — reward detail */
+function sRewardDetail(){
+  return SPhone({ title:'Chi tiết quà', nav:null, scroll:true, body:
+    <div className="c">
+      <Illus kind="gift" h={200} r={0} />
+      <div style={{padding:16, display:'flex', flexDirection:'column', gap:14}}>
+        <div className="h2">Voucher / Quà mẫu</div>
+        <div className="r g8"><Chip solid>5.000 điểm</Chip><Chip>Còn 120</Chip></div>
+        <Divider/>
+        <div className="c g8"><div className="h3">Mô tả</div><Lines n={4} /></div>
+        <div className="c g8"><div className="h3">Điều kiện</div><Lines n={2} last="50%" /></div>
+        <div style={{height:60}} />
+      </div>
+      <div className="w-box" style={{position:'sticky', bottom:0, padding:14, borderRadius:0, borderLeft:'none', borderRight:'none', background:'#fff', display:'flex', gap:10}}>
+        <Btn block ghost to="shop-redeem-physical">Quà vật lý</Btn>
+        <Btn block to="shop-redeem-voucher">Đổi voucher</Btn>
+      </div>
+    </div>
+  });
+}
+
+/* 11 — redeem voucher (pick unique code) */
+function sRedeemVoucher(){
+  return SPhone({ title:'Đổi voucher', nav:null, scroll:false, note:<><Pin n="7"/> Voucher: hệ thống <b>cấp mã unique</b> từ voucher pool. Mã hiển thị một lần & lưu trong "Quà của tôi".</>, body:
+    <div className="c" style={{height:'100%'}}>
+      <div style={{flex:1, padding:20, display:'flex', flexDirection:'column', gap:16, alignItems:'center', justifyContent:'center'}}>
+        <Tick />
+        <div className="center-text"><div className="h2">Đổi thành công</div><div className="t12 muted">Đã trừ 5.000 điểm</div></div>
+        <div className="w-box fill-w c g10" style={{padding:16, alignItems:'center'}}>
+          <span className="t11 muted">Mã voucher của bạn</span>
+          <div className="w-fill" style={{padding:'10px 16px', borderRadius:8, letterSpacing:2}}><b>IDMT-VC-8F4K2Q</b></div>
+          <Illus kind="qr" h={90} w={90} style={{marginTop:6}} />
+          <Chip>Sao chép mã</Chip>
+        </div>
+        <div className="r g10 fill-w"><Btn block ghost to="shop-rewards">Đổi tiếp</Btn><Btn block to="shop-mygifts">Quà của tôi</Btn></div>
+      </div>
+    </div>
+  });
+}
+
+/* 12 — redeem physical (delivery form) */
+function sRedeemPhysical(){
+  return SPhone({ title:'Nhận quà vật lý', nav:null, scroll:true, body:
+    <div style={{padding:16, display:'flex', flexDirection:'column', gap:16}}>
+      <div className="w-box r g12" style={{padding:10}}><Illus kind="gift" w={48} h={48} r={8} style={{flex:'none'}}/><div className="grow c g4"><b className="t13">Quà vật lý mẫu</b><Chip solid>8.000 điểm</Chip></div></div>
+      <div className="h3">Thông tin giao nhận</div>
+      <Field label="Người nhận" req><Input placeholder="Họ tên" /></Field>
+      <Field label="Số điện thoại" req><Input placeholder="09xx xxx xxx" /></Field>
+      <Field label="Địa chỉ nhận" req><Input area placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh" /></Field>
+      <Field label="Ghi chú"><Input placeholder="Tùy chọn" /></Field>
+      <Btn block to="shop-redeem-success">Xác nhận đổi quà</Btn>
+    </div>
+  });
+}
+
+/* 13 — redeem success (physical) */
+function sRedeemSuccess(){
+  return SPhone({ title:null, nav:null, scroll:false, body:
+    <div className="c" style={{height:'100%'}}>
+      <div className="w-zalo-bar"><span style={{width:20}}/><span className="ztitle">Đã đặt đổi quà</span><span className="muted" data-hot onClick={()=>WF.go('shop-home')} style={{fontSize:16}}>✕</span></div>
+      <div style={{flex:1, padding:20, display:'flex', flexDirection:'column', gap:16, alignItems:'center', justifyContent:'center'}}>
+        <Tick />
+        <div className="center-text"><div className="h2">Đặt đổi thành công</div><div className="t12 muted">Đơn #DG-20581 · đang xử lý</div></div>
+        <div className="w-box fill-w c g10" style={{padding:14}}>
+          <div className="r between t12"><span className="muted">Quà</span><b>Quà vật lý mẫu</b></div>
+          <div className="r between t12"><span className="muted">Điểm đã trừ</span><b>8.000</b></div>
+          <div className="r between t12"><span className="muted">Dự kiến giao</span><b>5–7 ngày</b></div>
+        </div>
+        <Btn block to="shop-mygifts">Xem trong Quà của tôi</Btn>
+      </div>
+    </div>
+  });
+}
+
+/* 14 — my gifts */
+function sMyGifts(){
+  return SPhone({ title:'Quà của tôi', nav:3, body:
+    <div style={{padding:16, display:'flex', flexDirection:'column', gap:12}}>
+      <div className="r g8"><Chip solid>Tất cả</Chip><Chip>Voucher</Chip><Chip>Quà vật lý</Chip></div>
+      {[
+        ['Voucher cafe 50k','Voucher · còn hạn 30/06','Khả dụng','ok','voucher','shop-gift-detail'],
+        ['Quà vật lý mẫu','Đơn #DG-20581','Đang giao','warn','gift','shop-gift-physical'],
+        ['Voucher xăng 100k','Voucher','Đã dùng','','voucher','shop-gift-detail'],
+      ].map((x,i)=>
+        <div key={i} className="w-box r g12" style={{padding:'12px 13px'}} data-hot onClick={()=>WF.go(x[5])}>
+          <Illus kind={x[4]} w={46} h={46} r={8} style={{flex:'none'}} />
+          <div className="grow c g4"><b className="t13">{x[0]}</b><span className="t11 muted">{x[1]}</span></div>
+          <Badge kind={x[3]}>{x[2]}</Badge>
+        </div>)}
+    </div>
+  });
+}
+
+/* 15 — gift detail */
+function sGiftDetail(){
+  return SPhone({ title:'Chi tiết quà', nav:null, scroll:true, body:
+    <div style={{padding:16, display:'flex', flexDirection:'column', gap:16, alignItems:'center'}}>
+      <Illus kind="voucher" h={120} />
+      <div className="center-text"><div className="h3">Voucher cafe 50k</div><Badge kind="ok" style={{marginTop:6}}>Khả dụng · HSD 30/06/2026</Badge></div>
+      <div className="w-box fill-w c g10" style={{padding:16, alignItems:'center'}}>
+        <span className="t11 muted">Mã sử dụng</span>
+        <div className="w-fill" style={{padding:'10px 16px', borderRadius:8, letterSpacing:2}}><b>IDMT-VC-8F4K2Q</b></div>
+        <Illus kind="qr" h={110} w={110} style={{marginTop:4}} />
+      </div>
+      <div className="w-box fill-w c g8" style={{padding:14}}>
+        <div className="t11 muted">Hướng dẫn sử dụng</div><Lines n={3} last="60%" />
+      </div>
+      <Btn block ghost to="shop-mygifts">Quay lại</Btn>
+    </div>
+  });
+}
+
+/* 15b — gift detail: PHYSICAL */
+function sGiftPhysical(){
+  return SPhone({ title:'Chi tiết quà', nav:null, scroll:true, body:
+    <div style={{padding:16, display:'flex', flexDirection:'column', gap:16, alignItems:'center'}}>
+      <Illus kind="gift" h={140} />
+      <div className="center-text"><div className="h3">Quà vật lý mẫu</div><Badge kind="warn" style={{marginTop:6}}>Đang giao · Đơn #DG-20581</Badge></div>
+      <div className="w-box fill-w c g10" style={{padding:14}}>
+        <div className="r between t12"><span className="muted">Điểm đã đổi</span><b>8.000</b></div>
+        <div className="r between t12"><span className="muted">Người nhận</span><b>Anh Nguyễn Văn Hùng</b></div>
+        <div className="r between t12"><span className="muted">SĐT</span><b>090 999 8876</b></div>
+        <div className="r between t12"><span className="muted">Dự kiến giao</span><b>5–7 ngày</b></div>
+      </div>
+      <div className="w-box fill-w c g8" style={{padding:14}}>
+        <div className="t11 muted">Theo dõi đơn</div>
+        <div className="r g8"><Tick size={20}/><span className="t12">Đã xác nhận đổi quà</span></div>
+        <div className="r g8"><span className="w-icon" style={{width:20,height:20,borderRadius:'50%'}}/><span className="t12 muted">Đang giao</span></div>
+        <div className="r g8"><span className="w-icon" style={{width:20,height:20,borderRadius:'50%'}}/><span className="t12 muted">Đã nhận</span></div>
+      </div>
+      <Btn block ghost to="shop-mygifts">Quay lại</Btn>
+    </div>
+  });
+}
+
+const SHOP_SCREENS = [
+  { id:'shop-invite',          group:'Onboarding',  title:'Lời mời ZNS (Zalo)', render:sInvite },
+  { id:'shop-permission',      group:'Onboarding',  title:'Cấp quyền Zalo', render:sPermission },
+  { id:'shop-home',            group:'Trang chủ',   title:'Trang chủ', render:sHome },
+  { id:'shop-scan',            group:'Quét QR',     title:'Quét QR (camera Zalo)', render:sScan },
+  { id:'shop-scan-success',    group:'Quét QR',     title:'Quét thành công', render:sScanSuccess },
+  { id:'shop-scan-error',      group:'Quét QR',     title:'Mã lỗi / đã quét', render:sScanError },
+  { id:'shop-history',         group:'Tài khoản',   title:'Lịch sử điểm · tích', render:sHistory },
+  { id:'shop-history-redeem',  group:'Tài khoản',   title:'Lịch sử điểm · đổi', render:sHistoryRedeem },
+  { id:'shop-profile',         group:'Tài khoản',   title:'Tài khoản (Profile)', render:sProfile },
+  { id:'shop-rewards',         group:'Danh mục quà',     title:'Danh mục quà', render:sRewards },
+  { id:'shop-reward-detail',   group:'Danh mục quà',     title:'Chi tiết quà', render:sRewardDetail },
+  { id:'shop-redeem-voucher',  group:'Đổi quà',     title:'Đổi voucher (mã unique)', render:sRedeemVoucher },
+  { id:'shop-redeem-physical', group:'Đổi quà',     title:'Đổi quà vật lý (form)', render:sRedeemPhysical },
+  { id:'shop-redeem-success',  group:'Đổi quà',     title:'Đặt đổi thành công', render:sRedeemSuccess },
+  { id:'shop-mygifts',         group:'Quà của tôi', title:'Quà của tôi', render:sMyGifts },
+  { id:'shop-gift-detail',     group:'Quà của tôi', title:'Chi tiết voucher đã đổi', render:sGiftDetail },
+  { id:'shop-gift-physical',   group:'Quà của tôi', title:'Chi tiết quà vật lý đã đổi', render:sGiftPhysical },
+];
+
+
+
+/* ----- Hi-fi illustrations (shared by NPP + Shop scan screens) ----- */
+function HfQrPattern(){
+  const SIZE = 21;
+  const cells = [];
+  const finder = (sx, sy) => {
+    for (let y=0; y<7; y++) for (let x=0; x<7; x++) {
+      const v = (y===0||y===6||x===0||x===6) || (y>=2&&y<=4&&x>=2&&x<=4);
+      if (v) cells.push([sx+x, sy+y]);
+    }
+  };
+  finder(0, 0); finder(14, 0); finder(0, 14);
+  // timing pattern
+  for (let i=8; i<13; i++) {
+    if (i % 2 === 0) { cells.push([i, 6]); cells.push([6, i]); }
+  }
+  // pseudo-random data modules (deterministic seed)
+  let s = 42;
+  const rng = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+  for (let y=0; y<SIZE; y++) for (let x=0; x<SIZE; x++) {
+    if ((x < 8 && y < 8) || (x > 12 && y < 8) || (x < 8 && y > 12)) continue;
+    if (x === 6 || y === 6) continue;
+    if (rng() < 0.46) cells.push([x, y]);
+  }
+  return (
+    <svg viewBox={`0 0 ${SIZE} ${SIZE}`} shapeRendering="crispEdges">
+      <rect width={SIZE} height={SIZE} fill="#fff"/>
+      {cells.map(([x,y], i) => <rect key={i} x={x} y={y} width="1" height="1" fill="#0F172A"/>)}
+    </svg>
+  );
+}
+
+function HfOilBottle({size = 56, label = 'Zepro'}){
+  const id = 'hfob-' + label;
+  return (
+    <svg className="hf-bottle" viewBox="0 0 64 80" width={size} height={size * 80/64}>
+      <defs>
+        <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#EF4444"/>
+          <stop offset="60%" stopColor="#C8102E"/>
+          <stop offset="100%" stopColor="#7A0A1C"/>
+        </linearGradient>
+      </defs>
+      <rect x="22" y="4" width="20" height="9" fill="#1F2937" rx="2"/>
+      <rect x="25" y="13" width="14" height="6" fill="#0F172A"/>
+      <path d="M10 26 Q10 19 16 19 L48 19 Q54 19 54 26 L54 72 Q54 76 50 76 L14 76 Q10 76 10 72 Z" fill={`url(#${id})`}/>
+      <rect x="14" y="36" width="36" height="24" fill="rgba(255,255,255,.94)" rx="2"/>
+      <text x="32" y="46" textAnchor="middle" fontSize="6.4" fontWeight="800" fill="#C8102E" fontFamily="Inter, sans-serif">IDEMITSU</text>
+      <text x="32" y="55" textAnchor="middle" fontSize="5.4" fontWeight="700" fill="#0F172A" fontFamily="Inter, sans-serif">{label}</text>
+      <rect x="13" y="22" width="3" height="50" fill="rgba(255,255,255,.18)" rx="1.5"/>
+      <rect x="48" y="22" width="2" height="50" fill="rgba(0,0,0,.15)" rx="1"/>
+    </svg>
+  );
+}
+
+function HfSuccessBadge(){
+  return (
+    <div className="hf-badge ok">
+      <div className="halo" />
+      <div className="core">
+        <svg viewBox="0 0 24 24" width="52%" height="52%" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M5 13l4 4L19 7"/>
+        </svg>
+      </div>
+      <span className="spark" style={{top:'8%', left:'14%'}} />
+      <span className="spark" style={{top:'12%', right:'8%', width:6, height:6}} />
+      <span className="spark" style={{bottom:'10%', left:'6%', width:7, height:7}} />
+      <span className="spark" style={{bottom:'14%', right:'14%'}} />
+      <span className="spark" style={{top:'-2%', left:'48%', width:5, height:5}} />
+    </div>
+  );
+}
+
+function HfErrorBadge(){
+  return (
+    <div className="hf-badge err">
+      <div className="halo" />
+      <div className="core">
+        <svg viewBox="0 0 24 24" width="52%" height="52%" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M6 6l12 12 M18 6l-12 12"/>
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+
+const { useRef } = React;
+
+const LOY_KEY = 'idemitsu-loyalty-demo-v1';
+const LOY_BUS = (typeof BroadcastChannel !== 'undefined') ? new BroadcastChannel(LOY_KEY) : null;
+const LOY_BASELINE = { nppPoints: 9842, shopPoints: 5000 };
+
+const LoyaltyState = {
+  nppPoints: LOY_BASELINE.nppPoints,
+  shopPoints: LOY_BASELINE.shopPoints,
+  history: [],
+  listeners: new Set(),
+
+  load() {
+    try {
+      const s = JSON.parse(localStorage.getItem(LOY_KEY) || 'null');
+      if (s) {
+        if (typeof s.nppPoints === 'number') this.nppPoints = s.nppPoints;
+        if (typeof s.shopPoints === 'number') this.shopPoints = s.shopPoints;
+        if (Array.isArray(s.history)) this.history = s.history;
+      }
+    } catch (e) {}
+  },
+  save() {
+    try {
+      localStorage.setItem(LOY_KEY, JSON.stringify({
+        nppPoints: this.nppPoints,
+        shopPoints: this.shopPoints,
+        history: this.history,
+      }));
+    } catch (e) {}
+  },
+  subscribe(fn) { this.listeners.add(fn); return () => this.listeners.delete(fn); },
+  emit() { for (const fn of this.listeners) fn(this); },
+
+  recordScan(source, product, qr, shopPts, nppPts) {
+    const entry = { source, product, qr, time: Date.now(), shopPts, nppPts };
+    this.shopPoints += shopPts;
+    this.nppPoints  += nppPts;
+    this.history.unshift(entry);
+    if (this.history.length > 100) this.history.length = 100;
+    this.save();
+    this.emit();
+    if (LOY_BUS) LOY_BUS.postMessage({ kind: 'scan', entry });
+  },
+  reset() {
+    this.nppPoints = LOY_BASELINE.nppPoints;
+    this.shopPoints = LOY_BASELINE.shopPoints;
+    this.history = [];
+    this.save();
+    this.emit();
+    if (LOY_BUS) LOY_BUS.postMessage({ kind: 'reset' });
+  },
+};
+LoyaltyState.load();
+
+if (LOY_BUS) {
+  LOY_BUS.onmessage = (e) => {
+    if (!e.data) return;
+    if (e.data.kind === 'scan') {
+      LoyaltyState.shopPoints += e.data.entry.shopPts;
+      LoyaltyState.nppPoints  += e.data.entry.nppPts;
+      LoyaltyState.history.unshift(e.data.entry);
+      if (LoyaltyState.history.length > 100) LoyaltyState.history.length = 100;
+      LoyaltyState.save();
+      LoyaltyState.emit();
+    } else if (e.data.kind === 'reset') {
+      LoyaltyState.nppPoints  = LOY_BASELINE.nppPoints;
+      LoyaltyState.shopPoints = LOY_BASELINE.shopPoints;
+      LoyaltyState.history    = [];
+      LoyaltyState.save();
+      LoyaltyState.emit();
+    }
+  };
+}
+// Fallback for browsers without BroadcastChannel only — if both BC and
+// storage event fire, we'd apply the same scan twice (BC += delta, then
+// storage overwrites with saved value, which could double-count depending
+// on event order).
+if (!LOY_BUS) {
+  window.addEventListener('storage', (ev) => {
+    if (ev.key !== LOY_KEY || !ev.newValue) return;
+    try {
+      const s = JSON.parse(ev.newValue);
+      LoyaltyState.nppPoints  = s.nppPoints;
+      LoyaltyState.shopPoints = s.shopPoints;
+      LoyaltyState.history    = s.history || [];
+      LoyaltyState.emit();
+    } catch (e) {}
+  });
+}
+
+function useLoyaltyState() {
+  const [, force] = useState(0);
+  useEffect(() => LoyaltyState.subscribe(() => force(t => t + 1)), []);
+  return LoyaltyState;
+}
+
+function useAnimatedNumber(target) {
+  const [val, setVal] = useState(target);
+  const rafRef = useRef(null);
+  const startRef = useRef(target);
+  useEffect(() => {
+    if (val === target) { startRef.current = target; return; }
+    const start = startRef.current;
+    const delta = target - start;
+    const dur = 700;
+    const t0 = performance.now();
+    const step = (now) => {
+      const t = Math.min(1, (now - t0) / dur);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setVal(Math.round(start + delta * eased));
+      if (t < 1) rafRef.current = requestAnimationFrame(step);
+      else startRef.current = target;
+    };
+    rafRef.current = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [target]);
+  return val;
+}
+
+// Product catalog used by the demo. Shop:NPP ratio is 2:1 (NPP = 0.5 × shop).
+const SCAN_PRODUCTS = [
+  { name: 'Idemitsu Zepro 0W-20',  sku: 'IDMT-B0098', shopPts: 10, nppPts: 5 },
+  { name: 'Idemitsu Touring 5W-30', sku: 'IDMT-B0102', shopPts: 8,  nppPts: 4 },
+  { name: 'Idemitsu Diesel 15W-40', sku: 'IDMT-B0105', shopPts: 12, nppPts: 6 },
+];
+function pickRandomProduct() {
+  return SCAN_PRODUCTS[Math.floor(Math.random() * SCAN_PRODUCTS.length)];
+}
+function mockQrFor(sku) {
+  return sku + '-' + Math.random().toString(16).slice(2, 8);
+}
+function formatHM(ts) {
+  const d = new Date(ts);
+  return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+}
+// Reliable integer formatter — avoids Intl/locale quirks (some Chrome
+// builds render '9.842' as '9.8420' under vi-VN with non-integer values).
+function fmtNum(n) {
+  return String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+function sScanHiFi(){
+  return SPhone({ title:null, nav:null, scroll:false, body:
+    <div className="c" style={{height:'100%'}}>
+      <div className="w-zalo-bar">
+        <span className="muted" data-hot onClick={()=>WF.go('shop-home')} style={{fontSize:18, width:54}}>‹</span>
+        <span className="ztitle">Quét QR sản phẩm</span>
+        <span style={{width:54}}/>
+      </div>
+      <div style={{flex:1, padding:14, display:'flex', flexDirection:'column', gap:12, minHeight:0}}>
+        <div className="hf-scanview" style={{height:'auto', flex:1, minHeight:260}}>
+          <div className="hf-scan-target">
+            <span className="hf-scan-corner tl" />
+            <span className="hf-scan-corner tr" />
+            <span className="hf-scan-corner bl" />
+            <span className="hf-scan-corner br" />
+            <div className="hf-qr-wrap">
+              <HfQrPattern />
+              <div className="hf-scanline" />
+            </div>
+          </div>
+          <span className="hf-scan-hint"><span className="led"/>Đặt tem QR vào khung</span>
+        </div>
+        <div className="w-card r g10" style={{padding:10, alignItems:'center'}}>
+          <HfOilBottle size={40} label="Zepro" />
+          <div className="grow c g4">
+            <b className="t12">Tem QR trên thân chai Idemitsu</b>
+            <span className="t11 muted">Quét hợp lệ → cộng điểm vào tài khoản shop</span>
+          </div>
+        </div>
+        <div className="r g10">
+          <Btn block ghost to="shop-scan-error">Mô phỏng · Lỗi</Btn>
+          <Btn block to="shop-scan-success">Mô phỏng · OK</Btn>
+        </div>
+      </div>
+    </div>
+  });
+}
+
+function sScanSuccessHiFi(){
+  // Pick a random product, record the scan (emits to the loyalty bus so NPP
+  // tab updates real-time), and use that data for display.
+  const [scan] = useState(() => {
+    const p = (typeof pickRandomProduct === 'function') ? pickRandomProduct() : { name:'Idemitsu Zepro 0W-20', sku:'IDMT-B0098', shopPts:10, nppPts:5 };
+    const qr = (typeof mockQrFor === 'function') ? mockQrFor(p.sku) : p.sku + '-' + Math.random().toString(16).slice(2,8);
+    if (typeof LoyaltyState !== 'undefined') {
+      LoyaltyState.recordScan('shop-scan', p.name, qr, p.shopPts, p.nppPts);
+    }
+    return { ...p, qr, time: Date.now() };
+  });
+  const balance = (typeof LoyaltyState !== 'undefined') ? LoyaltyState.shopPoints : (5000 + scan.shopPts);
+  const shortLabel = scan.name.replace(/^Idemitsu\s+/, '').split(' ')[0];
+
+  return SPhone({ title:null, nav:null, scroll:false, body:
+    <div className="c" style={{height:'100%'}}>
+      <div className="w-zalo-bar">
+        <span style={{width:54}}/>
+        <span className="ztitle">Thành công</span>
+        <span className="muted" data-hot onClick={()=>WF.go('shop-home')} style={{fontSize:16, width:54, textAlign:'right', cursor:'pointer'}}>✕</span>
+      </div>
+      <div style={{flex:1, overflowY:'auto', padding:'20px 16px', display:'flex', flexDirection:'column', gap:14, alignItems:'center'}}>
+        <HfSuccessBadge />
+        <div className="center-text">
+          <div style={{fontSize:30, fontWeight:800, color:'#10B981', letterSpacing:'-.02em', lineHeight:1.1}}>+{scan.shopPts} điểm</div>
+          <div className="t12 muted" style={{marginTop:6}}>Đã cộng vào tài khoản · còn {fmtNum(balance)}</div>
+        </div>
+
+        <div className="w-card r g12" style={{padding:12, width:'100%', alignItems:'center'}}>
+          <HfOilBottle size={48} label={shortLabel} />
+          <div className="grow c g4">
+            <b className="t13">{scan.name}</b>
+            <span className="t11 muted">SKU · {scan.sku} · 1L</span>
+            <div className="r g6">
+              <span className="w-chip solid" style={{height:22, fontSize:11}}>Shop +{scan.shopPts}</span>
+              <span className="w-chip" style={{height:22, fontSize:11, background:'#ECFDF5', borderColor:'#A7F3D0', color:'#047857'}}>NPP +{scan.nppPts}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="w-box fill-w c g10" style={{padding:14}}>
+          <div className="r between t12"><span className="muted">Mã QR</span><b className="hf-mono">{scan.qr}</b></div>
+          <div className="r between t12"><span className="muted">Thời gian</span><b>{formatHM(scan.time)}</b></div>
+          <div className="r between t12"><span className="muted">Cross-award NPP</span><b style={{color:'#10B981'}}>+{scan.nppPts} điểm</b></div>
+          <Divider/>
+          <div className="r between t12"><span className="muted">Số dư shop hiện tại</span><b>{fmtNum(balance)} điểm</b></div>
+        </div>
+      </div>
+      <div style={{padding:12, background:'#fff', borderTop:'1px solid #F1F5F9'}}>
+        <div className="r g10">
+          <Btn block ghost to="shop-history">Lịch sử</Btn>
+          <Btn block to="shop-scan">Quét tiếp</Btn>
+        </div>
+      </div>
+    </div>
+  });
+}
+
+function sScanErrorHiFi(){
+  return SPhone({ title:null, nav:null, scroll:false, body:
+    <div className="c" style={{height:'100%'}}>
+      <div className="w-zalo-bar">
+        <span className="muted" data-hot onClick={()=>WF.go('shop-scan')} style={{fontSize:18, width:54, cursor:'pointer'}}>‹</span>
+        <span className="ztitle">Không hợp lệ</span>
+        <span style={{width:54}}/>
+      </div>
+      <div style={{flex:1, overflowY:'auto', padding:'20px 16px', display:'flex', flexDirection:'column', gap:14, alignItems:'center'}}>
+        <HfErrorBadge />
+        <div className="center-text">
+          <div style={{fontSize:20, fontWeight:700, color:'#DC2626'}}>Mã QR đã được quét</div>
+          <div className="t12 muted" style={{marginTop:6}}>Tem này đã tính điểm trước đó. Mỗi tem chỉ dùng một lần.</div>
+        </div>
+
+        <div className="w-card fill-w c g10" style={{padding:14}}>
+          <div className="t11 muted">Các lỗi thường gặp</div>
+          {[
+            'Mã không thuộc sản phẩm Idemitsu',
+            'Tem đã bị quét bởi shop khác',
+            'Ảnh QR mờ / không đọc được',
+          ].map((txt, i) => (
+            <div key={i} className="r g10" style={{alignItems:'center'}}>
+              <span style={{width:26, height:26, borderRadius:'50%', background:'#FEF3C7', color:'#B45309', display:'flex', alignItems:'center', justifyContent:'center', flex:'none', fontSize:13, fontWeight:700}}>!</span>
+              <span className="t12">{txt}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div style={{padding:12, background:'#fff', borderTop:'1px solid #F1F5F9'}}>
+        <Btn block to="shop-scan">Quét lại</Btn>
+      </div>
+    </div>
+  });
+}
+
+/* mutate SHOP_SCREENS so the picker + router pick up the new renders */
+(function(){
+  const map = { 'shop-scan':sScanHiFi, 'shop-scan-success':sScanSuccessHiFi, 'shop-scan-error':sScanErrorHiFi };
+  for (const s of SHOP_SCREENS) { if (map[s.id]) s.render = map[s.id]; }
+})();
+
+/* ----- Repair Shop UI redesign · Idemitsu palette -----
+ * Reassign Illus + CatIcon so every shop screen picks up the new
+ * gradients/visuals without rewriting render functions. */
+
+function ShopIllus({kind='gift', h, w, r=10, style}){
+  // Idemitsu-anchored gradients (red dominant) + amber for voucher accent +
+  // product-style kinds (phone/audio/thermos/charger) for the rewards grid.
+  const grads = {
+    banner:  ['#FF8A3D', '#C8102E'],   // brand: orange → red
+    oil:     ['#DC1B3A', '#7A0A1C'],   // bright → deep red
+    gift:    ['#E11D48', '#881337'],   // rose-red
+    voucher: ['#F59E0B', '#B45309'],   // amber accent
+    qr:      ['#1E293B', '#0F172A'],   // slate (voucher code bg)
+    phone:   ['#1F2937', '#0F172A'],   // dark — phone product
+    audio:   ['#475569', '#1E293B'],   // medium slate — earbuds
+    thermos: ['#7C2D12', '#451A03'],   // warm brown — bottle/thermos
+    charger: ['#D946EF', '#86198F'],   // purple — accessories
+  };
+  const icons = {
+    oil:     'M9 2h6v3l2 2v13a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V7l2-2V2Z M9 11h6',
+    gift:    'M3 8h18v4H3V8Zm1 4h16v9H4v-9Zm8-9c2 0 3 2 0 5-3-3-2-5 0-5Zm0 0v18',
+    voucher: 'M3 7h18v4a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4V7Zm7 0v13',
+    banner:  'M4 5h16v10H4z M4 19h16 M8 11l3-3 2 2 3-4',
+    qr:      'M4 4h6v6H4z M14 4h6v6h-6z M4 14h6v6H4z M14 14h2v2h-2z M18 18h2v2h-2z',
+    phone:   'M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z M10 18h4',
+    audio:   'M4 11a8 8 0 0 1 16 0v4a2 2 0 0 1-2 2h-1v-7h3 M4 11v4a2 2 0 0 0 2 2h1v-7H4',
+    thermos: 'M9 2h6v4a3 3 0 0 1-3 3 3 3 0 0 1-3-3V2z M8 9h8v11a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V9z M8 14h8',
+    charger: 'M9 7V3 M15 7V3 M7 7h10v5a5 5 0 0 1-5 5 5 5 0 0 1-5-5V7z M12 17v4',
+  };
+  const g = grads[kind] || grads.gift;
+  const iconSize = Math.min(((h || 80) * 0.42), 60);
+  return (
+    <div style={{
+      position:'relative', display:'flex', alignItems:'center', justifyContent:'center',
+      height:h, width:w||'100%', borderRadius:r, overflow:'hidden',
+      background: 'linear-gradient(135deg, ' + g[0] + ', ' + g[1] + ')',
+      ...style
+    }}>
+      {/* Top-right highlight */}
+      <div style={{
+        position:'absolute', right:'-25%', top:'-35%', width:'90%', height:'90%',
+        background:'radial-gradient(circle, rgba(255,255,255,.22), transparent 60%)',
+        pointerEvents:'none'
+      }} />
+      {/* Bottom-left shadow lobe */}
+      <div style={{
+        position:'absolute', left:'-15%', bottom:'-25%', width:'70%', height:'70%',
+        background:'radial-gradient(circle, rgba(0,0,0,.20), transparent 70%)',
+        pointerEvents:'none'
+      }} />
+      {/* Icon */}
+      <svg viewBox="0 0 24 24" width={iconSize} height={iconSize}
+           fill="none" stroke="rgba(255,255,255,.96)"
+           strokeWidth="1.45" strokeLinecap="round" strokeLinejoin="round"
+           style={{position:'relative', zIndex:1, filter:'drop-shadow(0 3px 6px rgba(0,0,0,.22))'}}>
+        <path d={icons[kind] || icons.gift}/>
+      </svg>
+    </div>
+  );
+}
+Illus = ShopIllus;
+
+// Polished category icon — Idemitsu-anchored, unified design language
+const SHOP_CAT_DEF = {
+  'Tất cả':      { color:'#C8102E', d:'M4 4h7v7H4z M13 4h7v7h-7z M4 13h7v7H4z M13 13h7v7h-7z' },
+  'Mới':         { color:'#EF7D00', d:'M12 3l2.5 5 5.5.8-4 3.9 1 5.5L12 21l-5-2.8 1-5.5-4-3.9 5.5-.8z' },
+  'Cafe & Bánh': { color:'#92400E', d:'M4 8h13v5a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z M17 9h2a2 2 0 0 1 0 4h-2 M7 3v2 M11 3v2' },
+  'Tiện ích':    { color:'#0F172A', d:'M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z M9 12l2 2 4-4' },
+  'Thực phẩm':   { color:'#DC2626', d:'M6 2v8a3 3 0 0 0 6 0V2 M9 2v20 M17 2c-2 1-3 3-3 6v4h3z M17 12v10' },
+};
+function ShopCatIcon({label, active}){
+  const def = SHOP_CAT_DEF[label] || SHOP_CAT_DEF['Tất cả'];
+  const bg = active
+    ? 'linear-gradient(135deg, ' + def.color + ', ' + def.color + 'b8)'
+    : '#FFF1F2';
+  const shadow = active
+    ? '0 6px 14px ' + def.color + '55, inset 0 1px 0 rgba(255,255,255,.2)'
+    : 'inset 0 0 0 1px #FECDD3';
+  return (
+    <span style={{
+      width:50, height:50, borderRadius:14,
+      display:'flex', alignItems:'center', justifyContent:'center', flex:'none',
+      background: bg, boxShadow: shadow,
+    }}>
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none"
+           stroke={active ? '#fff' : def.color}
+           strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+        <path d={def.d}/>
+      </svg>
+    </span>
+  );
+}
+CatIcon = ShopCatIcon;
+
+/* ----- Shop Home redesign (Got It loyalty template) ----- */
+function PromoDevice() {
+  // Stylized phone silhouette for the dark promo banner
+  return (
+    <svg viewBox="0 0 80 160" width="80" height="160" style={{filter:'drop-shadow(0 8px 18px rgba(0,0,0,.5))'}}>
+      <defs>
+        <linearGradient id="promo-phone" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#475569"/>
+          <stop offset="100%" stopColor="#1F2937"/>
+        </linearGradient>
+        <linearGradient id="promo-screen" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#1E293B"/>
+          <stop offset="100%" stopColor="#0F172A"/>
+        </linearGradient>
+      </defs>
+      <rect x="2" y="2" width="76" height="156" rx="16" fill="url(#promo-phone)" stroke="#94A3B8" strokeWidth=".5"/>
+      <rect x="6" y="6" width="68" height="148" rx="12" fill="url(#promo-screen)"/>
+      <rect x="30" y="10" width="20" height="3" rx="1.5" fill="#0F172A"/>
+      <circle cx="42" cy="76" r="14" fill="#1E293B" stroke="#374151" strokeWidth="1"/>
+      <circle cx="42" cy="76" r="9" fill="#0F172A"/>
+      <circle cx="42" cy="76" r="5" fill="#475569" opacity=".7"/>
+      <circle cx="56" cy="62" r="3" fill="#1E293B" stroke="#374151" strokeWidth=".5"/>
+    </svg>
+  );
+}
+
+const SHOP_TIER_STAR = (
+  <svg viewBox="0 0 24 24" width="11" height="11" fill="#7C2D12" stroke="none">
+    <path d="M12 2l2.5 6.3 6.7.5-5.1 4.4 1.6 6.5L12 16.8 6.3 19.7l1.6-6.5L2.8 8.8l6.7-.5z"/>
+  </svg>
+);
+
+function sHomeHiFi() {
+  const state = (typeof LoyaltyState !== 'undefined') ? useLoyaltyState() : null;
+  const points = state ? state.shopPoints : 5000;
+  const cats = ['Tất cả','Mới','Cafe & Bánh','Tiện ích','Thực phẩm'];
+  const products = [
+    { brand:'Anker',       name:'Sạc nhanh Anker tím 65W',          pts:1000, kind:'charger' },
+    { brand:'Samsung',     name:'Tai nghe không dây Galaxy Buds',    pts:1000, kind:'audio'   },
+    { brand:'Apple',       name:'iPhone 17 Pro Max cam vũ trụ 256GB',pts:5000, kind:'phone'   },
+    { brand:'Lock & Lock', name:'Combo 3 bình giữ nhiệt thời thượng',pts:1500, kind:'thermos' },
+  ];
+  const fmtPts = (n) => (typeof fmtNum === 'function' ? fmtNum(n) : String(n));
+
+  return SPhone({ title:null, nav:0, scroll:true, body:
+    <div className="c" style={{padding:0, background:'#FAFAFA'}}>
+      {/* Hero */}
+      <div className="shop-hero" style={{paddingTop:18, paddingBottom:20}}>
+        <div className="r between start" style={{padding:'0 16px'}}>
+          <div className="c g8" style={{minWidth:0, flex:1}}>
+            <b style={{color:'#fff', fontSize:16, letterSpacing:.15, lineHeight:1.25}}>Sửa xe Hùng Anh</b>
+            <span className="shop-tier-pill">{SHOP_TIER_STAR}<span>HỘI VIÊN VÀNG</span></span>
+          </div>
+          <span className="shop-avatar-sm" style={{width:40, height:40}}>
+            <svg viewBox="0 0 40 40" width="40" height="40">
+              <circle cx="20" cy="16" r="7" fill="rgba(255,255,255,.6)"/>
+              <path d="M5 38 C 5 28 12 24 20 24 C 28 24 35 28 35 38 L 35 40 L 5 40 Z" fill="rgba(255,255,255,.6)"/>
+            </svg>
+          </span>
+        </div>
+
+        <div className="r between" style={{padding:'14px 16px 0', alignItems:'flex-end'}}>
+          <div className="c g4">
+            <div style={{color:'#fff', fontSize:42, fontWeight:800, lineHeight:1, letterSpacing:'-.02em'}}>
+              {fmtPts(points)} <span style={{fontSize:18, fontWeight:600, opacity:.85}}>điểm</span>
+            </div>
+            <span style={{color:'rgba(255,255,255,.75)', fontSize:11.5}}>HSD: 31/12/2026</span>
+          </div>
+          <span data-hot onClick={() => WF.go('shop-history')}
+                style={{color:'#fff', fontSize:12, fontWeight:500, opacity:.95, cursor:'pointer'}}>
+            Lịch sử điểm ›
+          </span>
+        </div>
+      </div>
+
+      <div style={{padding:'24px 16px 20px', display:'flex', flexDirection:'column', gap:22}}>
+        {/* Khuyến mãi cực lớn */}
+        <div className="c g10">
+          <div className="h3">Khuyến mãi cực lớn</div>
+          <div className="shop-promo-banner">
+            <div className="promo-device"><PromoDevice/></div>
+            <div className="promo-text">
+              <div className="label">iPhone 16 Pro</div>
+              <div className="tag">Đổi điểm · ưu đãi cuối tháng</div>
+            </div>
+            <div className="promo-dots"><i className="on"/><i/><i/><i/></div>
+          </div>
+        </div>
+
+        {/* Danh mục quà tặng */}
+        <div className="c g12">
+          <div className="r between">
+            <div className="h3">Danh mục quà tặng</div>
+            <span data-hot onClick={() => WF.go('shop-rewards')} className="muted" style={{cursor:'pointer', fontSize:18}}>›</span>
+          </div>
+          <div className="r g14" style={{overflowX:'auto', paddingBottom:4, marginInline:-4, paddingInline:4}}>
+            {cats.map((c, i) => (
+              <div key={i} className="c g6" style={{alignItems:'center', minWidth:62, flex:'none', cursor:'pointer'}}
+                   data-hot onClick={() => WF.go('shop-rewards')}>
+                <CatIcon label={c} active={i===0}/>
+                <span className="t11 center-text" style={{lineHeight:1.25, color:'#475569'}}>{c}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Quà nổi bật */}
+        <div className="c g12">
+          <div className="r between">
+            <div className="h3">Quà nổi bật</div>
+            <span data-hot onClick={() => WF.go('shop-rewards')} className="t12 muted" style={{cursor:'pointer'}}>Xem tất cả ›</span>
+          </div>
+          <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:12}}>
+            {products.map((p, i) => (
+              <div key={i} className="w-card shop-product-card" data-hot onClick={() => WF.go('shop-reward-detail')}>
+                <div className="shop-product-img">
+                  <Illus kind={p.kind} h={140} r={0}/>
+                  <span className="shop-product-brand">{p.brand}</span>
+                </div>
+                <div className="shop-product-info">
+                  <span className="shop-product-name">{p.name}</span>
+                  <span className="shop-product-pts">{fmtPts(p.pts)} điểm</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  });
+}
+SHOP_SCREENS.find(s => s.id === 'shop-home').render = sHomeHiFi;
+
+/* ----- Shop Profile redesign (template-based) ----- */
+function sProfileHiFi() {
+  return SPhone({ title:null, nav:4, scroll:true, body:
+    <div className="c" style={{padding:0, background:'#FAFAFA', minHeight:'100%'}}>
+      {/* Profile hero */}
+      <div className="shop-profile-hero" style={{paddingBottom:20}}>
+        <div className="r g14 start" style={{padding:'20px 16px 8px'}}>
+          <span className="shop-avatar-lg">
+            <svg viewBox="0 0 64 64" width="64" height="64">
+              <circle cx="32" cy="26" r="11" fill="rgba(255,255,255,.65)"/>
+              <path d="M10 60 C 10 46 20 41 32 41 C 44 41 54 46 54 60 L 54 64 L 10 64 Z" fill="rgba(255,255,255,.65)"/>
+            </svg>
+          </span>
+          <div className="grow c g8" style={{minWidth:0}}>
+            <div className="r between" style={{alignItems:'flex-start'}}>
+              <b style={{color:'#fff', fontSize:13.5, textTransform:'uppercase', letterSpacing:.4, lineHeight:1.25}}>
+                Sửa xe Hùng Anh
+              </b>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="rgba(255,255,255,.85)"
+                   strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{flex:'none', cursor:'pointer'}}>
+                <path d="M12 20h9 M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>
+              </svg>
+            </div>
+            <span className="shop-tier-pill">{SHOP_TIER_STAR}<span>HỘI VIÊN VÀNG</span></span>
+            <div className="c g4" style={{marginTop:6}}>
+              <div className="shop-profile-contact">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+                <span>0901 234 567</span>
+              </div>
+              <div className="shop-profile-contact">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l9 4v6c0 5-3.7 9-9 10-5.3-1-9-5-9-10V6z"/></svg>
+                <span>Cầu Giấy, Hà Nội · NPP Miền Bắc 01</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Sections */}
+      <div style={{padding:'20px 16px 24px', display:'flex', flexDirection:'column', gap:22}}>
+        <div className="c g10">
+          <div className="tt">Điểm</div>
+          <div className="w-box r between" style={{padding:14, background:'#fff', cursor:'pointer'}}
+               data-hot onClick={() => WF.go('shop-history')}>
+            <span className="t13">Lịch sử điểm</span>
+            <span className="muted">›</span>
+          </div>
+        </div>
+
+        <div className="c g10">
+          <div className="tt">Thông tin</div>
+          <div className="w-box c" style={{background:'#fff'}}>
+            <div className="r between" style={{padding:14, cursor:'pointer'}} data-hot onClick={() => {}}>
+              <span className="t13">Điều khoản & Điều kiện</span><span className="muted">›</span>
+            </div>
+            <Divider/>
+            <div className="r between" style={{padding:14, cursor:'pointer'}} data-hot onClick={() => {}}>
+              <span className="t13">Chính sách bảo mật</span><span className="muted">›</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="c g10">
+          <div className="tt">Cài đặt</div>
+          <div className="w-box r between" style={{padding:14, background:'#fff', cursor:'pointer'}} data-hot onClick={() => {}}>
+            <span className="t13">Ngôn ngữ</span>
+            <span className="r g8" style={{alignItems:'center'}}>
+              <span className="t12 muted">English</span>
+              <span className="muted">›</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  });
+}
+SHOP_SCREENS.find(s => s.id === 'shop-profile').render = sProfileHiFi;
+
+
+
+function HiFiApp({ mode, role, title, sub, screens, defaultId }){
+  const ids = screens.map(s => s.id);
+  const first = defaultId || ids[0];
+  const read = () => {
+    const h = decodeURIComponent((location.hash||'').replace(/^#/,''));
+    if(h && ids.includes(h)) return h;
+    return first;
+  };
+  const [cur, setCur] = useState(read);
+  const [open, setOpen] = useState(false);
+
+  const go = useCallback((id) => {
+    if(id === 'home'){ location.href = '../'; return; }
+    if(!ids.includes(id)){ console.warn('no screen', id); return; }
+    setCur(id);
+    location.hash = encodeURIComponent(id);
+    window.scrollTo(0,0);
+  }, []);
+
+  useEffect(() => { WF.go = go; }, [go]);
+  useEffect(() => {
+    const on = () => {
+      const h = decodeURIComponent((location.hash||'').replace(/^#/,''));
+      if(h && ids.includes(h)) setCur(h);
+    };
+    window.addEventListener('hashchange', on);
+    return () => window.removeEventListener('hashchange', on);
+  }, []);
+
+  // group by .group field for the picker
+  const groups = [];
+  screens.forEach(s => {
+    let g = groups.find(x => x.name === (s.group||''));
+    if(!g){ g = { name:s.group||'', items:[] }; groups.push(g); }
+    g.items.push(s);
+  });
+
+  const screen = screens.find(s => s.id === cur) || screens[0];
+  const idx = screens.indexOf(screen) + 1;
+
+  const hasBus = typeof LoyaltyState !== 'undefined';
+  const hasToast = typeof LoyaltyToast === 'function';
+  // Render the screen as a proper React component (not a function call) so
+  // hooks inside it get their own per-screen state. The key forces an
+  // unmount/remount on navigation — important for screens that compute
+  // something fresh on mount (e.g. shop scan-success records a new scan).
+  const ScreenComp = screen.render;
+
+  return (
+    <div className={cx('wf-shell hifi', 'mode-' + mode)}>
+      <div className="wf-stage">
+        <div className="wf-stage-pad"><ScreenComp key={screen.id} /></div>
+      </div>
+
+      <button className="hf-pick-btn" onClick={() => setOpen(o => !o)} title="Đổi màn demo">
+        <span className="hf-dot" />
+        <span>{screen.title}</span>
+        <span className="hf-meta">· {idx}/{screens.length}</span>
+      </button>
+
+      {open && (
+        <>
+          <div onClick={() => setOpen(false)}
+            style={{position:'fixed', inset:0, zIndex:999, background:'transparent'}} />
+          <div className="hf-pick-panel">
+            <div className="hf-pick-head">
+              <b>{role}</b>
+              <div className="r g8" style={{alignItems:'center'}}>
+                {hasBus && (
+                  <button className="hf-reset-btn"
+                    onClick={() => { LoyaltyState.reset(); }}
+                    title="Reset demo points & history">↻ Reset demo</button>
+                )}
+                <a href="../">‹ Tất cả role</a>
+              </div>
+            </div>
+            <div className="hf-pick-list">
+              {groups.map((g, gi) => (
+                <div key={gi}>
+                  {g.name && <div className="hf-pick-group">{g.name}</div>}
+                  {g.items.map(s => {
+                    const n = screens.indexOf(s) + 1;
+                    return (
+                      <button key={s.id}
+                        className={cx('hf-pick-item', s.id === cur && 'active')}
+                        onClick={() => { go(s.id); setOpen(false); }}>
+                        <span className="hf-pick-num">{n}</span>
+                        <span>{s.title}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+
+      {hasToast && <LoyaltyToast />}
+    </div>
+  );
+}
+
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <HiFiApp
+    mode="mobile"
+    role="Repair Shop"
+    title="Zalo Mini App"
+    sub="Tích điểm · Đổi quà"
+    screens={SHOP_SCREENS}
+    defaultId="shop-scan"
+  />
+);
+</script>
+</body>
+</html>
