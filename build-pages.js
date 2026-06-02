@@ -345,6 +345,16 @@ function HiFiApp({ mode, role, title, sub, screens, defaultId }){
 
   useEffect(() => { WF.go = go; }, [go]);
   useEffect(() => {
+    // Reflect the current screen in the URL on first load so bookmarking
+    // and link-sharing always show the explicit entry point (e.g. /npp/
+    // → /npp/#npp-login). replaceState avoids a history entry + does NOT
+    // fire hashchange, so listeners don't double-trigger.
+    const currentHash = decodeURIComponent((location.hash||'').replace(/^#/,''));
+    if (!currentHash && cur) {
+      try { history.replaceState(null, '', '#' + encodeURIComponent(cur)); } catch (e) {}
+    }
+  }, []);
+  useEffect(() => {
     const on = () => {
       const h = decodeURIComponent((location.hash||'').replace(/^#/,''));
       if(h && ids.includes(h)) setCur(h);
