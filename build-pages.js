@@ -1978,8 +1978,8 @@ SHOP_SCREENS.find(s => s.id === 'shop-profile').render = sProfileHiFi;
 // 5g. Per-role config
 const ROLE_CFG = {
   admin: { mode:'cms',    label:'Admin · Got It',     title:'Admin CMS',     sub:'Tạo NPP · Tích điểm · Quản trị',  constName:'ADMIN_SCREENS', defaultId:'login',       extraCss:'',                                  extraJs:'' },
-  npp:   { mode:'cms',    label:'NPP · Nhà phân phối',title:'NPP CMS',       sub:'Whitelist · Loyalty · Cashback', constName:'NPP_SCREENS',   defaultId:'npp-rewards', extraCss:scanCss + nppLoyaltyCss,             extraJs:scanIllusJs + loyaltyBusJs + nppScanJs + nppLoyaltyJs },
-  shop:  { mode:'mobile', label:'Repair Shop',        title:'Zalo Mini App', sub:'Tích điểm · Đổi quà',            constName:'SHOP_SCREENS',  defaultId:'shop-scan',   extraCss:scanCss + shopRedesignCss,           extraJs:scanIllusJs + loyaltyBusJs + shopScanJs + shopRedesignJs },
+  npp:   { mode:'cms',    label:'NPP · Nhà phân phối',title:'NPP CMS',       sub:'Whitelist · Loyalty · Cashback', constName:'NPP_SCREENS',   defaultId:'npp-login',   extraCss:scanCss + nppLoyaltyCss,             extraJs:scanIllusJs + loyaltyBusJs + nppScanJs + nppLoyaltyJs },
+  shop:  { mode:'mobile', label:'Repair Shop',        title:'Zalo Mini App', sub:'Tích điểm · Đổi quà',            constName:'SHOP_SCREENS',  defaultId:'shop-invite', extraCss:scanCss + shopRedesignCss,           extraJs:scanIllusJs + loyaltyBusJs + shopScanJs + shopRedesignJs },
   sales: { mode:'mobile', label:'Sales · Phase 2',    title:'App Sales',     sub:'Field · Check-in · Báo cáo',     constName:'SALES_SCREENS', defaultId:'sales-login', extraCss:'',                                  extraJs:'' },
 };
 
