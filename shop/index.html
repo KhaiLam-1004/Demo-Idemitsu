@@ -31,9 +31,13 @@
   --w-paper:    #FFFFFF;
   --w-canvas:   #D8DAde;   /* stage behind frames */
   --w-solid:    #C8102E;   /* Idemitsu red — primary filled control */
-  --w-brand:    #C8102E;   /* Idemitsu red */
+  --w-brand:    #C8102E;   /* Idemitsu red (Pantone 186C) */
+  --w-brand-dk: #8B0E22;   /* Idemitsu deep red */
   --w-brand-2:  #EF7D00;   /* Apollo orange accent */
+  --w-brand-3:  #F8B500;   /* Apollo gold (sun symbol) */
+  --w-brand-3l: #FFD86B;   /* Apollo gold light */
   --w-brand-bg: #FBE9EB;   /* red tint wash */
+  --w-brand-bg2:#FFF1F2;   /* lighter red wash */
   --w-hot:      #3F6CFF;   /* clickable affordance */
   --w-hot-bg:   #EAF0FF;
   --w-note:     #B5781A;   /* annotation ink */
@@ -642,21 +646,20 @@ body{ background:var(--w-canvas); }
  *  • Cards: clean white with subtle product framing
  * ============================================================ */
 
-/* Premium hero block (home + profile) */
+/* Premium hero block (home + profile) — Idemitsu Apollo brand: deep red → red → orange w/ Apollo sun */
 .shop-hero, .shop-profile-hero{
   position:relative; overflow:hidden;
   color:#fff;
   background:
-    radial-gradient(ellipse 80% 60% at 85% 15%, rgba(252,211,77,.45) 0%, transparent 55%),
-    radial-gradient(ellipse 70% 50% at 15% 85%, rgba(220,38,38,.22) 0%, transparent 55%),
-    linear-gradient(135deg, #261609 0%, #5C3416 30%, #9C5C12 65%, #C57A1B 100%);
+    radial-gradient(circle 110px at 88% 12%, rgba(255,216,107,.55) 0%, rgba(248,181,0,.32) 35%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 20% 90%, rgba(0,0,0,.18) 0%, transparent 60%),
+    linear-gradient(135deg, #8B0E22 0%, #C8102E 45%, #E54820 80%, #EF7D00 100%);
   border-radius:0 0 26px 26px;
 }
 .shop-hero::before, .shop-profile-hero::before{
   content:''; position:absolute; inset:0; pointer-events:none;
   background:
-    radial-gradient(circle at 90% 0%, rgba(255,213,128,.35), transparent 40%),
-    repeating-linear-gradient(135deg, transparent 0, transparent 6px, rgba(255,255,255,.018) 6px, rgba(255,255,255,.018) 7px);
+    repeating-linear-gradient(135deg, transparent 0, transparent 6px, rgba(255,255,255,.02) 6px, rgba(255,255,255,.02) 7px);
 }
 .shop-hero > *, .shop-profile-hero > *{ position:relative; z-index:1; }
 
@@ -672,24 +675,24 @@ body{ background:var(--w-canvas); }
 .shop-got-it .got{ color:#FCD34D; font-weight:800; font-size:16px; }
 .shop-got-it .it{ color:#fff; font-weight:800; font-size:16px; margin-left:1px; }
 
-/* Avatar circle */
+/* Avatar circle — Apollo gold */
 .shop-avatar-sm, .shop-avatar-lg{
   border-radius:50%; overflow:hidden; flex:none;
-  background:linear-gradient(135deg, #FCD34D, #F59E0B);
+  background:linear-gradient(135deg, var(--w-brand-3l), var(--w-brand-3));
   border:2px solid rgba(255,255,255,.6);
   box-shadow:0 3px 8px rgba(0,0,0,.25);
 }
 .shop-avatar-sm{ width:32px; height:32px; }
 .shop-avatar-lg{ width:64px; height:64px; }
 
-/* Gold "Hội viên vàng" tier pill */
+/* "Hội viên vàng" tier pill — Apollo gold */
 .shop-tier-pill{
   display:inline-flex; align-items:center; gap:5px;
   padding:3px 10px;
-  background:linear-gradient(135deg, #FCD34D, #F59E0B);
-  color:#7C2D12; font-size:10.5px; font-weight:800;
+  background:linear-gradient(135deg, var(--w-brand-3l), var(--w-brand-3));
+  color:#5C2400; font-size:10.5px; font-weight:800;
   border-radius:999px; letter-spacing:.05em;
-  box-shadow:0 2px 6px rgba(245,158,11,.45), inset 0 1px 0 rgba(255,255,255,.4);
+  box-shadow:0 2px 6px rgba(248,181,0,.45), inset 0 1px 0 rgba(255,255,255,.4);
   align-self:flex-start; white-space:nowrap;
 }
 .shop-tier-pill svg{ flex:none; }
@@ -709,9 +712,9 @@ body{ background:var(--w-canvas); }
 .shop-input-card .submit-btn{
   width:44px; height:44px; flex:none;
   border-radius:50%; border:none;
-  background:linear-gradient(135deg, #FBBF24, #F59E0B);
-  color:#fff; cursor:pointer;
-  box-shadow:0 4px 10px rgba(245,158,11,.4), inset 0 1px 0 rgba(255,255,255,.2);
+  background:linear-gradient(135deg, var(--w-brand-3l), var(--w-brand-3));
+  color:#5C2400; cursor:pointer;
+  box-shadow:0 4px 10px rgba(248,181,0,.45), inset 0 1px 0 rgba(255,255,255,.3);
   display:flex; align-items:center; justify-content:center;
   transition:transform .12s, box-shadow .12s;
 }
@@ -789,6 +792,172 @@ body{ background:var(--w-canvas); }
   font-size:13px; font-weight:700; color:#C8102E;
   margin-top:auto;
 }
+
+/* ===== Real image-based gift cards & banner ===== */
+.shop-hero-banner{
+  position:relative; height:170px; border-radius:14px; overflow:hidden;
+  background:#0F172A;
+  box-shadow:0 6px 18px rgba(15,23,42,.18);
+}
+.shop-hero-banner > img{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; transition:opacity .5s ease;
+}
+.shop-hero-banner > img.off{ opacity:0; }
+.shop-hero-banner .promo-dots{
+  position:absolute; bottom:10px; left:0; right:0; z-index:2;
+  display:flex; gap:6px; justify-content:center;
+}
+.shop-hero-banner .promo-dots i{
+  width:6px; height:6px; border-radius:50%;
+  background:rgba(255,255,255,.55); cursor:pointer; transition:width .2s, background .2s;
+}
+.shop-hero-banner .promo-dots i.on{
+  width:18px; border-radius:3px; background:#fff;
+}
+
+.shop-prod-thumb{
+  position:relative; aspect-ratio:1; overflow:hidden;
+  background:#F8FAFC; border-radius:12px 12px 0 0;
+  display:flex; align-items:center; justify-content:center;
+}
+.shop-prod-thumb > img{
+  width:100%; height:100%; object-fit:cover; display:block;
+}
+.shop-prod-thumb.fit > img{ object-fit:contain; padding:8px; }
+
+.shop-prod-merchant{
+  display:flex; align-items:center; gap:6px; min-width:0;
+}
+.shop-prod-merchant > .lg{
+  width:22px; height:22px; flex:none; border-radius:4px;
+  background:#fff; border:1px solid #F1F5F9; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+}
+.shop-prod-merchant > .lg > img{ width:100%; height:100%; object-fit:contain; }
+.shop-prod-merchant > .nm{
+  font-size:10.5px; font-weight:600; color:#64748B;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0;
+}
+
+/* Voucher card variant — branded gradient with denomination */
+.shop-voucher-card{
+  position:relative; aspect-ratio:16/10; border-radius:12px; overflow:hidden;
+  display:flex; flex-direction:column; justify-content:space-between;
+  padding:10px 12px; color:#fff;
+}
+.shop-voucher-card.coffee{ background:linear-gradient(135deg,#8B4513,#3E2723); }
+.shop-voucher-card.fuel{ background:linear-gradient(135deg,#005BAA,#1A237E); }
+.shop-voucher-card.shop{ background:linear-gradient(135deg,#E91E63,#880E4F); }
+.shop-voucher-card .vc-brand{ font-size:10px; font-weight:700; letter-spacing:.12em; opacity:.92; text-transform:uppercase; }
+.shop-voucher-card .vc-amount{ font-size:22px; font-weight:800; line-height:1; letter-spacing:-.02em; }
+.shop-voucher-card .vc-tag{ font-size:9.5px; opacity:.85; }
+.shop-voucher-card::after{
+  content:''; position:absolute; right:-30px; top:-30px; width:90px; height:90px;
+  border-radius:50%; background:rgba(255,255,255,.08);
+}
+
+/* Gift list row thumb */
+.shop-row-thumb{
+  width:46px; height:46px; flex:none; border-radius:8px; overflow:hidden;
+  background:#F8FAFC; display:flex; align-items:center; justify-content:center;
+}
+.shop-row-thumb > img{ width:100%; height:100%; object-fit:cover; }
+.shop-row-thumb.voucher{ color:#fff; font-weight:800; font-size:10px; letter-spacing:.05em; }
+.shop-row-thumb.v-coffee{ background:linear-gradient(135deg,#8B4513,#3E2723); }
+.shop-row-thumb.v-fuel{ background:linear-gradient(135deg,#005BAA,#1A237E); }
+.shop-row-thumb.v-shop{ background:linear-gradient(135deg,#E91E63,#880E4F); }
+
+/* ===== Rewards catalog (Figma node 29113:127499) ===== */
+.shop-cat-hero{
+  position:relative; overflow:hidden;
+  background:
+    radial-gradient(ellipse 60% 80% at 90% 10%, rgba(248,181,0,.30) 0%, transparent 55%),
+    linear-gradient(135deg, #EF7D00 0%, #C8102E 60%, #8B0E22 100%);
+  border-radius:0 0 20px 20px;
+  padding:12px 16px 16px;
+  display:flex; flex-direction:column; gap:8px;
+  color:#fff;
+}
+.shop-cat-hero > *{ position:relative; z-index:1; }
+.shop-cat-hero .top-row{
+  display:flex; align-items:center; gap:12px;
+}
+.shop-cat-hero .title{
+  flex:1; font-size:16px; font-weight:600; line-height:24px; color:#fff;
+}
+.shop-cat-hero .pt-pill{
+  display:flex; align-items:center; gap:4px;
+  font-size:16px; font-weight:600; color:#fff;
+}
+.shop-cat-hero .pt-pill .coin{
+  width:20px; height:20px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #FFE39A 0%, #F2A024 55%, #B25800 100%);
+  box-shadow:inset 0 -2px 4px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.45), 0 1px 2px rgba(0,0,0,.25);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Barlow', system-ui, sans-serif;
+  font-size:11px; font-weight:800; color:#5C2400;
+  text-shadow:0 1px 0 rgba(255,255,255,.35);
+}
+.shop-cat-hero .search-row{
+  display:flex; gap:12px; padding-top:4px;
+}
+.shop-cat-hero .search-box{
+  flex:1; height:44px; background:#fff; border-radius:12px;
+  display:flex; align-items:center; gap:7px; padding:0 16px;
+  color:#737373; font-size:14px;
+}
+.shop-cat-hero .search-box svg{ flex:none; }
+.shop-cat-hero .filter-btn{
+  width:44px; height:44px; background:#fff; border-radius:12px;
+  display:flex; align-items:center; justify-content:center; flex:none;
+  color:#262626;
+}
+
+.shop-cat-row{
+  display:flex; gap:4px; align-items:flex-start;
+  overflow-x:auto; padding-bottom:4px; margin-inline:-4px; padding-inline:4px;
+  scrollbar-width:none;
+}
+.shop-cat-row::-webkit-scrollbar{ display:none; }
+.shop-cat-item{
+  flex:none; width:72px;
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  cursor:pointer;
+}
+.shop-cat-bubble{
+  width:40px; height:40px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; flex:none;
+  background:#fff; box-shadow:0 0 8px rgba(51,51,51,.12);
+  transition:background .15s, box-shadow .15s, transform .15s;
+}
+.shop-cat-bubble.active{ background:var(--w-brand-bg); box-shadow:inset 0 0 0 1.5px var(--w-brand); }
+.shop-cat-bubble:hover{ transform:translateY(-1px); }
+.shop-cat-item .label{
+  font-size:12px; line-height:1.35; text-align:center; color:#404040;
+  display:-webkit-box; -webkit-line-clamp:2; line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+}
+.shop-cat-item.active .label{ font-weight:600; color:#C8102E; }
+
+.shop-cat-section-title{
+  display:flex; align-items:baseline; gap:6px;
+}
+.shop-cat-section-title .main{ font-size:16px; font-weight:600; color:#262626; }
+.shop-cat-section-title .meta{ font-size:14px; color:#737373; }
+
+.shop-cat-grid{
+  display:grid; grid-template-columns:1fr 1fr; gap:16px;
+}
+
+@keyframes shopSpin{ to{ transform:rotate(360deg); } }
+
+/* Gift detail hero image */
+.shop-gift-hero{
+  width:100%; aspect-ratio:1; background:#F8FAFC;
+  display:flex; align-items:center; justify-content:center; overflow:hidden;
+}
+.shop-gift-hero > img{ width:100%; height:100%; object-fit:cover; }
+.shop-gift-hero.fit > img{ object-fit:contain; padding:24px; }
 
 /* Profile contact rows */
 .shop-profile-contact{
@@ -1178,6 +1347,86 @@ const SHOP_NAV = [
 ];
 function navWith(active){ return SHOP_NAV.map((n,i)=> i===active ? n.label : n); }
 
+/* ===== Real gift catalog (assets from Got It Loyalty base design) ===== */
+const SHOP_BANNERS = [
+  'assets/banner-1.png',
+  'assets/banner-2.png',
+  'assets/banner-3.png',
+];
+const SHOP_GIFTS = [
+  { id:'iphone17',  name:'iPhone 17 Pro Max cam vũ trụ 256GB',  brand:'Apple',       img:'assets/prod-iphone17.png',         logo:'assets/brand-apple.png',    pts:25000, fit:false },
+  { id:'imac',      name:'iMac màu xanh 8GB RAM',                brand:'Apple',       img:'assets/prod-imac-blue.png',        logo:'assets/brand-apple.png',    pts:35000, fit:true  },
+  { id:'samsungc',  name:'Sạc di động đa năng công suất cao',    brand:'Samsung',     img:'assets/prod-samsung-charger.png',  logo:'assets/brand-samsung.png',  pts:2500,  fit:false },
+  { id:'baseus',    name:'Sạc di động Anker tím',                brand:'Baseus',      img:'assets/prod-baseus-anker.png',     logo:'assets/brand-baseus.png',   pts:1800,  fit:false },
+  { id:'locklock',  name:'Combo 3 bình giữ nhiệt tươi mát',      brand:'Lock & Lock', img:'assets/prod-locklock-bottles.png', logo:'assets/brand-locklock.png', pts:3500,  fit:true  },
+  { id:'xiaomifan', name:'Quạt cầm tay giải nhiệt mùa hè',       brand:'Xiaomi',      img:'assets/prod-xiaomi-fan.png',       logo:'assets/brand-xiaomi.png',   pts:1200,  fit:true  },
+];
+const SHOP_VOUCHERS = [
+  { id:'hl-coffee', name:'Voucher Highlands Coffee 50K',         brand:'Highlands',   theme:'coffee', amount:'50K',  pts:500,  tag:'Áp dụng toàn quốc' },
+  { id:'fuel-100',  name:'Voucher đổ xăng 100K',                 brand:'Petrolimex',  theme:'fuel',   amount:'100K', pts:1000, tag:'Cây xăng Petrolimex' },
+  { id:'shop-200',  name:'Voucher mua sắm 200K',                 brand:'GotIt Mall',  theme:'shop',   amount:'200K', pts:2000, tag:'Áp dụng đơn từ 500K' },
+];
+const giftById = (id) => SHOP_GIFTS.find(g => g.id === id) || SHOP_GIFTS[0];
+const voucherById = (id) => SHOP_VOUCHERS.find(v => v.id === id) || SHOP_VOUCHERS[0];
+
+/* Demo state: which gift the user tapped most recently → drives detail/redeem screens */
+let SHOP_PICK = { giftId: 'iphone17', voucherId: 'hl-coffee', kind: 'gift' };
+function pickGift(id){ SHOP_PICK.giftId = id; SHOP_PICK.kind = 'gift'; }
+function pickVoucher(id){ SHOP_PICK.voucherId = id; SHOP_PICK.kind = 'voucher'; }
+
+/* Product thumbnail card — image + brand logo + name + points */
+function GiftThumb({gift, onClick}){
+  return (
+    <div className="w-card shop-product-card" data-hot onClick={onClick}>
+      <div className={cx('shop-prod-thumb', gift.fit && 'fit')}>
+        <img src={gift.img} alt={gift.name} loading="lazy"/>
+      </div>
+      <div className="shop-product-info">
+        <div className="shop-prod-merchant">
+          <span className="lg"><img src={gift.logo} alt={gift.brand}/></span>
+          <span className="nm">{gift.brand}</span>
+        </div>
+        <span className="shop-product-name">{gift.name}</span>
+        <span className="shop-product-pts">{(typeof fmtNum==='function'?fmtNum(gift.pts):gift.pts)} điểm</span>
+      </div>
+    </div>
+  );
+}
+
+/* Voucher card — colored brand gradient with denomination */
+function VoucherCard({v, onClick}){
+  return (
+    <div className={cx('shop-voucher-card', v.theme)} data-hot onClick={onClick}>
+      <div className="vc-brand">{v.brand}</div>
+      <div className="c g4">
+        <div className="vc-amount">{v.amount}</div>
+        <div className="vc-tag">{v.tag}</div>
+      </div>
+    </div>
+  );
+}
+
+/* Rotating banner with dots */
+function ShopHeroBanner(){
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setIdx(i => (i+1) % SHOP_BANNERS.length), 3500);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <div className="shop-hero-banner">
+      {SHOP_BANNERS.map((b,i) => (
+        <img key={i} src={b} alt="" className={i===idx?'':'off'} loading="lazy"/>
+      ))}
+      <div className="promo-dots">
+        {SHOP_BANNERS.map((_,i) => (
+          <i key={i} className={i===idx?'on':''} onClick={()=>setIdx(i)}/>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* illustrative branded image placeholder (vẽ sẵn, không cần chọn ảnh) */
 function Illus({kind='gift', h, w, r=10, style}){
   const grads = {
@@ -1460,22 +1709,36 @@ function sHistory(){
 /* 8b — lịch sử ĐIỂM ĐỔI (đổi quà) */
 function sHistoryRedeem(){
   const rows = [
-    ['Voucher Highlands Coffee','Voucher','-2.000','28/05 10:20'],
-    ['Robotek W600 Vacuum','Quà vật lý · #DG-20581','-3.000','25/05 09:05'],
-    ['Voucher xăng 100k','Voucher','-1.000','20/05 18:40'],
+    { kind:'voucher', v:voucherById('hl-coffee'),  sub:'28/05 10:20', delta:'-500'   },
+    { kind:'gift',    g:giftById('locklock'),       sub:'#DG-20581 · 25/05 09:05', delta:'-3.500' },
+    { kind:'voucher', v:voucherById('fuel-100'),   sub:'20/05 18:40', delta:'-1.000' },
+    { kind:'gift',    g:giftById('xiaomifan'),      sub:'#DG-20475 · 15/05 14:32', delta:'-1.200' },
   ];
   return SPhone({ title:null, nav:4, body:
     <div className="c" style={{height:'100%'}}>
       {histBar()}
       <div style={{padding:16, display:'flex', flexDirection:'column', gap:12}}>
         {histTabs('doi')}
-        <div className="w-box r between" style={{padding:'10px 13px'}}><span className="t12 muted">Tổng điểm đã đổi</span><b className="t13">-6.000</b></div>
-        {rows.map((r,i)=>
-          <div key={i} className="w-box r g12" style={{padding:'12px 13px'}} data-hot onClick={()=>WF.go('shop-gift-detail')}>
-            <Illus kind="voucher" w={40} h={40} r={8} style={{flex:'none'}} />
-            <div className="grow c g4"><b className="t13">{r[0]}</b><span className="t11 muted">{r[1]}</span><span className="t11 muted">{r[3]}</span></div>
-            <Chip solid>{r[2]}đ</Chip>
-          </div>)}
+        <div className="w-box r between" style={{padding:'10px 13px'}}><span className="t12 muted">Tổng điểm đã đổi</span><b className="t13">-6.200</b></div>
+        {rows.map((r,i) => {
+          const isV = r.kind==='voucher';
+          const title = isV ? r.v.name : r.g.name;
+          const onTap = () => { if(isV){ pickVoucher(r.v.id); WF.go('shop-gift-detail'); } else { pickGift(r.g.id); WF.go('shop-gift-physical'); } };
+          return (
+            <div key={i} className="w-box r g12" style={{padding:'12px 13px', alignItems:'center'}} data-hot onClick={onTap}>
+              {isV
+                ? <div className={cx('shop-row-thumb voucher','v-'+r.v.theme)} style={{width:40,height:40,fontSize:9}}>{r.v.amount}</div>
+                : <div className="shop-row-thumb" style={{width:40,height:40}}><img src={r.g.img} alt={title} style={{objectFit:r.g.fit?'contain':'cover', padding:r.g.fit?3:0}}/></div>
+              }
+              <div className="grow c g4" style={{minWidth:0}}>
+                <b className="t13" style={{lineHeight:1.3, overflow:'hidden', textOverflow:'ellipsis', display:'-webkit-box', WebkitLineClamp:1, WebkitBoxOrient:'vertical'}}>{title}</b>
+                <span className="t11 muted">{isV?'Voucher · '+r.v.brand : 'Quà vật lý · '+r.g.brand}</span>
+                <span className="t11 muted">{r.sub}</span>
+              </div>
+              <Chip solid>{r.delta}đ</Chip>
+            </div>
+          );
+        })}
         <Note><Pin n="5"/> Điểm đổi = lịch sử <b>đổi quà/voucher</b> (điểm bị trừ). Bấm dòng để xem chi tiết quà đã đổi.</Note>
       </div>
     </div>
@@ -1525,41 +1788,158 @@ function sProfile(){
   });
 }
 
-/* 9 — rewards catalog */
+/* 9 — rewards catalog (Figma: Danh mục / Default — node 29113:127499) */
+const SHOP_CATS = ['Tất cả','Mới','Cafe & Bánh','Tiện ích','Thực phẩm'];
 function sRewards(){
-  return SPhone({ title:'Danh mục quà', nav:1, body:
-    <div style={{padding:16, display:'flex', flexDirection:'column', gap:16}}>
-      <Input placeholder="🔍 Tìm quà / voucher" />
-      <div className="r g8 wrap"><Chip solid>Tất cả</Chip><Chip>Cafe & Bánh</Chip><Chip>Tiện ích</Chip><Chip>Quà vật lý</Chip></div>
-      <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:12}}>
-        {Array.from({length:6}).map((_,i)=>
-          <div key={i} className="w-card" style={{padding:8}} data-hot onClick={()=>WF.go('shop-reward-detail')}>
-            <Illus kind={i%2?'voucher':'gift'} h={92} style={{marginBottom:8}}/>
-            <Line sm w="85%" /><div style={{height:6}}/><Line sm w="55%" />
-            <div className="r between" style={{marginTop:10}}><Chip solid>{[2000,5000,1500,8000,3000,1000][i].toLocaleString('vi')}đ</Chip><span className="muted">›</span></div>
-          </div>)}
+  const state = (typeof LoyaltyState !== 'undefined') ? useLoyaltyState() : null;
+  const points = state ? state.shopPoints : 2000;
+  const [cat, setCat] = useState('Tất cả');
+  const fmt = (n) => (typeof fmtNum==='function'?fmtNum(n):n);
+
+  const total = SHOP_GIFTS.length + SHOP_VOUCHERS.length;
+
+  return SPhone({ title:null, nav:1, scroll:true, body:
+    <div className="c" style={{padding:0, background:'#FAFAFA', minHeight:'100%'}}>
+      {/* Red gradient header: title + coin balance + search + filter */}
+      <div className="shop-cat-hero">
+        <div className="top-row">
+          <div className="title">Danh mục</div>
+          <div className="pt-pill">
+            <span className="coin">G</span>
+            <span>{fmt(points)}</span>
+          </div>
+        </div>
+        <div className="search-row">
+          <div className="search-box">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <span>Tìm kiếm quà</span>
+          </div>
+          <div className="filter-btn" data-hot onClick={()=>{}}>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M3 6h13l1.7-1.7a2 2 0 1 1 2.8 2.8L18.8 8.8A2.1 2.1 0 0 1 17.3 9.5H3a1 1 0 0 1 0-2zM21 11H8l-1.7-1.7a2 2 0 0 0-2.8 2.8L5.2 13.8A2.1 2.1 0 0 0 6.7 14.5H21a1 1 0 0 0 0-2zM3 17h13l1.7-1.7a2 2 0 1 1 2.8 2.8L18.8 19.8a2.1 2.1 0 0 1-1.5.7H3a1 1 0 0 1 0-2z"/></svg>
+          </div>
+        </div>
       </div>
-      <Note><Pin n="6"/> Danh mục quà do Got It cung cấp — tận dụng <b>catalog Campaign tool</b>.</Note>
+
+      <div style={{padding:'20px 16px 24px', display:'flex', flexDirection:'column', gap:24}}>
+        {/* Category list (horizontal scroll) */}
+        <div className="shop-cat-row">
+          {SHOP_CATS.map(c => (
+            <div key={c} className={cx('shop-cat-item', cat===c && 'active')} onClick={()=>setCat(c)}>
+              <span className={cx('shop-cat-bubble', cat===c && 'active')}>
+                <ShopCatBubbleIcon label={c} active={cat===c}/>
+              </span>
+              <span className="label">{c}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Section title */}
+        <div className="c g16">
+          <div className="shop-cat-section-title">
+            <span className="main">{cat}</span>
+            <span className="meta">({total} sản phẩm)</span>
+          </div>
+
+          <div className="shop-cat-grid">
+            {SHOP_GIFTS.map(g => (
+              <GiftThumb key={g.id} gift={g} onClick={() => { pickGift(g.id); WF.go('shop-reward-detail'); }}/>
+            ))}
+            {SHOP_VOUCHERS.map(v => (
+              <div key={v.id} className="w-card shop-product-card" style={{padding:0}} data-hot onClick={() => { pickVoucher(v.id); WF.go('shop-reward-detail'); }}>
+                <div style={{padding:8}}><VoucherCard v={v}/></div>
+                <div className="shop-product-info">
+                  <div className="shop-prod-merchant">
+                    <span className="lg" style={{background:'#FFF1F2', color:'#C8102E', fontSize:9, fontWeight:800}}>VC</span>
+                    <span className="nm">{v.brand}</span>
+                  </div>
+                  <span className="shop-product-name">{v.name}</span>
+                  <span className="shop-product-pts">{fmt(v.pts)} điểm</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Loading indicator (Figma shows a spinner under list) */}
+        <div className="r" style={{justifyContent:'center', padding:'8px 0'}}>
+          <span style={{width:30, height:30, borderRadius:'50%', border:'3px solid var(--w-brand-bg)', borderTopColor:'var(--w-brand)', animation:'shopSpin 1s linear infinite', display:'inline-block'}}/>
+        </div>
+      </div>
+
+      <Note style={{margin:'0 16px 16px'}}><Pin n="6"/> Danh mục quà do Got It cung cấp — tận dụng <b>catalog Campaign tool</b>. Bấm category để lọc; bấm thẻ để xem chi tiết.</Note>
     </div>
   });
 }
 
+/* Smaller category bubble icon (24px) matching Figma red theme */
+function ShopCatBubbleIcon({label, active}){
+  const defs = {
+    'Tất cả':      'M3 8h7v3H3z M14 8h7v3h-7z M3 14h7v3H3z M14 14h7v3h-7z',
+    'Mới':         'M12 2l2.4 5 5.6.8-4 3.9 1 5.5L12 14.8 7 17.7l1-5.5-4-3.9 5.6-.8z',
+    'Cafe & Bánh': 'M4 8h13v5a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z M17 9h2a2 2 0 0 1 0 4h-2 M7 3v2 M11 3v2',
+    'Tiện ích':    'M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z M9 12l2 2 4-4',
+    'Thực phẩm':   'M6 2v8a3 3 0 0 0 6 0V2 M9 2v20 M17 2c-2 1-3 3-3 6v4h3z M17 12v10',
+  };
+  const color = active ? '#C8102E' : '#737373';
+  return (
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none"
+         stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d={defs[label] || defs['Tất cả']}/>
+    </svg>
+  );
+}
+
 /* 10 — reward detail */
 function sRewardDetail(){
+  const isVoucher = SHOP_PICK.kind === 'voucher';
+  const g = !isVoucher ? giftById(SHOP_PICK.giftId) : null;
+  const v = isVoucher ? voucherById(SHOP_PICK.voucherId) : null;
+  const fmt = (n) => (typeof fmtNum==='function'?fmtNum(n):n);
   return SPhone({ title:'Chi tiết quà', nav:null, scroll:true, body:
     <div className="c">
-      <Illus kind="gift" h={200} r={0} />
+      {isVoucher ? (
+        <div style={{padding:16}}><VoucherCard v={v}/></div>
+      ) : (
+        <div className={cx('shop-gift-hero', g.fit && 'fit')}>
+          <img src={g.img} alt={g.name}/>
+        </div>
+      )}
       <div style={{padding:16, display:'flex', flexDirection:'column', gap:14}}>
-        <div className="h2">Voucher / Quà mẫu</div>
-        <div className="r g8"><Chip solid>5.000 điểm</Chip><Chip>Còn 120</Chip></div>
+        {!isVoucher && (
+          <div className="shop-prod-merchant">
+            <span className="lg"><img src={g.logo} alt={g.brand}/></span>
+            <span className="nm" style={{fontSize:12}}>{g.brand}</span>
+          </div>
+        )}
+        <div className="h2">{isVoucher ? v.name : g.name}</div>
+        <div className="r g8"><Chip solid>{fmt(isVoucher ? v.pts : g.pts)} điểm</Chip><Chip>Còn {isVoucher?'500':'120'}</Chip></div>
         <Divider/>
-        <div className="c g8"><div className="h3">Mô tả</div><Lines n={4} /></div>
-        <div className="c g8"><div className="h3">Điều kiện</div><Lines n={2} last="50%" /></div>
+        <div className="c g8">
+          <div className="h3">Mô tả</div>
+          {isVoucher ? (
+            <div className="t12" style={{color:'#475569', lineHeight:1.6}}>
+              {v.tag}. Mã voucher cấp duy nhất sau khi đổi điểm, hiển thị trong "Quà của tôi" và có thể chia sẻ cho khách hàng.
+            </div>
+          ) : (
+            <div className="t12" style={{color:'#475569', lineHeight:1.6}}>
+              Sản phẩm chính hãng {g.brand}, được bảo hành 12 tháng. Quà vật lý sẽ giao tận nơi 5–7 ngày làm việc kể từ khi xác nhận đổi.
+            </div>
+          )}
+        </div>
+        <div className="c g8">
+          <div className="h3">Điều kiện</div>
+          <div className="t12" style={{color:'#475569', lineHeight:1.6}}>
+            • Áp dụng cho hội viên Vàng trở lên<br/>
+            • Mỗi shop tối đa đổi 2 lần/tháng<br/>
+            • Không hoàn điểm sau khi đã đổi
+          </div>
+        </div>
         <div style={{height:60}} />
       </div>
       <div className="w-box" style={{position:'sticky', bottom:0, padding:14, borderRadius:0, borderLeft:'none', borderRight:'none', background:'#fff', display:'flex', gap:10}}>
-        <Btn block ghost to="shop-redeem-physical">Quà vật lý</Btn>
-        <Btn block to="shop-redeem-voucher">Đổi voucher</Btn>
+        {isVoucher
+          ? <Btn block to="shop-redeem-voucher">Đổi voucher</Btn>
+          : <Btn block to="shop-redeem-physical">Đổi quà vật lý</Btn>}
       </div>
     </div>
   });
@@ -1567,11 +1947,14 @@ function sRewardDetail(){
 
 /* 11 — redeem voucher (pick unique code) */
 function sRedeemVoucher(){
+  const v = voucherById(SHOP_PICK.voucherId);
+  const fmt = (n) => (typeof fmtNum==='function'?fmtNum(n):n);
   return SPhone({ title:'Đổi voucher', nav:null, scroll:false, note:<><Pin n="7"/> Voucher: hệ thống <b>cấp mã unique</b> từ voucher pool. Mã hiển thị một lần & lưu trong "Quà của tôi".</>, body:
     <div className="c" style={{height:'100%'}}>
       <div style={{flex:1, padding:20, display:'flex', flexDirection:'column', gap:16, alignItems:'center', justifyContent:'center'}}>
         <Tick />
-        <div className="center-text"><div className="h2">Đổi thành công</div><div className="t12 muted">Đã trừ 5.000 điểm</div></div>
+        <div className="center-text"><div className="h2">Đổi thành công</div><div className="t12 muted">{v.name} · đã trừ {fmt(v.pts)} điểm</div></div>
+        <div style={{width:160}}><VoucherCard v={v}/></div>
         <div className="w-box fill-w c g10" style={{padding:16, alignItems:'center'}}>
           <span className="t11 muted">Mã voucher của bạn</span>
           <div className="w-fill" style={{padding:'10px 16px', borderRadius:8, letterSpacing:2}}><b>IDMT-VC-8F4K2Q</b></div>
@@ -1586,9 +1969,20 @@ function sRedeemVoucher(){
 
 /* 12 — redeem physical (delivery form) */
 function sRedeemPhysical(){
+  const g = giftById(SHOP_PICK.giftId);
+  const fmt = (n) => (typeof fmtNum==='function'?fmtNum(n):n);
   return SPhone({ title:'Nhận quà vật lý', nav:null, scroll:true, body:
     <div style={{padding:16, display:'flex', flexDirection:'column', gap:16}}>
-      <div className="w-box r g12" style={{padding:10}}><Illus kind="gift" w={48} h={48} r={8} style={{flex:'none'}}/><div className="grow c g4"><b className="t13">Quà vật lý mẫu</b><Chip solid>8.000 điểm</Chip></div></div>
+      <div className="w-box r g12" style={{padding:10, alignItems:'center'}}>
+        <div className="shop-row-thumb" style={{width:56, height:56}}>
+          <img src={g.img} alt={g.name} style={{objectFit:g.fit?'contain':'cover', padding:g.fit?4:0}}/>
+        </div>
+        <div className="grow c g4">
+          <div className="shop-prod-merchant"><span className="lg"><img src={g.logo} alt={g.brand}/></span><span className="nm">{g.brand}</span></div>
+          <b className="t13" style={{lineHeight:1.3}}>{g.name}</b>
+          <Chip solid>{fmt(g.pts)} điểm</Chip>
+        </div>
+      </div>
       <div className="h3">Thông tin giao nhận</div>
       <Field label="Người nhận" req><Input placeholder="Họ tên" /></Field>
       <Field label="Số điện thoại" req><Input placeholder="09xx xxx xxx" /></Field>
@@ -1601,15 +1995,21 @@ function sRedeemPhysical(){
 
 /* 13 — redeem success (physical) */
 function sRedeemSuccess(){
+  const g = giftById(SHOP_PICK.giftId);
+  const fmt = (n) => (typeof fmtNum==='function'?fmtNum(n):n);
   return SPhone({ title:null, nav:null, scroll:false, body:
     <div className="c" style={{height:'100%'}}>
       <div className="w-zalo-bar"><span style={{width:20}}/><span className="ztitle">Đã đặt đổi quà</span><span className="muted" data-hot onClick={()=>WF.go('shop-home')} style={{fontSize:16}}>✕</span></div>
       <div style={{flex:1, padding:20, display:'flex', flexDirection:'column', gap:16, alignItems:'center', justifyContent:'center'}}>
         <Tick />
         <div className="center-text"><div className="h2">Đặt đổi thành công</div><div className="t12 muted">Đơn #DG-20581 · đang xử lý</div></div>
+        <div style={{width:120, height:120, borderRadius:12, overflow:'hidden', background:'#F8FAFC', display:'flex', alignItems:'center', justifyContent:'center'}}>
+          <img src={g.img} alt={g.name} style={{width:'100%', height:'100%', objectFit:g.fit?'contain':'cover', padding:g.fit?8:0}}/>
+        </div>
         <div className="w-box fill-w c g10" style={{padding:14}}>
-          <div className="r between t12"><span className="muted">Quà</span><b>Quà vật lý mẫu</b></div>
-          <div className="r between t12"><span className="muted">Điểm đã trừ</span><b>8.000</b></div>
+          <div className="r between t12"><span className="muted">Quà</span><b style={{textAlign:'right', maxWidth:'60%'}}>{g.name}</b></div>
+          <div className="r between t12"><span className="muted">Thương hiệu</span><b>{g.brand}</b></div>
+          <div className="r between t12"><span className="muted">Điểm đã trừ</span><b>{fmt(g.pts)}</b></div>
           <div className="r between t12"><span className="muted">Dự kiến giao</span><b>5–7 ngày</b></div>
         </div>
         <Btn block to="shop-mygifts">Xem trong Quà của tôi</Btn>
@@ -1620,36 +2020,56 @@ function sRedeemSuccess(){
 
 /* 14 — my gifts */
 function sMyGifts(){
+  const rows = [
+    { kind:'voucher', v:voucherById('hl-coffee'),    sub:'Voucher · còn hạn 30/06', state:'Khả dụng', tag:'ok',   to:'shop-gift-detail' },
+    { kind:'gift',    g:giftById('locklock'),         sub:'Đơn #DG-20581',           state:'Đang giao', tag:'warn', to:'shop-gift-physical' },
+    { kind:'gift',    g:giftById('xiaomifan'),        sub:'Đơn #DG-20475',           state:'Đã giao',   tag:'ok',   to:'shop-gift-physical' },
+    { kind:'voucher', v:voucherById('fuel-100'),     sub:'Voucher',                  state:'Đã dùng',   tag:'',     to:'shop-gift-detail' },
+  ];
   return SPhone({ title:'Quà của tôi', nav:3, body:
     <div style={{padding:16, display:'flex', flexDirection:'column', gap:12}}>
       <div className="r g8"><Chip solid>Tất cả</Chip><Chip>Voucher</Chip><Chip>Quà vật lý</Chip></div>
-      {[
-        ['Voucher cafe 50k','Voucher · còn hạn 30/06','Khả dụng','ok','voucher','shop-gift-detail'],
-        ['Quà vật lý mẫu','Đơn #DG-20581','Đang giao','warn','gift','shop-gift-physical'],
-        ['Voucher xăng 100k','Voucher','Đã dùng','','voucher','shop-gift-detail'],
-      ].map((x,i)=>
-        <div key={i} className="w-box r g12" style={{padding:'12px 13px'}} data-hot onClick={()=>WF.go(x[5])}>
-          <Illus kind={x[4]} w={46} h={46} r={8} style={{flex:'none'}} />
-          <div className="grow c g4"><b className="t13">{x[0]}</b><span className="t11 muted">{x[1]}</span></div>
-          <Badge kind={x[3]}>{x[2]}</Badge>
-        </div>)}
+      {rows.map((r,i)=>{
+        const isV = r.kind==='voucher';
+        const title = isV ? r.v.name : r.g.name;
+        const onTap = () => { if(isV){ pickVoucher(r.v.id); } else { pickGift(r.g.id); } WF.go(r.to); };
+        return (
+          <div key={i} className="w-box r g12" style={{padding:'12px 13px', alignItems:'center'}} data-hot onClick={onTap}>
+            {isV
+              ? <div className={cx('shop-row-thumb voucher', 'v-'+r.v.theme)}>{r.v.amount}</div>
+              : <div className="shop-row-thumb"><img src={r.g.img} alt={title} style={{objectFit:r.g.fit?'contain':'cover', padding:r.g.fit?4:0}}/></div>
+            }
+            <div className="grow c g4" style={{minWidth:0}}>
+              <b className="t13" style={{lineHeight:1.3, overflow:'hidden', textOverflow:'ellipsis', display:'-webkit-box', WebkitLineClamp:1, WebkitBoxOrient:'vertical'}}>{title}</b>
+              <span className="t11 muted">{isV ? r.v.brand+' · '+r.sub : r.g.brand+' · '+r.sub}</span>
+            </div>
+            <Badge kind={r.tag}>{r.state}</Badge>
+          </div>
+        );
+      })}
     </div>
   });
 }
 
-/* 15 — gift detail */
+/* 15 — gift detail (voucher) */
 function sGiftDetail(){
+  const v = voucherById(SHOP_PICK.voucherId);
   return SPhone({ title:'Chi tiết quà', nav:null, scroll:true, body:
     <div style={{padding:16, display:'flex', flexDirection:'column', gap:16, alignItems:'center'}}>
-      <Illus kind="voucher" h={120} />
-      <div className="center-text"><div className="h3">Voucher cafe 50k</div><Badge kind="ok" style={{marginTop:6}}>Khả dụng · HSD 30/06/2026</Badge></div>
+      <div style={{width:'80%'}}><VoucherCard v={v}/></div>
+      <div className="center-text"><div className="h3">{v.name}</div><Badge kind="ok" style={{marginTop:6}}>Khả dụng · HSD 30/06/2026</Badge></div>
       <div className="w-box fill-w c g10" style={{padding:16, alignItems:'center'}}>
         <span className="t11 muted">Mã sử dụng</span>
         <div className="w-fill" style={{padding:'10px 16px', borderRadius:8, letterSpacing:2}}><b>IDMT-VC-8F4K2Q</b></div>
         <Illus kind="qr" h={110} w={110} style={{marginTop:4}} />
       </div>
       <div className="w-box fill-w c g8" style={{padding:14}}>
-        <div className="t11 muted">Hướng dẫn sử dụng</div><Lines n={3} last="60%" />
+        <div className="t11 muted">Hướng dẫn sử dụng</div>
+        <div className="t12" style={{color:'#475569', lineHeight:1.6}}>
+          • Xuất trình mã QR/ID tại {v.brand} khi thanh toán<br/>
+          • {v.tag}<br/>
+          • Mỗi mã chỉ dùng được một lần
+        </div>
       </div>
       <Btn block ghost to="shop-mygifts">Quay lại</Btn>
     </div>
@@ -1658,12 +2078,20 @@ function sGiftDetail(){
 
 /* 15b — gift detail: PHYSICAL */
 function sGiftPhysical(){
+  const g = giftById(SHOP_PICK.giftId);
+  const fmt = (n) => (typeof fmtNum==='function'?fmtNum(n):n);
   return SPhone({ title:'Chi tiết quà', nav:null, scroll:true, body:
     <div style={{padding:16, display:'flex', flexDirection:'column', gap:16, alignItems:'center'}}>
-      <Illus kind="gift" h={140} />
-      <div className="center-text"><div className="h3">Quà vật lý mẫu</div><Badge kind="warn" style={{marginTop:6}}>Đang giao · Đơn #DG-20581</Badge></div>
+      <div style={{width:'100%', aspectRatio:'1.5', borderRadius:12, overflow:'hidden', background:'#F8FAFC', display:'flex', alignItems:'center', justifyContent:'center'}}>
+        <img src={g.img} alt={g.name} style={{width:'100%', height:'100%', objectFit:g.fit?'contain':'cover', padding:g.fit?16:0}}/>
+      </div>
+      <div className="center-text c g4">
+        <div className="shop-prod-merchant" style={{justifyContent:'center'}}><span className="lg"><img src={g.logo} alt={g.brand}/></span><span className="nm">{g.brand}</span></div>
+        <div className="h3">{g.name}</div>
+        <Badge kind="warn" style={{marginTop:6}}>Đang giao · Đơn #DG-20581</Badge>
+      </div>
       <div className="w-box fill-w c g10" style={{padding:14}}>
-        <div className="r between t12"><span className="muted">Điểm đã đổi</span><b>8.000</b></div>
+        <div className="r between t12"><span className="muted">Điểm đã đổi</span><b>{fmt(g.pts)}</b></div>
         <div className="r between t12"><span className="muted">Người nhận</span><b>Anh Nguyễn Văn Hùng</b></div>
         <div className="r between t12"><span className="muted">SĐT</span><b>090 999 8876</b></div>
         <div className="r between t12"><span className="muted">Dự kiến giao</span><b>5–7 ngày</b></div>
@@ -2144,7 +2572,7 @@ function ShopCatIcon({label, active}){
     : '#FFF1F2';
   const shadow = active
     ? '0 6px 14px ' + def.color + '55, inset 0 1px 0 rgba(255,255,255,.2)'
-    : 'inset 0 0 0 1px #FECDD3';
+    : 'inset 0 0 0 1px var(--w-brand-bg)';
   return (
     <span style={{
       width:50, height:50, borderRadius:14,
@@ -2197,12 +2625,7 @@ function sHomeHiFi() {
   const state = (typeof LoyaltyState !== 'undefined') ? useLoyaltyState() : null;
   const points = state ? state.shopPoints : 5000;
   const cats = ['Tất cả','Mới','Cafe & Bánh','Tiện ích','Thực phẩm'];
-  const products = [
-    { brand:'Anker',       name:'Sạc nhanh Anker tím 65W',          pts:1000, kind:'charger' },
-    { brand:'Samsung',     name:'Tai nghe không dây Galaxy Buds',    pts:1000, kind:'audio'   },
-    { brand:'Apple',       name:'iPhone 17 Pro Max cam vũ trụ 256GB',pts:5000, kind:'phone'   },
-    { brand:'Lock & Lock', name:'Combo 3 bình giữ nhiệt thời thượng',pts:1500, kind:'thermos' },
-  ];
+  const products = SHOP_GIFTS.slice(0, 4);
   const fmtPts = (n) => (typeof fmtNum === 'function' ? fmtNum(n) : String(n));
 
   return SPhone({ title:null, nav:0, scroll:true, body:
@@ -2240,14 +2663,7 @@ function sHomeHiFi() {
         {/* Khuyến mãi cực lớn */}
         <div className="c g10">
           <div className="h3">Khuyến mãi cực lớn</div>
-          <div className="shop-promo-banner">
-            <div className="promo-device"><PromoDevice/></div>
-            <div className="promo-text">
-              <div className="label">iPhone 16 Pro</div>
-              <div className="tag">Đổi điểm · ưu đãi cuối tháng</div>
-            </div>
-            <div className="promo-dots"><i className="on"/><i/><i/><i/></div>
-          </div>
+          <ShopHeroBanner/>
         </div>
 
         {/* Danh mục quà tặng */}
@@ -2274,17 +2690,8 @@ function sHomeHiFi() {
             <span data-hot onClick={() => WF.go('shop-rewards')} className="t12 muted" style={{cursor:'pointer'}}>Xem tất cả ›</span>
           </div>
           <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:12}}>
-            {products.map((p, i) => (
-              <div key={i} className="w-card shop-product-card" data-hot onClick={() => WF.go('shop-reward-detail')}>
-                <div className="shop-product-img">
-                  <Illus kind={p.kind} h={140} r={0}/>
-                  <span className="shop-product-brand">{p.brand}</span>
-                </div>
-                <div className="shop-product-info">
-                  <span className="shop-product-name">{p.name}</span>
-                  <span className="shop-product-pts">{fmtPts(p.pts)} điểm</span>
-                </div>
-              </div>
+            {products.map((p) => (
+              <GiftThumb key={p.id} gift={p} onClick={() => { pickGift(p.id); WF.go('shop-reward-detail'); }}/>
             ))}
           </div>
         </div>
