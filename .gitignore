@@ -1,6 +1,9 @@
 # Claude local settings
 .claude/
 
+# MCP server config — contains Figma API token, must stay local
+.mcp.json
+
 # Build / editor / OS noise
 node_modules/
 *.log
