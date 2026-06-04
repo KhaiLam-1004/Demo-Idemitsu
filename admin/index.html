@@ -380,6 +380,11 @@ body{ background:var(--w-canvas); }
   background:rgba(200,16,46,.08); border-color:rgba(200,16,46,.18);
   color:var(--w-brand); font-weight:600;
 }
+.w-chip.danger{
+  background:#FEF2F2; border-color:#FECACA;
+  color:#B91C1C; font-weight:600;
+}
+.w-chip.danger:hover{ background:#FEE2E2; border-color:#FCA5A5; }
 
 /* badges (status pills) */
 .w-badge{ background:#F1F5F9; border:1px solid #E2E8F0; color:#475569; font-weight:600; }
@@ -999,38 +1004,195 @@ function aNppDetail(){
 
 /* 7 — Cấu hình ZNS (tin Zalo tự gửi khi NPP add/import shop) */
 /* 8 — Cấu hình cơ chế tích điểm (NPP theo SKU + % cửa hàng) */
+/* ===== Cross-tab point config (admin → shop/npp) ===== */
+const PC_KEY = 'idemitsu-points-config-v1';
+const PC_BUS = (typeof BroadcastChannel !== 'undefined') ? new BroadcastChannel(PC_KEY) : null;
+const PC_BASELINE = [
+  { id:1, name:'Sản phẩm 1', sku:'Zepro 0W-20',   shop:4, npp:2 },
+  { id:2, name:'Sản phẩm 2', sku:'Touring 5W-30', shop:6, npp:2 },
+  { id:3, name:'Sản phẩm 3', sku:'Diesel 15W-40', shop:8, npp:3 },
+];
+const PointsConfig = {
+  rows: PC_BASELINE.map(r => ({...r})),
+  listeners: new Set(),
+  load() {
+    try {
+      const s = JSON.parse(localStorage.getItem(PC_KEY) || 'null');
+      if (s && Array.isArray(s.rows) && s.rows.length) this.rows = s.rows.map(r => ({...r}));
+    } catch (e) {}
+  },
+  save(rows) {
+    this.rows = rows.map(r => ({ ...r, shop: Number(r.shop) || 0, npp: Number(r.npp) || 0 }));
+    try { localStorage.setItem(PC_KEY, JSON.stringify({ rows: this.rows })); } catch (e) {}
+    this.emit();
+    if (PC_BUS) PC_BUS.postMessage({ kind: 'config', rows: this.rows });
+  },
+  lookup(sku) {
+    const r = this.rows.find(x => x.sku === sku);
+    return r ? { shop: r.shop, npp: r.npp, name: r.name } : { shop: 0, npp: 0, name: sku };
+  },
+  subscribe(fn) { this.listeners.add(fn); return () => this.listeners.delete(fn); },
+  emit() { for (const fn of this.listeners) fn(this); },
+};
+PointsConfig.load();
+if (PC_BUS) {
+  PC_BUS.onmessage = (e) => {
+    if (e.data && e.data.kind === 'config' && Array.isArray(e.data.rows)) {
+      PointsConfig.rows = e.data.rows.map(r => ({...r}));
+      PointsConfig.emit();
+    }
+  };
+}
+if (!PC_BUS) {
+  window.addEventListener('storage', (ev) => {
+    if (ev.key !== PC_KEY || !ev.newValue) return;
+    try {
+      const s = JSON.parse(ev.newValue);
+      if (s && Array.isArray(s.rows)) {
+        PointsConfig.rows = s.rows.map(r => ({...r}));
+        PointsConfig.emit();
+      }
+    } catch (e) {}
+  });
+}
+function usePointsConfig() {
+  const [, force] = useState(0);
+  useEffect(() => PointsConfig.subscribe(() => force(t => t + 1)), []);
+  return PointsConfig;
+}
+
 function aPointsConfig(){
-  const sku = [
-    ['Sản phẩm 1','Zepro 0W-20','4','2'],
-    ['Sản phẩm 2','Touring 5W-30','6','2'],
-    ['Sản phẩm 3','Diesel 15W-40','8','3'],
-  ];
+  usePointsConfig();  // re-render when external changes arrive
+  const [rows, setRows]           = useState(() => PointsConfig.rows.map(r => ({...r})));
+  const [editingId, setEditingId] = useState(null);
+  const [draft, setDraft]         = useState(null);
+  const [history, setHistory]     = useState([]);
+  const [historyOpen, setHistoryOpen] = useState(false);
+  const [dirty, setDirty]         = useState(false);
+  const [savedAt, setSavedAt]     = useState(null);
+
+  const isEditing = (id) => editingId === id;
+  const nowStr = () => new Date().toLocaleString('vi-VN', { hour:'2-digit', minute:'2-digit', day:'2-digit', month:'2-digit', year:'numeric' });
+  const logChange = (msg) => setHistory(h => [{ at: nowStr(), msg }, ...h]);
+
+  const startEdit = (row) => { setEditingId(row.id); setDraft({...row}); };
+  const cancelEdit = () => {
+    // if cancelling a brand-new row that was never committed, drop it
+    if (editingId != null) {
+      const original = rows.find(r => r.id === editingId);
+      const isNew = original && original.sku === '' && original.shop === 1 && original.npp === 1;
+      if (isNew) setRows(rows.filter(r => r.id !== editingId));
+    }
+    setEditingId(null); setDraft(null);
+  };
+  const commitEdit = () => {
+    if (!draft) return;
+    if (!draft.sku.trim()) { alert('Vui lòng nhập SKU'); return; }
+    const prev = rows.find(r => r.id === draft.id);
+    const isCreating = prev && prev.sku === '' && prev.shop === 1 && prev.npp === 1;
+    setRows(rows.map(r => r.id === draft.id ? { ...draft, shop:Number(draft.shop)||0, npp:Number(draft.npp)||0 } : r));
+    logChange(isCreating
+      ? `Thêm "${draft.name} · ${draft.sku}" — shop +${draft.shop}, NPP +${draft.npp}`
+      : `Cập nhật "${draft.sku}" — shop +${draft.shop}, NPP +${draft.npp}`);
+    setEditingId(null); setDraft(null); setDirty(true);
+  };
+  const deleteRow = (row) => {
+    if (!confirm(`Xoá "${row.name} · ${row.sku}"?`)) return;
+    setRows(rows.filter(r => r.id !== row.id));
+    logChange(`Xoá "${row.name} · ${row.sku}"`);
+    setEditingId(null); setDraft(null); setDirty(true);
+  };
+  const addNew = () => {
+    const id = Date.now();
+    const newRow = { id, name:`Sản phẩm ${rows.length + 1}`, sku:'', shop:1, npp:1 };
+    setRows([...rows, newRow]);
+    setEditingId(id); setDraft({...newRow});
+  };
+  const saveConfig = () => {
+    if (!dirty) return;
+    PointsConfig.save(rows);  // persist + broadcast to shop/npp
+    setSavedAt(nowStr());
+    setDirty(false);
+    logChange(`Lưu cấu hình (${rows.length} sản phẩm) — đã đẩy sang Repair Shop & NPP`);
+    setTimeout(() => setSavedAt(null), 2800);
+  };
+
+  const inputStyle = { width:'100%', height:30, padding:'0 8px', border:'1px solid #CBD5E1', borderRadius:6, fontSize:13, background:'#fff' };
+  const numStyle = { ...inputStyle, width:64, textAlign:'right', fontVariantNumeric:'tabular-nums' };
+
+  const renderRow = (r) => isEditing(r.id) ? ([
+    <input style={inputStyle} value={draft.name} onChange={e => setDraft({...draft, name:e.target.value})} />,
+    <input style={inputStyle} value={draft.sku}  onChange={e => setDraft({...draft, sku:e.target.value})}  placeholder="VD: Zepro 0W-20" />,
+    <input type="number" min="0" style={numStyle} value={draft.shop} onChange={e => setDraft({...draft, shop:e.target.value})} />,
+    <input type="number" min="0" style={numStyle} value={draft.npp}  onChange={e => setDraft({...draft, npp: e.target.value})} />,
+    <span className="r g6" style={{justifyContent:'flex-end'}}>
+      <Chip onClick={commitEdit} solid>Lưu</Chip>
+      <Chip onClick={cancelEdit}>Huỷ</Chip>
+      <Chip onClick={() => deleteRow(r)} className="danger">Xoá</Chip>
+    </span>
+  ]) : ([
+    <b>{r.name}</b>,
+    r.sku,
+    <span className="w-chip solid" style={{minWidth:32, justifyContent:'center'}}>+{r.shop}</span>,
+    <span className="w-chip solid" style={{minWidth:32, justifyContent:'center'}}>+{r.npp}</span>,
+    <Chip onClick={() => startEdit(r)}>Sửa</Chip>
+  ]);
+
   return <ABrowser active="pts" title="Cấu hình tích điểm" breadcrumb={<><b>Cấu hình tích điểm</b></>}
-    actions={<><Btn ghost sm>Lịch sử thay đổi</Btn><Btn ghost sm>+ Thêm sản phẩm</Btn><Btn sm>Lưu cấu hình</Btn></>}>
+    actions={<>
+      <Btn ghost sm onClick={() => setHistoryOpen(o => !o)}>
+        Lịch sử thay đổi {history.length>0 && <span style={{marginLeft:6, padding:'1px 6px', background:'#fee2e2', color:'#b91c1c', borderRadius:10, fontSize:10, fontWeight:700}}>{history.length}</span>}
+      </Btn>
+      <Btn ghost sm onClick={addNew}>+ Thêm sản phẩm</Btn>
+      <Btn sm onClick={saveConfig} disabled={!dirty}>Lưu cấu hình</Btn>
+    </>}>
     <Note style={{marginBottom:16}}><Pin n="1"/> Cấu hình điểm <b>theo từng sản phẩm</b>: mỗi lượt quét QR hợp lệ, <b>Repair Shop</b> và <b>NPP</b> cộng điểm theo mức riêng của sản phẩm đó. VD: SP1 — shop +4, NPP +2; SP2 — shop +6, NPP +2.</Note>
+
+    {savedAt && (
+      <div style={{marginBottom:16, padding:'10px 14px', background:'rgba(16,185,129,.08)', border:'1px solid rgba(16,185,129,.25)', borderRadius:8, color:'#047857', fontSize:13, fontWeight:600, display:'flex', alignItems:'center', gap:8}}>
+        <span style={{width:8, height:8, borderRadius:'50%', background:'#10B981', display:'inline-block'}}/>
+        Đã lưu cấu hình lúc {savedAt}
+      </div>
+    )}
+    {dirty && !savedAt && (
+      <div style={{marginBottom:16, padding:'10px 14px', background:'rgba(245,158,11,.10)', border:'1px solid rgba(245,158,11,.25)', borderRadius:8, color:'#B45309', fontSize:13, fontWeight:600}}>
+        Có thay đổi chưa được lưu. Bấm <b>Lưu cấu hình</b> để áp dụng.
+      </div>
+    )}
+
+    {historyOpen && (
+      <Card style={{marginBottom:16}}>
+        <div className="r between" style={{marginBottom:10}}>
+          <div className="h3">Lịch sử thay đổi</div>
+          <Chip onClick={() => setHistoryOpen(false)}>Đóng</Chip>
+        </div>
+        {history.length === 0
+          ? <div className="t12 muted">Chưa có thay đổi nào trong phiên này.</div>
+          : <div className="c g6">{history.slice(0, 10).map((h,i) =>
+              <div key={i} className="r between t12" style={{padding:'8px 10px', background:i===0?'#FFF7ED':'#F8FAFC', borderRadius:6}}>
+                <span>{h.msg}</span><span className="muted">{h.at}</span>
+              </div>)}</div>}
+      </Card>
+    )}
 
     <Card style={{marginBottom:16}}>
       <div className="h3" style={{marginBottom:6}}>Điểm tích theo sản phẩm (mỗi lượt quét)</div>
-      <div className="t12 muted" style={{marginBottom:14}}>Đặt độc lập điểm cho Repair Shop và NPP trên từng SKU.</div>
+      <div className="t12 muted" style={{marginBottom:14}}>Đặt độc lập điểm cho Repair Shop và NPP trên từng SKU. Bấm <b>Sửa</b> để chỉnh inline.</div>
       <div style={{overflowX:'auto'}}>
         <Table cols={[{t:'Sản phẩm'},{t:'SKU'},{t:'Điểm Repair Shop',align:'right'},{t:'Điểm NPP',align:'right'},{t:'',align:'right'}]}
-          rows={sku.map(r=>[
-            <b>{r[0]}</b>, r[1],
-            <span className="w-chip solid" style={{minWidth:28, justifyContent:'center'}}>+{r[2]}</span>,
-            <span className="w-chip solid" style={{minWidth:28, justifyContent:'center'}}>+{r[3]}</span>,
-            <Chip>Sửa</Chip>
-          ])} />
+          rows={rows.map(renderRow)} />
       </div>
     </Card>
 
     <Card>
       <div className="h3" style={{marginBottom:6}}>Ví dụ tính cho 1 lượt quét</div>
-      <div className="r g16 wrap">
-        {[['Sản phẩm 1','+4','+2'],['Sản phẩm 2','+6','+2']].map((x,i)=>
-          <div key={i} className="w-box c g8" style={{flex:'1 1 240px', minWidth:220, padding:14}}>
-            <b className="t13">{x[0]}</b>
-            <div className="r between t13"><span className="muted">Repair Shop nhận</span><b style={{color:'#3FA34D'}}>{x[1]} điểm</b></div>
-            <div className="r between t13"><span className="muted">NPP nhận</span><b style={{color:'#3FA34D'}}>{x[2]} điểm</b></div>
+      <div className="t12 muted" style={{marginBottom:12}}>Hiển thị toàn bộ {rows.length} sản phẩm đang cấu hình.</div>
+      <div className="r g12 wrap">
+        {rows.map(r =>
+          <div key={r.id} className="w-box c g8" style={{flex:'1 1 240px', minWidth:220, padding:14}}>
+            <b className="t13">{r.name} {r.sku && <span className="t11 muted" style={{fontWeight:400}}>· {r.sku}</span>}</b>
+            <div className="r between t13"><span className="muted">Repair Shop nhận</span><b style={{color:'#3FA34D'}}>+{r.shop} điểm</b></div>
+            <div className="r between t13"><span className="muted">NPP nhận</span><b style={{color:'#3FA34D'}}>+{r.npp} điểm</b></div>
           </div>)}
       </div>
     </Card>

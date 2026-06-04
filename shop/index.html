@@ -1632,12 +1632,14 @@ function sScan(){
 
 /* 5 — scan success */
 function sScanSuccess(){
-  return SPhone({ title:null, nav:null, scroll:false, note:<><Pin n="3"/> Quét hợp lệ: cộng điểm cho shop <b>và</b> cross-award cho NPP. Mỗi tem chỉ tính 1 lần.</>, body:
+  usePointsConfig();  // re-render when admin edits config
+  const pts = PointsConfig.lookup('Zepro 0W-20');
+  return SPhone({ title:null, nav:null, scroll:false, note:<><Pin n="3"/> Quét hợp lệ: cộng điểm cho shop <b>và</b> cross-award cho NPP theo cấu hình Admin (SKU này: shop +{pts.shop}, NPP +{pts.npp}). Mỗi tem chỉ tính 1 lần.</>, body:
     <div className="c" style={{height:'100%'}}>
       <div className="w-zalo-bar"><span style={{width:20}}/><span className="ztitle">Thành công</span><span className="muted" data-hot onClick={()=>WF.go('shop-home')} style={{fontSize:16}}>✕</span></div>
       <div style={{flex:1, padding:20, display:'flex', flexDirection:'column', gap:16, alignItems:'center', justifyContent:'center'}}>
         <Tick />
-        <div className="center-text"><div className="h1">+10 điểm</div><div className="t12 muted">Đã cộng vào tài khoản</div></div>
+        <div className="center-text"><div className="h1">+{pts.shop} điểm</div><div className="t12 muted">Đã cộng vào tài khoản · NPP nhận +{pts.npp}</div></div>
         <div className="w-box fill-w c g10" style={{padding:14}}>
           <div className="r between t12"><span className="muted">Sản phẩm</span><b>Zepro 0W-20</b></div>
           <div className="r between t12"><span className="muted">Mã QR</span><b>IDMT-B0098-0001a4</b></div>
@@ -1682,11 +1684,13 @@ function histBar(){
 }
 /* 8a — lịch sử ĐIỂM TÍCH (quét QR) */
 function sHistory(){
+  usePointsConfig();  // re-render when admin edits config
+  const ptsFor = (sku) => PointsConfig.lookup(sku).shop;
   const rows = [
-    ['Zepro 0W-20','IDMT-B0098-0001a4','+10','28/05 09:12'],
-    ['Touring 5W-30','IDMT-B0102-03f9c1','+8','27/05 16:40'],
-    ['Diesel 15W-40','IDMT-B0105-0a12bb','+12','27/05 11:05'],
-    ['Zepro 0W-20','IDMT-B0098-0001b7','+10','26/05 14:20'],
+    ['Zepro 0W-20','IDMT-B0098-0001a4','+' + ptsFor('Zepro 0W-20'),  '28/05 09:12'],
+    ['Touring 5W-30','IDMT-B0102-03f9c1','+' + ptsFor('Touring 5W-30'),'27/05 16:40'],
+    ['Diesel 15W-40','IDMT-B0105-0a12bb','+' + ptsFor('Diesel 15W-40'),'27/05 11:05'],
+    ['Zepro 0W-20','IDMT-B0098-0001b7','+' + ptsFor('Zepro 0W-20'),  '26/05 14:20'],
   ];
   return SPhone({ title:null, nav:4, body:
     <div className="c" style={{height:'100%'}}>
@@ -2326,6 +2330,63 @@ function useLoyaltyState() {
   return LoyaltyState;
 }
 
+/* ===== Cross-tab point config (admin → shop/npp) ===== */
+const PC_KEY = 'idemitsu-points-config-v1';
+const PC_BUS = (typeof BroadcastChannel !== 'undefined') ? new BroadcastChannel(PC_KEY) : null;
+const PC_BASELINE = [
+  { id:1, name:'Sản phẩm 1', sku:'Zepro 0W-20',   shop:4, npp:2 },
+  { id:2, name:'Sản phẩm 2', sku:'Touring 5W-30', shop:6, npp:2 },
+  { id:3, name:'Sản phẩm 3', sku:'Diesel 15W-40', shop:8, npp:3 },
+];
+const PointsConfig = {
+  rows: PC_BASELINE.map(r => ({...r})),
+  listeners: new Set(),
+  load() {
+    try {
+      const s = JSON.parse(localStorage.getItem(PC_KEY) || 'null');
+      if (s && Array.isArray(s.rows) && s.rows.length) this.rows = s.rows.map(r => ({...r}));
+    } catch (e) {}
+  },
+  save(rows) {
+    this.rows = rows.map(r => ({ ...r, shop: Number(r.shop) || 0, npp: Number(r.npp) || 0 }));
+    try { localStorage.setItem(PC_KEY, JSON.stringify({ rows: this.rows })); } catch (e) {}
+    this.emit();
+    if (PC_BUS) PC_BUS.postMessage({ kind: 'config', rows: this.rows });
+  },
+  lookup(sku) {
+    const r = this.rows.find(x => x.sku === sku);
+    return r ? { shop: r.shop, npp: r.npp, name: r.name } : { shop: 0, npp: 0, name: sku };
+  },
+  subscribe(fn) { this.listeners.add(fn); return () => this.listeners.delete(fn); },
+  emit() { for (const fn of this.listeners) fn(this); },
+};
+PointsConfig.load();
+if (PC_BUS) {
+  PC_BUS.onmessage = (e) => {
+    if (e.data && e.data.kind === 'config' && Array.isArray(e.data.rows)) {
+      PointsConfig.rows = e.data.rows.map(r => ({...r}));
+      PointsConfig.emit();
+    }
+  };
+}
+if (!PC_BUS) {
+  window.addEventListener('storage', (ev) => {
+    if (ev.key !== PC_KEY || !ev.newValue) return;
+    try {
+      const s = JSON.parse(ev.newValue);
+      if (s && Array.isArray(s.rows)) {
+        PointsConfig.rows = s.rows.map(r => ({...r}));
+        PointsConfig.emit();
+      }
+    } catch (e) {}
+  });
+}
+function usePointsConfig() {
+  const [, force] = useState(0);
+  useEffect(() => PointsConfig.subscribe(() => force(t => t + 1)), []);
+  return PointsConfig;
+}
+
 function useAnimatedNumber(target) {
   const [val, setVal] = useState(target);
   const rafRef = useRef(null);
@@ -2355,8 +2416,28 @@ const SCAN_PRODUCTS = [
   { name: 'Idemitsu Touring 5W-30', sku: 'IDMT-B0102', shopPts: 8,  nppPts: 4 },
   { name: 'Idemitsu Diesel 15W-40', sku: 'IDMT-B0105', shopPts: 12, nppPts: 6 },
 ];
+// Build the live scan catalog from admin's PointsConfig — newly added
+// products in admin (e.g. "Sản phẩm 4 · khai-01") appear here automatically.
+function getScanCatalog() {
+  if (typeof PointsConfig === 'undefined' || !PointsConfig.rows.length) return SCAN_PRODUCTS;
+  return PointsConfig.rows.map(r => ({
+    name: 'Idemitsu ' + r.sku,
+    sku:  'IDMT-' + String(r.id).slice(-4).padStart(4, '0'),
+    shopPts: r.shop,
+    nppPts:  r.npp,
+    cfgSku: r.sku,
+  }));
+}
+// Demo SKU picker — set on the scan screen, consumed by sScanSuccessHiFi.
+// Null = pick random; otherwise force-match the chosen config SKU.
+let SHOP_SCAN_PICK = { sku: null };
 function pickRandomProduct() {
-  return SCAN_PRODUCTS[Math.floor(Math.random() * SCAN_PRODUCTS.length)];
+  const list = getScanCatalog();
+  if (SHOP_SCAN_PICK.sku) {
+    const match = list.find(p => p.cfgSku === SHOP_SCAN_PICK.sku);
+    if (match) return match;
+  }
+  return list[Math.floor(Math.random() * list.length)];
 }
 function mockQrFor(sku) {
   return sku + '-' + Math.random().toString(16).slice(2, 8);
@@ -2372,6 +2453,21 @@ function fmtNum(n) {
 }
 
 function sScanHiFi(){
+  usePointsConfig();
+  const cfgRows = PointsConfig.rows;
+  const [picked, setPicked] = useState(() => SHOP_SCAN_PICK.sku || (cfgRows[0] && cfgRows[0].sku));
+  // If admin removed/renamed the previously picked SKU, fall back to first row.
+  useEffect(() => {
+    if (cfgRows.length && !cfgRows.find(r => r.sku === picked)) {
+      const fb = cfgRows[0].sku;
+      setPicked(fb); SHOP_SCAN_PICK.sku = fb;
+    }
+  }, [cfgRows.length, picked]);
+  if (picked && !SHOP_SCAN_PICK.sku) SHOP_SCAN_PICK.sku = picked;
+  const choose = (sku) => { setPicked(sku); SHOP_SCAN_PICK.sku = sku; };
+  const pickedRow = cfgRows.find(r => r.sku === picked);
+  const shortLabel = picked ? picked.split(/[\s-]/)[0] : 'Zepro';
+
   return SPhone({ title:null, nav:null, scroll:false, body:
     <div className="c" style={{height:'100%'}}>
       <div className="w-zalo-bar">
@@ -2379,8 +2475,8 @@ function sScanHiFi(){
         <span className="ztitle">Quét QR sản phẩm</span>
         <span style={{width:54}}/>
       </div>
-      <div style={{flex:1, padding:14, display:'flex', flexDirection:'column', gap:12, minHeight:0}}>
-        <div className="hf-scanview" style={{height:'auto', flex:1, minHeight:260}}>
+      <div style={{flex:1, padding:14, display:'flex', flexDirection:'column', gap:12, minHeight:0, overflowY:'auto'}}>
+        <div className="hf-scanview" style={{height:'auto', flex:'none', minHeight:200}}>
           <div className="hf-scan-target">
             <span className="hf-scan-corner tl" />
             <span className="hf-scan-corner tr" />
@@ -2393,12 +2489,27 @@ function sScanHiFi(){
           </div>
           <span className="hf-scan-hint"><span className="led"/>Đặt tem QR vào khung</span>
         </div>
-        <div className="w-card r g10" style={{padding:10, alignItems:'center'}}>
-          <HfOilBottle size={40} label="Zepro" />
-          <div className="grow c g4">
-            <b className="t12">Tem QR trên thân chai Idemitsu</b>
-            <span className="t11 muted">Quét hợp lệ → cộng điểm vào tài khoản shop</span>
+        <div className="w-card c g8" style={{padding:10}}>
+          <div className="r between" style={{alignItems:'center'}}>
+            <b className="t12">Chọn SKU để mô phỏng quét</b>
+            <span className="t11 muted">{cfgRows.length} SP · từ Admin</span>
           </div>
+          <div className="r g6 wrap">
+            {cfgRows.map(r =>
+              <Chip key={r.id} solid={r.sku === picked} onClick={() => choose(r.sku)}>
+                {r.sku} <span style={{opacity:.65, marginLeft:4, fontWeight:400}}>+{r.shop}</span>
+              </Chip>
+            )}
+          </div>
+          {pickedRow && (
+            <div className="r g10" style={{alignItems:'center', marginTop:4, paddingTop:8, borderTop:'1px dashed var(--w-line)'}}>
+              <HfOilBottle size={36} label={shortLabel} />
+              <div className="grow c g2">
+                <b className="t12">Idemitsu {pickedRow.sku}</b>
+                <span className="t11 muted">Shop +{pickedRow.shop} · NPP cross-award +{pickedRow.npp}</span>
+              </div>
+            </div>
+          )}
         </div>
         <div className="r g10">
           <Btn block ghost to="shop-scan-error">Mô phỏng · Lỗi</Btn>

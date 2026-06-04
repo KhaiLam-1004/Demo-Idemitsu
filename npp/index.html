@@ -1300,30 +1300,49 @@ function scCam(m){
 }
 
 function scSuccess(m){
+  usePointsConfig();
   const id = SCAN_IDS[m];
-  const rows = [
-    ['Zepro 0W-20','IDMT-B0098-0001a4','+10','+1','Vừa xong'],
-    ['Touring 5W-30','IDMT-B0102-03f9c1','+8','+1','5 phút trước'],
-    ['Diesel 15W-40','IDMT-B0105-0a12bb','+12','+1','12 phút trước'],
-  ];
+  const batchOf = (rowId) => 'IDMT-' + String(rowId).slice(-4).padStart(4, '0');
+  // Pick a random product from admin's current config AND record the scan once
+  // so the NPP balance actually goes up (and other tabs see it via LOY_BUS).
+  const [scan] = useState(() => {
+    const list = PointsConfig.rows;
+    if (!list.length) return null;
+    const pick = list[Math.floor(Math.random() * list.length)];
+    const qr = batchOf(pick.id) + '-' + Math.random().toString(16).slice(2, 8);
+    if (typeof LoyaltyState !== 'undefined') {
+      // NPP is the scanner → NPP balance += shop pts (the displayed headline).
+      // shopPts=0 because shop is not involved in this scan.
+      LoyaltyState.recordScan('npp-scan', 'Idemitsu ' + pick.sku, qr, 0, pick.shop);
+    }
+    return { sku: pick.sku, id: pick.id, qr };
+  });
+  const focused = scan ? PointsConfig.lookup(scan.sku) : { shop:0, npp:0, name:'Zepro 0W-20' };
+  const focusedSku = scan ? scan.sku : 'Zepro 0W-20';
+  const ts = ['Vừa xong','5 phút trước','12 phút trước','25 phút trước'];
+  const rows = PointsConfig.rows.slice(0, 4).map((r, i) => [
+    r.sku,
+    batchOf(r.id) + '-' + Math.random().toString(16).slice(2, 6),
+    '+' + r.shop, '+' + r.npp, ts[i] || '1 giờ trước'
+  ]);
   return <div className="r g20 wrap start">
     <Card style={{flex:'1 1 300px', minWidth:280, maxWidth:360}}>
       <div className="c g14" style={{alignItems:'center'}}>
         <span className="w-icon circle" style={{width:60,height:60,borderColor:'#3FA34D'}} />
-        <div className="center-text"><div className="h1">+10 điểm</div><div className="t12 muted">Idemitsu Zepro 0W-20</div></div>
+        <div className="center-text"><div className="h1">+{focused.shop} điểm</div><div className="t12 muted">Idemitsu {focusedSku}</div></div>
         <div className="w-box fill-w c g10" style={{padding:14}}>
-          <div className="r between t12"><span className="muted">Mã QR</span><b>IDMT-B0098-0001a4</b></div>
-          <div className="r between t12"><span className="muted">Thời gian</span><b>28/05 09:12</b></div>
+          <div className="r between t12"><span className="muted">Mã QR</span><b>{scan ? scan.qr : 'IDMT-B0098-0001a4'}</b></div>
+          <div className="r between t12"><span className="muted">Thời gian</span><b>{new Date().toLocaleString('vi-VN', {hour:'2-digit', minute:'2-digit', day:'2-digit', month:'2-digit'})}</b></div>
           <Divider/>
-          <div className="r between t12"><span className="muted">Cross-award NPP</span><b>+1 điểm</b></div>
+          <div className="r between t12"><span className="muted">Đã cộng vào NPP</span><b style={{color:'#10B981'}}>+{focused.shop} điểm</b></div>
         </div>
         <div className="r g10 wrap fill-w"><Btn block ghost to={id.limit}>Xem giới hạn</Btn><Btn block to={id.method}>Quét tiếp</Btn></div>
       </div>
     </Card>
     <div className="grow c g12" style={{minWidth:280}}>
-      <Note><Pin n="4"/> Mỗi lượt quét hợp lệ cộng điểm SP <b>và</b> tự động <b>cross-award</b> cho NPP. Quota đã trừ 1 lượt.</Note>
+      <Note><Pin n="4"/> Mỗi lượt quét hợp lệ cộng điểm cho NPP theo <b>Cấu hình tích điểm</b> Admin ({PointsConfig.rows.length} SP). Quota đã trừ 1 lượt.</Note>
       <div className="h3">Lượt quét gần đây (phiên này)</div>
-      <div style={{overflowX:'auto'}}><Table cols={[{t:'Sản phẩm'},{t:'Mã QR'},{t:'Điểm SP',align:'right'},{t:'Cross-award',align:'right'},{t:'Thời gian'}]} rows={rows} /></div>
+      <div style={{overflowX:'auto'}}><Table cols={[{t:'Sản phẩm'},{t:'Mã QR'},{t:'Điểm SP',align:'right'},{t:'Điểm NPP',align:'right'},{t:'Thời gian'}]} rows={rows} /></div>
     </div>
   </div>;
 }
@@ -1953,6 +1972,63 @@ function useLoyaltyState() {
   return LoyaltyState;
 }
 
+/* ===== Cross-tab point config (admin → shop/npp) ===== */
+const PC_KEY = 'idemitsu-points-config-v1';
+const PC_BUS = (typeof BroadcastChannel !== 'undefined') ? new BroadcastChannel(PC_KEY) : null;
+const PC_BASELINE = [
+  { id:1, name:'Sản phẩm 1', sku:'Zepro 0W-20',   shop:4, npp:2 },
+  { id:2, name:'Sản phẩm 2', sku:'Touring 5W-30', shop:6, npp:2 },
+  { id:3, name:'Sản phẩm 3', sku:'Diesel 15W-40', shop:8, npp:3 },
+];
+const PointsConfig = {
+  rows: PC_BASELINE.map(r => ({...r})),
+  listeners: new Set(),
+  load() {
+    try {
+      const s = JSON.parse(localStorage.getItem(PC_KEY) || 'null');
+      if (s && Array.isArray(s.rows) && s.rows.length) this.rows = s.rows.map(r => ({...r}));
+    } catch (e) {}
+  },
+  save(rows) {
+    this.rows = rows.map(r => ({ ...r, shop: Number(r.shop) || 0, npp: Number(r.npp) || 0 }));
+    try { localStorage.setItem(PC_KEY, JSON.stringify({ rows: this.rows })); } catch (e) {}
+    this.emit();
+    if (PC_BUS) PC_BUS.postMessage({ kind: 'config', rows: this.rows });
+  },
+  lookup(sku) {
+    const r = this.rows.find(x => x.sku === sku);
+    return r ? { shop: r.shop, npp: r.npp, name: r.name } : { shop: 0, npp: 0, name: sku };
+  },
+  subscribe(fn) { this.listeners.add(fn); return () => this.listeners.delete(fn); },
+  emit() { for (const fn of this.listeners) fn(this); },
+};
+PointsConfig.load();
+if (PC_BUS) {
+  PC_BUS.onmessage = (e) => {
+    if (e.data && e.data.kind === 'config' && Array.isArray(e.data.rows)) {
+      PointsConfig.rows = e.data.rows.map(r => ({...r}));
+      PointsConfig.emit();
+    }
+  };
+}
+if (!PC_BUS) {
+  window.addEventListener('storage', (ev) => {
+    if (ev.key !== PC_KEY || !ev.newValue) return;
+    try {
+      const s = JSON.parse(ev.newValue);
+      if (s && Array.isArray(s.rows)) {
+        PointsConfig.rows = s.rows.map(r => ({...r}));
+        PointsConfig.emit();
+      }
+    } catch (e) {}
+  });
+}
+function usePointsConfig() {
+  const [, force] = useState(0);
+  useEffect(() => PointsConfig.subscribe(() => force(t => t + 1)), []);
+  return PointsConfig;
+}
+
 function useAnimatedNumber(target) {
   const [val, setVal] = useState(target);
   const rafRef = useRef(null);
@@ -1998,13 +2074,32 @@ function fmtNum(n) {
   return String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
 
+// Demo SKU picker for NPP scan — set on the scan screen, consumed by
+// nScanWebSuccessHiFi. Null = pick random.
+let NPP_SCAN_PICK = { sku: null };
+
 function nScanWebHiFi(){
+  usePointsConfig();
+  const cfgRows = PointsConfig.rows;
+  const [picked, setPicked] = useState(() => NPP_SCAN_PICK.sku || (cfgRows[0] && cfgRows[0].sku));
+  useEffect(() => {
+    if (cfgRows.length && !cfgRows.find(r => r.sku === picked)) {
+      const fb = cfgRows[0].sku;
+      setPicked(fb); NPP_SCAN_PICK.sku = fb;
+    }
+  }, [cfgRows.length, picked]);
+  if (picked && !NPP_SCAN_PICK.sku) NPP_SCAN_PICK.sku = picked;
+  const choose = (sku) => { setPicked(sku); NPP_SCAN_PICK.sku = sku; };
+  const pickedRow = cfgRows.find(r => r.sku === picked);
+  const shortLabel = picked ? picked.split(/[\s-]/)[0] : 'Zepro';
+  const skuList = cfgRows.map(r => r.sku).join(' · ');
+
   return nLoy('Quét QR sản phẩm', 1, 'npp-rewards',
     <div style={{padding:'20px 16px', display:'flex', flexDirection:'column', gap:18}}>
       <div className="r between wrap g8" style={{padding:'0 2px'}}>
         <div className="c g4">
           <div style={{fontSize:16, fontWeight:700, color:'#0F172A'}}>Quét tem QR sản phẩm</div>
-          <span className="t11 muted">Zepro · Touring · Diesel — mỗi tem chỉ tích 1 lần</span>
+          <span className="t11 muted">{skuList || 'Zepro · Touring · Diesel'} — mỗi tem chỉ tích 1 lần</span>
         </div>
         <span className="w-badge ok"><i className="led" />Camera đã bật</span>
       </div>
@@ -2023,12 +2118,27 @@ function nScanWebHiFi(){
         <span className="hf-scan-hint"><span className="led" />Đặt tem QR vào khung</span>
       </div>
 
-      <div className="w-card r g12" style={{padding:12, alignItems:'center'}}>
-        <HfOilBottle size={44} label="Zepro" />
-        <div className="grow c g4">
-          <b className="t13">Tem QR nằm trên thân chai</b>
-          <span className="t11 muted">Quét hợp lệ → cộng điểm sản phẩm cho cửa hàng và <b>cross-award</b> cho NPP.</span>
+      <div className="w-card c g10" style={{padding:12}}>
+        <div className="r between" style={{alignItems:'center'}}>
+          <b className="t13">Chọn SKU để mô phỏng quét</b>
+          <span className="t11 muted">{cfgRows.length} SP · đồng bộ từ Admin</span>
         </div>
+        <div className="r g6 wrap">
+          {cfgRows.map(r =>
+            <Chip key={r.id} solid={r.sku === picked} onClick={() => choose(r.sku)}>
+              {r.sku} <span style={{opacity:.65, marginLeft:4, fontWeight:400}}>+{r.shop}</span>
+            </Chip>
+          )}
+        </div>
+        {pickedRow && (
+          <div className="r g12" style={{alignItems:'center', paddingTop:8, borderTop:'1px dashed var(--w-line)'}}>
+            <HfOilBottle size={40} label={shortLabel} />
+            <div className="grow c g4">
+              <b className="t13">Idemitsu {pickedRow.sku}</b>
+              <span className="t11 muted">NPP nhận +{pickedRow.shop} · Cross-award +{pickedRow.npp} điểm</span>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="r g10 wrap">
@@ -2040,29 +2150,47 @@ function nScanWebHiFi(){
 }
 
 function nScanWebSuccessHiFi(){
+  usePointsConfig();
+  // Use the SKU picked on the scan screen if any; otherwise fall back to
+  // a random pick (preserves drop-in scan-success links).
+  const [scan] = useState(() => {
+    const list = PointsConfig.rows;
+    if (!list.length) return { sku:'Zepro 0W-20', id:1, qr:'IDMT-B0098-0001a4' };
+    let pick = null;
+    if (NPP_SCAN_PICK.sku) pick = list.find(r => r.sku === NPP_SCAN_PICK.sku);
+    if (!pick) pick = list[Math.floor(Math.random() * list.length)];
+    const batch = 'IDMT-' + String(pick.id).slice(-4).padStart(4, '0');
+    const qr = batch + '-' + Math.random().toString(16).slice(2, 8);
+    if (typeof LoyaltyState !== 'undefined') {
+      LoyaltyState.recordScan('npp-scan-web', 'Idemitsu ' + pick.sku, qr, 0, pick.shop);
+    }
+    return { sku: pick.sku, id: pick.id, qr, batch };
+  });
+  const cfg = PointsConfig.lookup(scan.sku);
+  const shortLabel = scan.sku.split(/[\s-]/)[0];
   return nLoy('Quét thành công', null, 'npp-scan-web',
     <div style={{padding:'24px 16px 28px', display:'flex', flexDirection:'column', gap:18, alignItems:'center'}}>
       <HfSuccessBadge />
       <div className="center-text">
-        <div style={{fontSize:30, fontWeight:800, color:'#10B981', letterSpacing:'-.02em', lineHeight:1.1}}>+10 điểm</div>
-        <div className="t12 muted" style={{marginTop:6}}>Đã ghi nhận vào tài khoản NPP</div>
+        <div style={{fontSize:30, fontWeight:800, color:'#10B981', letterSpacing:'-.02em', lineHeight:1.1}}>+{cfg.shop} điểm</div>
+        <div className="t12 muted" style={{marginTop:6}}>Đã ghi nhận vào tài khoản NPP · Cấu hình Admin áp dụng</div>
       </div>
 
       <div className="w-card r g14" style={{padding:14, width:'100%', maxWidth:440, alignItems:'center'}}>
-        <HfOilBottle size={56} label="Zepro" />
+        <HfOilBottle size={56} label={shortLabel} />
         <div className="grow c g6">
-          <b className="t13">Idemitsu Zepro 0W-20</b>
-          <span className="t11 muted">SKU · IDMT-B0098 · 1L</span>
-          <div className="r g6"><span className="w-chip" style={{height:22, fontSize:11}}>Synthetic</span><span className="w-chip solid" style={{height:22, fontSize:11}}>+10 điểm</span></div>
+          <b className="t13">Idemitsu {scan.sku}</b>
+          <span className="t11 muted">SKU · {scan.batch || ('IDMT-' + String(scan.id).slice(-4).padStart(4,'0'))} · 1L</span>
+          <div className="r g6"><span className="w-chip" style={{height:22, fontSize:11}}>Synthetic</span><span className="w-chip solid" style={{height:22, fontSize:11}}>+{cfg.shop} điểm</span></div>
         </div>
       </div>
 
       <div className="w-box c g10" style={{padding:14, width:'100%', maxWidth:440}}>
-        <div className="r between t12"><span className="muted">Mã QR</span><b className="hf-mono">IDMT-B0098-0001a4</b></div>
-        <div className="r between t12"><span className="muted">Thời gian</span><b>28/05 · 09:12</b></div>
+        <div className="r between t12"><span className="muted">Mã QR</span><b className="hf-mono">{scan.qr}</b></div>
+        <div className="r between t12"><span className="muted">Thời gian</span><b>{new Date().toLocaleString('vi-VN', {hour:'2-digit', minute:'2-digit', day:'2-digit', month:'2-digit'})}</b></div>
         <Divider />
-        <div className="r between t12"><span className="muted">Điểm sản phẩm</span><b style={{color:'#10B981'}}>+10 điểm</b></div>
-        <div className="r between t12"><span className="muted">Cross-award NPP</span><b style={{color:'#10B981'}}>+1 điểm</b></div>
+        <div className="r between t12"><span className="muted">Đã cộng vào NPP</span><b style={{color:'#10B981'}}>+{cfg.shop} điểm</b></div>
+        <div className="r between t12"><span className="muted">Bonus (Repair Shop nếu có)</span><b className="muted">+{cfg.npp} điểm</b></div>
       </div>
 
       <div className="r g10" style={{width:'100%', maxWidth:440}}>
