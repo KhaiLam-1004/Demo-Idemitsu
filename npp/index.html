@@ -1051,6 +1051,7 @@ const NPP_NAV = [
     { id:'shop',   label:'Quản lý Shop', to:'npp-shop-list' },
     { id:'loy',    label:'Loyalty (Tích điểm)', to:'npp-rewards' },
     { id:'visit',  label:'Check-in của Sale', to:'npp-visit-log' },
+    { id:'report', label:'Báo cáo', to:'npp-report' },
   ]},
   { group:'Khác', items:[
     { id:'profile', label:'Tài khoản', to:'npp-profile' },
@@ -1743,6 +1744,201 @@ function nVisitLog(){
   </NBrowser>;
 }
 
+/* Build & download a CSV containing every section of the NPP loyalty report. */
+function downloadReportCSV(payload){
+  const esc = (v) => {
+    const s = (v === null || v === undefined) ? '' : String(v);
+    return /[,"\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  };
+  const toCsv = (rows) => rows.map(r => r.map(esc).join(',')).join('\r\n');
+  const exportedAt = new Date().toLocaleString('vi-VN');
+  const fmtDT = (t) => new Date(t).toLocaleString('vi-VN', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
+  const blocks = [];
+
+  blocks.push(toCsv([
+    ['BÁO CÁO LOYALTY · NPP MIỀN BẮC 01'],
+    ['Kỳ', payload.period],
+    ['Xuất lúc', exportedAt],
+    [],
+  ]));
+
+  blocks.push(toCsv([
+    ['I. CỬA HÀNG THAM GIA'],
+    ['Tổng cửa hàng (whitelist NPP)', payload.kpi.totalShops],
+    ['Cửa hàng đã quét QR', payload.kpi.activeShops],
+    ['Cửa hàng chưa hoạt động', payload.kpi.totalShops - payload.kpi.activeShops],
+    ['Tỷ lệ tham gia (%)', payload.kpi.activeRate],
+    [],
+  ]));
+
+  blocks.push(toCsv([
+    ['II. SỐ LƯỢT QUÉT THEO SẢN PHẨM'],
+    ['Sản phẩm', 'Lượt quét', 'Tỷ lệ (%)'],
+    ...payload.products.map(p => [p.sku, p.scans, p.pct]),
+    ['TỔNG', payload.kpi.totalScans, '100'],
+    [],
+  ]));
+
+  blocks.push(toCsv([
+    ['III. SỐ LƯỢT QUÉT THEO CỬA HÀNG (Top 10)'],
+    ['Hạng', 'Cửa hàng', 'Khu vực', 'Lượt quét'],
+    ...payload.ranking.map(r => ['#' + r.rank, r.shop, r.area, r.scans]),
+    [],
+  ]));
+
+  blocks.push(toCsv([
+    ['IV. CHI TIẾT THỜI GIAN QUÉT (20 lượt mới nhất)'],
+    ['Thời gian', 'Cửa hàng', 'Sản phẩm'],
+    ...payload.timeline.slice(0, 20).map(e => [fmtDT(e.time), e.shop, e.product]),
+  ]));
+
+  // UTF-8 BOM ensures Vietnamese diacritics render correctly when opened in Excel.
+  const csv = '﻿' + blocks.join('\r\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'bao-cao-loyalty-npp-' + new Date().toISOString().slice(0, 10) + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+/* 14b — Báo cáo: 4 chỉ số trọng tâm — thời gian, theo SP, theo CH, CH tham gia/total */
+function nReport(){
+  usePointsConfig();
+  const state = (typeof LoyaltyState !== 'undefined') ? useLoyaltyState() : null;
+
+  const TOTAL_SHOPS = 96;
+  const baseScans = 1284;
+  const baseActive = 71;
+  const liveScans = state ? state.history.length : 0;
+  const totalScans = baseScans + liveScans;
+  const activeShops = baseActive;
+  const activeRate = Math.round((activeShops / TOTAL_SHOPS) * 100);
+  const fmtN = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  const fmtTime = (t) => new Date(t).toLocaleString('vi-VN', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+
+  // Lượt quét theo sản phẩm — base mỗi SKU + cộng live
+  const liveByProduct = {};
+  if (state) {
+    for (const e of state.history) {
+      const key = (e.product || '').replace(/^Idemitsu\s+/, '');
+      liveByProduct[key] = (liveByProduct[key] || 0) + 1;
+    }
+  }
+  const baseByProduct = { 'Zepro 0W-20':484, 'Touring 5W-30':356, 'Diesel 15W-40':288 };
+  const productRows = PointsConfig.rows.map(r => {
+    const base = baseByProduct[r.sku] || 0;
+    const live = liveByProduct[r.sku] || 0;
+    const scans = base + live;
+    return { sku: r.sku, name: r.name, scans, pct: totalScans ? Math.round(scans / totalScans * 1000) / 10 : 0 };
+  }).sort((a, b) => b.scans - a.scans);
+  const maxScans = Math.max(1, ...productRows.map(r => r.scans));
+
+  // Top cửa hàng (demo)
+  const ranking = [
+    { rank:1, shop:'Sửa xe Hùng Anh',  area:'Cầu Giấy',  scans:142 },
+    { rank:2, shop:'Gara Minh Phát',   area:'Đống Đa',   scans:118 },
+    { rank:3, shop:'Auto Care 24h',    area:'Long Biên', scans: 96 },
+    { rank:4, shop:'Gara Thành Đạt',   area:'Hà Đông',   scans: 84 },
+    { rank:5, shop:'Sửa xe Minh Phát', area:'Hoàng Mai', scans: 71 },
+    { rank:6, shop:'Tiệm Sửa Xe Tâm',  area:'Thanh Xuân',scans: 58 },
+    { rank:7, shop:'Auto 4S Hà Đông',  area:'Hà Đông',   scans: 47 },
+    { rank:8, shop:'Sửa xe Quang Anh', area:'Long Biên', scans: 39 },
+    { rank:9, shop:'Gara 360',         area:'Cầu Giấy',  scans: 32 },
+    { rank:10,shop:'Auto Care Mới',    area:'Đống Đa',   scans: 28 },
+  ];
+
+  // Lịch sử lượt quét (timeline) — 30 entries baseline, sinh 1 lần / mount,
+  // rồi merge với scan live từ LoyaltyState mỗi lần render.
+  const [baseTimeline] = useState(() => {
+    const shops = ['Sửa xe Hùng Anh','Gara Minh Phát','Auto Care 24h','Gara Thành Đạt','Sửa xe Minh Phát','Tiệm Sửa Xe Tâm'];
+    const skus = ['Zepro 0W-20','Touring 5W-30','Diesel 15W-40'];
+    const now = Date.now();
+    const out = [];
+    for (let i = 0; i < 30; i++) {
+      const minsAgo = 12 + i * 53 + (i * 17 % 41);
+      out.push({
+        time: now - minsAgo * 60 * 1000,
+        shop: shops[(i * 3 + 1) % shops.length],
+        product: skus[i % skus.length],
+        isLive: false,
+      });
+    }
+    return out;
+  });
+  const liveTimeline = state ? state.history.map(e => ({
+    time: e.time,
+    shop: '(Phiên test hiện tại)',
+    product: (e.product || '').replace(/^Idemitsu\s+/, ''),
+    isLive: true,
+  })) : [];
+  const timeline = [...liveTimeline, ...baseTimeline].sort((a, b) => b.time - a.time);
+
+  const [exportedAt, setExportedAt] = useState(null);
+  const period = 'Tháng 06/2026';
+  const exportCsv = () => {
+    downloadReportCSV({
+      period,
+      kpi: { totalScans, activeShops, totalShops: TOTAL_SHOPS, activeRate },
+      products: productRows,
+      ranking,
+      timeline,
+    });
+    setExportedAt(new Date().toLocaleTimeString('vi-VN', { hour:'2-digit', minute:'2-digit', second:'2-digit' }));
+    setTimeout(() => setExportedAt(null), 4000);
+  };
+
+  return <NBrowser active="report" title="Báo cáo Loyalty" breadcrumb={<><b>Báo cáo</b></>}>
+    <div style={{maxWidth:680, margin:'0 auto'}}>
+      <Card>
+        <div className="c g8" style={{marginBottom:18}}>
+          <div className="h2">Xuất báo cáo Loyalty</div>
+          <span className="t12 muted">Báo cáo tổng hợp lượt quét QR và mức độ tham gia của các cửa hàng trong whitelist NPP.</span>
+        </div>
+
+        <div className="w-box c g14" style={{padding:18, marginBottom:18}}>
+          <div className="r between t13">
+            <span className="muted">Kỳ báo cáo</span>
+            <Chip>{period} ▾</Chip>
+          </div>
+          <Divider/>
+          <div className="r between t13">
+            <span className="muted">Phạm vi</span>
+            <b>{TOTAL_SHOPS} cửa hàng · {PointsConfig.rows.length} SKU</b>
+          </div>
+          <Divider/>
+          <div className="r between t13">
+            <span className="muted">Định dạng</span>
+            <b>CSV (UTF-8) — mở được bằng Excel/Google Sheets</b>
+          </div>
+        </div>
+
+        <div className="c g8" style={{marginBottom:18}}>
+          <div className="t12" style={{fontWeight:600}}>Nội dung báo cáo gồm:</div>
+          <ul className="t12 muted" style={{margin:0, paddingLeft:20, lineHeight:1.8}}>
+            <li>Cửa hàng tham gia / tổng số trong whitelist NPP</li>
+            <li>Số lượt quét QR theo từng sản phẩm (kèm tỷ lệ %)</li>
+            <li>Số lượt quét QR theo cửa hàng (Top 10)</li>
+            <li>Chi tiết thời gian quét (20 lượt mới nhất)</li>
+          </ul>
+        </div>
+
+        <div className="r g10" style={{alignItems:'center'}}>
+          <Btn lg onClick={exportCsv}>↓ Xuất báo cáo (CSV)</Btn>
+          {exportedAt && (
+            <span className="t12" style={{color:'#047857', fontWeight:600}}>
+              ✓ Đã xuất lúc {exportedAt}
+            </span>
+          )}
+        </div>
+      </Card>
+    </div>
+  </NBrowser>;
+}
+
 /* 15 — profile (CMS) */
 function nProfile(){
   return <NBrowser active="profile" title="Tài khoản" breadcrumb={<><b>Tài khoản</b></>}>
@@ -1784,6 +1980,7 @@ const NPP_SCREENS = [
   { id:'npp-scan-web-success', group:'Loyalty (web view)', title:'Quét QR · thành công', render:nScanWebSuccess },
   { id:'npp-loy-history',  group:'Loyalty (web view)', title:'Lịch sử điểm (+/−)', render:nLoyHistory },
   { id:'npp-visit-log',    group:'Check-in của Sale', title:'Lịch sử & báo cáo check-in', render:nVisitLog },
+  { id:'npp-report',       group:'Báo cáo',          title:'Báo cáo Loyalty', render:nReport },
   { id:'npp-profile',      group:'Tài khoản',        title:'Hồ sơ & đổi MK', render:nProfile },
 ];
 

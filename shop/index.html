@@ -129,6 +129,31 @@ body{
 .w-zalo-cluster i{ width:5px; height:5px; border-radius:50%; background:var(--w-ink-2); display:block; }
 .w-zalo-divider{ width:1px; height:14px; background:var(--w-line); }
 
+/* Mini App container bar (Zalo Mini App default) — Trang chủ · Zalo + ⋯ ✕ */
+.w-miniapp-bar{
+  flex:none; height:48px; display:flex; align-items:center; gap:8px;
+  padding:0 14px; background:#fff; border-bottom:1px solid #F1F5F9;
+}
+.w-miniapp-bar .ma-pill{
+  background:#E53935; color:#fff; font-weight:700; font-size:12px;
+  padding:5px 14px; border-radius:999px; line-height:1; white-space:nowrap;
+  box-shadow:0 1px 2px rgba(0,0,0,.08);
+}
+.w-miniapp-bar .ma-pill.zalo{
+  display:inline-flex; align-items:center; gap:5px; padding:5px 12px;
+}
+.w-miniapp-bar .ma-pill.zalo::before{
+  content:''; width:6px; height:6px; background:#fff; border-radius:50%;
+}
+.w-miniapp-bar .ma-controls{
+  margin-left:auto; display:flex; align-items:center; gap:0;
+  border:1px solid #CBD5E1; border-radius:18px; padding:3px 8px;
+  height:30px; color:#475569; font-size:13px;
+}
+.w-miniapp-bar .ma-controls .dots{ padding:0 6px; }
+.w-miniapp-bar .ma-controls .sep{ width:1px; height:14px; background:#CBD5E1; margin:0 2px; }
+.w-miniapp-bar .ma-controls .close{ padding:0 6px; font-size:14px; }
+
 /* mobile bottom nav */
 .w-botnav{ height:58px; flex:none; border-top:1px solid var(--w-line); display:flex; background:#fff; }
 .w-botnav .nav-i{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; font-size:9.5px; color:var(--w-ink-3); cursor:pointer; }
@@ -1064,6 +1089,260 @@ body{ background:var(--w-canvas); }
 /* Section headings tighter */
 .w-phone .h3{ letter-spacing:-.01em; color:#0F172A; }
 .w-phone .tt{ color:#94A3B8; letter-spacing:.12em; font-size:10.5px; }
+
+/* ===== Onboarding screen 1: Zalo OA notification card ===== */
+.zns-oa-bar{
+  display:flex; align-items:center; gap:10px; padding:10px 14px;
+  background:#fff; border-bottom:1px solid #E2E8F0;
+}
+.zns-oa-bar .back{ font-size:20px; color:#0F172A; cursor:pointer; }
+.zns-oa-bar .title{ font-size:14px; font-weight:700; color:#0F172A; display:flex; align-items:center; gap:6px; }
+.zns-oa-bar .check{
+  width:14px; height:14px; border-radius:50%; background:#FFA500;
+  color:#fff; font-size:9px; font-weight:700; display:flex; align-items:center; justify-content:center;
+}
+.zns-oa-bar .sub{ font-size:11px; color:#64748B; }
+.zns-oa-bar .menu{ margin-left:auto; color:#64748B; font-size:16px; }
+
+.zns-body{
+  flex:1; background:#EEF1F5; padding:20px 14px;
+  display:flex; flex-direction:column; gap:14px; min-height:0;
+}
+.zns-card{
+  background:#fff; border-radius:14px; padding:18px;
+  box-shadow:0 1px 3px rgba(15,23,42,.08);
+  display:flex; flex-direction:column; gap:14px;
+}
+.zns-card .brand-row{ display:flex; align-items:center; gap:8px; }
+.zns-card .brand-logo{
+  width:24px; height:24px; border-radius:5px;
+  background:linear-gradient(135deg,#C8102E,#8B0E22);
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-weight:800; font-size:11px;
+}
+.zns-card .brand-name{ font-size:13px; font-weight:700; color:#C8102E; }
+.zns-card .nt-title{ font-size:14px; font-weight:700; color:#0F172A; line-height:1.4; }
+.zns-card .nt-body{ font-size:13px; color:#475569; line-height:1.55; }
+.zns-cta{
+  width:100%; height:42px; border:none; border-radius:8px;
+  background:#1877F2; color:#fff; font-weight:600; font-size:14px;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+}
+
+.zns-chat-input{
+  display:flex; align-items:center; gap:10px; padding:8px 12px;
+  background:#fff; border-top:1px solid #E2E8F0; color:#94A3B8; font-size:12px;
+}
+.zns-chat-input .pill{
+  flex:1; height:32px; background:#F1F5F9; border-radius:999px;
+  display:flex; align-items:center; padding:0 14px; color:#94A3B8;
+}
+
+/* ===== Onboarding screen 2: dark hero + terms checkboxes ===== */
+.terms-screen{
+  flex:1; background:#0A0A0A; color:#fff; display:flex; flex-direction:column;
+  overflow-y:auto;
+}
+.terms-screen .miniapp-bar{
+  background:#fff; padding:10px 14px;
+  display:flex; align-items:center; gap:8px; border-bottom:1px solid #E2E8F0;
+  flex:none;
+}
+.terms-screen .miniapp-bar .pill-red{
+  background:#E53935; color:#fff; font-weight:700; font-size:12px;
+  padding:5px 14px; border-radius:999px;
+}
+.terms-screen .miniapp-bar .pill-zalo{
+  background:#E53935; color:#fff; font-weight:700; font-size:12px;
+  padding:5px 10px; border-radius:999px;
+  display:flex; align-items:center; gap:3px;
+}
+.terms-screen .miniapp-bar .pill-zalo::before{
+  content:''; width:5px; height:5px; background:#fff; border-radius:50%;
+}
+.terms-hero{
+  position:relative; aspect-ratio: 16/9; overflow:hidden; flex:none;
+  background:
+    radial-gradient(circle 200px at 20% 60%, #8B0E22 0%, transparent 60%),
+    linear-gradient(135deg, #1a0a08 0%, #4a1810 35%, #C8102E 65%, #EF7D00 100%);
+}
+.terms-hero .protection{
+  position:absolute; top:18%; left:6%; right:30%;
+  font-family:'Roboto Condensed', 'Inter', sans-serif;
+  font-weight:900; font-style:italic; color:#fff;
+  font-size:22px; line-height:1.05; letter-spacing:-.01em;
+  text-shadow:0 2px 8px rgba(0,0,0,.6);
+}
+.terms-hero .septet{
+  position:absolute; bottom:6%; right:6%;
+  font-family:'Roboto Condensed', sans-serif; font-weight:900;
+  color:#fff; font-size:10px; letter-spacing:.15em;
+  padding:3px 7px; background:rgba(0,0,0,.4);
+  border:1px solid rgba(255,255,255,.3);
+}
+.terms-hero .bottle{
+  position:absolute; right:4%; bottom:10%; width:60px; height:120px;
+  background:linear-gradient(180deg,#000 0%,#2a0a0a 60%, #C8102E 100%);
+  border-radius:6px 6px 14px 14px;
+  box-shadow:inset -6px 0 12px rgba(0,0,0,.5), 0 4px 16px rgba(0,0,0,.4);
+}
+.terms-hero .bottle::before{
+  content:'IDEMITSU'; position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%) rotate(-90deg);
+  color:#fff; font-size:9px; font-weight:800; letter-spacing:.05em;
+  white-space:nowrap;
+}
+.terms-product{
+  background:#000; padding:18px 18px 0;
+  display:flex; flex-direction:column; gap:6px;
+}
+.terms-product .product-name{
+  font-family:'Roboto Condensed', sans-serif;
+  font-weight:300; font-size:22px; color:#9ca3af; letter-spacing:.02em;
+}
+.terms-product .product-model{
+  font-family:'Roboto Condensed', sans-serif;
+  font-weight:900; font-size:32px; color:#fff; letter-spacing:.02em; line-height:1;
+}
+.terms-body{
+  background:#000; padding:24px 18px 28px;
+  display:flex; flex-direction:column; gap:18px; flex:1;
+}
+.terms-intro{ font-size:13.5px; color:#e5e7eb; line-height:1.55; }
+.terms-check-row{
+  display:flex; align-items:flex-start; gap:12px; cursor:pointer;
+}
+.terms-check{
+  width:22px; height:22px; border:2px solid #fff; border-radius:5px;
+  flex:none; background:transparent;
+  display:flex; align-items:center; justify-content:center;
+  margin-top:1px; transition:background .15s;
+}
+.terms-check.on{ background:#fff; }
+.terms-check.on::after{
+  content:''; width:6px; height:11px; border:solid #0A0A0A;
+  border-width:0 2px 2px 0; transform:rotate(45deg) translate(-1px,-1px);
+}
+.terms-check-row .label{ font-size:13.5px; color:#e5e7eb; line-height:1.55; }
+.terms-check-row .label u{ text-decoration:underline; text-underline-offset:2px; }
+.terms-continue{
+  width:100%; height:48px; border:none; border-radius:8px;
+  background:linear-gradient(180deg,#C9B080,#A88E5C);
+  color:#fff; font-weight:700; font-size:15px; cursor:pointer;
+  transition:opacity .15s;
+}
+.terms-continue:disabled{ opacity:.4; cursor:not-allowed; }
+.terms-hotline{
+  text-align:center; color:#9ca3af; font-size:12px;
+  display:flex; align-items:center; justify-content:center; gap:6px;
+}
+
+/* ===== Onboarding screen 3: Zalo permission modal over poster ===== */
+.zperm-screen{
+  position:relative; flex:1; overflow:hidden;
+  display:flex; flex-direction:column;
+}
+.zperm-poster{
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse at 50% 30%, #5a2a16 0%, #2a1208 60%, #000 100%),
+    #000;
+  display:flex; align-items:flex-start; justify-content:center;
+  padding-top:18%;
+}
+.zperm-poster .branding{
+  font-family:'Roboto Condensed','Inter',sans-serif;
+  font-style:italic; font-weight:900; color:#FFD86B;
+  font-size:14px; letter-spacing:.05em;
+  text-shadow:0 2px 4px rgba(0,0,0,.7);
+}
+.zperm-poster .pg{
+  font-family:'Inter', sans-serif; font-weight:900; font-size:32px;
+  color:#FFD86B; letter-spacing:.05em;
+}
+.zperm-poster .luc-vang{
+  font-family:'Roboto Condensed','Inter',sans-serif;
+  font-style:italic; font-weight:900; color:#FFD86B;
+  font-size:22px; letter-spacing:.02em; text-align:center; line-height:1.2;
+  text-shadow:0 2px 6px rgba(0,0,0,.6);
+}
+.zperm-poster .luc-date{
+  font-size:11px; color:rgba(255,216,107,.7); margin-top:8px; letter-spacing:.05em;
+}
+.zperm-poster .miniapp-bar{
+  position:absolute; top:0; left:0; right:0; padding:10px 14px;
+  background:#fff; display:flex; align-items:center; gap:8px;
+  border-bottom:1px solid #E2E8F0; z-index:1;
+}
+.zperm-modal{
+  margin-top:auto; background:#fff; border-radius:20px 20px 0 0;
+  padding:18px 20px 22px; display:flex; flex-direction:column; gap:14px;
+  z-index:2; position:relative;
+}
+.zperm-info-btn{
+  position:absolute; top:14px; right:14px; width:22px; height:22px;
+  border-radius:50%; border:1.5px solid #94A3B8; color:#94A3B8;
+  display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600;
+}
+.zperm-logo{ display:flex; align-items:center; justify-content:center; gap:8px; margin-top:4px; }
+.zperm-logo .mark{
+  width:24px; height:24px; background:#E53935;
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+}
+.zperm-logo .name{
+  font-family:'Inter','Arial',sans-serif; font-weight:800; font-size:18px;
+  color:#0F172A; letter-spacing:-.02em;
+}
+.zperm-title{
+  text-align:center; font-size:16px; font-weight:700; color:#0F172A;
+  line-height:1.35;
+}
+.zperm-desc{
+  font-size:13px; color:#475569; line-height:1.55;
+}
+.zperm-desc .link{ color:#1877F2; font-weight:600; }
+
+.zperm-row{
+  display:flex; align-items:center; gap:14px; padding:12px 0;
+  border-top:1px solid #F1F5F9;
+}
+.zperm-row .ico{
+  width:36px; height:36px; border-radius:50%; flex:none;
+  background:#E2E8F0; display:flex; align-items:center; justify-content:center;
+}
+.zperm-row .ico.avatar{ background:#CBD5E1; }
+.zperm-row .info{ flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+.zperm-row .name{ font-size:14px; font-weight:600; color:#0F172A; }
+.zperm-row .desc{ font-size:11.5px; color:#94A3B8; }
+
+/* iOS-style toggle */
+.ios-toggle{
+  width:42px; height:24px; border-radius:999px; background:#CBD5E1;
+  position:relative; cursor:pointer; transition:background .2s;
+  flex:none;
+}
+.ios-toggle::after{
+  content:''; position:absolute; top:2px; left:2px; width:20px; height:20px;
+  background:#fff; border-radius:50%; transition:left .2s;
+  box-shadow:0 1px 3px rgba(0,0,0,.2);
+}
+.ios-toggle.on{ background:#1877F2; }
+.ios-toggle.on::after{ left:20px; }
+.ios-toggle.disabled{ background:#A5C6FA; }
+
+.zperm-footer-text{
+  font-size:12px; color:#64748B; line-height:1.5;
+  padding-top:10px; border-top:1px solid #F1F5F9;
+}
+.zperm-footer-text .link{ color:#1877F2; font-weight:600; }
+.zperm-actions{ display:flex; gap:10px; margin-top:6px; }
+.zperm-actions button{
+  flex:1; height:46px; border-radius:999px; border:none;
+  font-weight:600; font-size:14px; cursor:pointer; transition:opacity .15s;
+}
+.zperm-actions .deny{ background:#DCEAFE; color:#1877F2; }
+.zperm-actions .allow{ background:#1877F2; color:#fff; }
+.zperm-actions .allow:disabled{ background:#A5C6FA; cursor:not-allowed; }
 </style>
 </head>
 <body>
@@ -1181,6 +1460,20 @@ function ZaloBar({title}){ return (
     <span className="w-zalo-cluster"><i/><i/><i/><span className="w-zalo-divider"/><span style={{width:8,height:8,borderRadius:'50%',border:'1.5px solid var(--w-ink-2)',display:'block'}}/></span>
     <span className="ztitle">{title}</span>
     <span style={{width:54}} />
+  </div>
+); }
+
+/* Zalo Mini App container bar (Trang chủ · Zalo + ⋯ ✕) — always visible
+ * at the top of Mini App screens, separate from the app's own inner header. */
+function MiniAppBar(){ return (
+  <div className="w-miniapp-bar">
+    <span className="ma-pill">Trang chủ</span>
+    <span className="ma-pill zalo">Zalo</span>
+    <span className="ma-controls">
+      <span className="dots">⋯</span>
+      <span className="sep"/>
+      <span className="close">✕</span>
+    </span>
   </div>
 ); }
 
@@ -1487,11 +1780,12 @@ function SBotNav({active}){
   </div>;
 }
 
-function SPhone({title, body, nav, scroll=true, note}){
+function SPhone({title, body, nav, scroll=true, note, noMiniBar}){
   return <div className="c g16" style={{alignItems:'center'}}>
     {note && <Note style={{maxWidth:420}}>{note}</Note>}
     <Phone>
       <Screen scroll={scroll}>
+        {!noMiniBar && <MiniAppBar/>}
         {title!==null && <ZaloBar title={title} />}
         <div className="w-screen-body" style={{overflowY: scroll?'auto':'hidden'}}>{body}</div>
         {nav!=null && <SBotNav active={nav} />}
@@ -1503,19 +1797,90 @@ function SPhone({title, body, nav, scroll=true, note}){
 /* 1 — ZNS invite (Zalo chat) */
 function sInvite(){
   return <div className="c g16" style={{alignItems:'center'}}>
-    <Note style={{maxWidth:420}}><Pin n="1"/> Shop nhận <b>ZNS</b> (tin Zalo) từ Got It kèm link mời. Bấm link để mở <b>Zalo Mini App Loyalty Idemitsu</b>.</Note>
+    <Note style={{maxWidth:420}}><Pin n="1"/> Shop nhận <b>thông báo ZNS</b> từ Tài khoản OA <b>Idemitsu VN</b>. Bấm "Tham gia ngay" để vào Mini App.</Note>
     <Phone>
       <Screen scroll={false}>
-        <div className="w-zalo-bar"><span className="muted" style={{fontSize:18}}>‹</span><span className="ztitle">Got It · Idemitsu</span><span style={{width:20}}/></div>
-        <div className="w-screen-body" style={{padding:16, background:'#EEF1F5', display:'flex', flexDirection:'column', gap:12}}>
-          <div className="center-text t11 muted">Hôm nay</div>
-          <div className="w-card" style={{maxWidth:'85%', padding:14, borderRadius:'4px 14px 14px 14px'}}>
-            <div className="r g8" style={{marginBottom:10}}><span className="w-icon" style={{width:26,height:26,borderRadius:6}}/><b className="t12">Idemitsu Loyalty</b></div>
-            <div className="t13" style={{lineHeight:1.5, color:'var(--w-ink-2)'}}>Chào shop! NPP Miền Bắc 01 mời bạn tham gia chương trình tích điểm Idemitsu. Quét tem sản phẩm để nhận điểm đổi quà.</div>
-            <Illus kind="banner" h={92} ph="banner mời" style={{margin:'12px 0'}} />
-            <Btn block to="shop-permission">Mở Mini App</Btn>
+        <div className="zns-oa-bar">
+          <span className="back">‹</span>
+          <div className="c g2" style={{flex:1}}>
+            <div className="title">Idemitsu VN <span className="check">✓</span></div>
+            <div className="sub">Tài khoản OA</div>
           </div>
-          <div className="t11 muted" style={{maxWidth:'85%'}}>zns.zalo.me/idemitsu-loyalty?ref=npp-mb01</div>
+          <span className="menu">☰</span>
+        </div>
+        <div className="zns-body">
+          <div className="zns-card">
+            <div className="brand-row">
+              <span className="brand-logo">i</span>
+              <span className="brand-name">idemitsu</span>
+            </div>
+            <div className="nt-title">Bạn nhận được một thông báo từ Idemitsu VN</div>
+            <div className="nt-body">
+              Xin chào <b>Cửa hàng Hùng Anh</b> với mã khách hàng <b>0905898989</b>,
+            </div>
+            <div className="nt-body">
+              Chúc mừng bạn đã nhận được lời mời tham gia chương trình <b>Tích điểm đổi quà</b> từ Idemitsu
+            </div>
+            <div className="nt-body">
+              Vui lòng bấm nút "<b>THAM GIA NGAY</b>" để truy cập chương trình.
+            </div>
+            <button className="zns-cta" onClick={() => WF.go('shop-terms')}>Tham gia ngay</button>
+          </div>
+        </div>
+        <div className="zns-chat-input">
+          <span>☺</span>
+          <div className="pill">Tin nhắn</div>
+          <span>🎤</span>
+          <span>📁</span>
+        </div>
+      </Screen>
+    </Phone>
+  </div>;
+}
+
+/* 1b — Terms & conditions (sau ZNS, trước Zalo permission) */
+function sShopTerms(){
+  const [t1, setT1] = useState(true);
+  const [t2, setT2] = useState(true);
+  const enabled = t1 && t2;
+  return <div className="c g16" style={{alignItems:'center'}}>
+    <Note style={{maxWidth:420}}><Pin n="2"/> Trước khi xin quyền Zalo, shop xác nhận đồng ý <b>Điều khoản</b> và <b>Chính sách bảo mật</b> của chương trình.</Note>
+    <Phone>
+      <Screen scroll={false}>
+        <div className="terms-screen">
+          <div className="miniapp-bar">
+            <span className="pill-red">Trang chủ</span>
+            <span className="pill-zalo">Zalo</span>
+          </div>
+          <div className="terms-hero">
+            <div className="protection">PROTECTION<br/>that thrills<br/>in seven ways</div>
+            <span className="septet">SEPTET GUARD</span>
+            <div className="bottle"/>
+          </div>
+          <div className="terms-product">
+            <div className="product-name">Nano Tailored Oil</div>
+            <div className="product-model">IDEMITSU IRG 7</div>
+          </div>
+          <div className="terms-body">
+            <div className="terms-intro">
+              Idemitsu cần bạn cung cấp quyền truy cập <b>tên &amp; số điện thoại</b> để tham gia chương trình
+            </div>
+            <div className="terms-check-row" onClick={() => setT1(v=>!v)}>
+              <span className={cx('terms-check', t1 && 'on')}/>
+              <span className="label">Tôi đồng ý với <u>điều kiện và điều khoản chung</u> của chương trình</span>
+            </div>
+            <div className="terms-check-row" onClick={() => setT2(v=>!v)}>
+              <span className={cx('terms-check', t2 && 'on')}/>
+              <span className="label">Tôi đã hiểu và đồng ý với <u>Chính sách quyền riêng tư</u> khi tham gia chương trình khuyến mại này</span>
+            </div>
+            <button className="terms-continue" disabled={!enabled}
+                    onClick={() => enabled && WF.go('shop-permission')}>
+              Tiếp tục
+            </button>
+            <div className="terms-hotline">
+              <span>📞</span><span>Hotline <b style={{color:'#fff'}}>1900 5588 20</b></span>
+            </div>
+          </div>
         </div>
       </Screen>
     </Phone>
@@ -2126,8 +2491,9 @@ function sGiftPhysical(){
 }
 
 const SHOP_SCREENS = [
-  { id:'shop-invite',          group:'Onboarding',  title:'Lời mời ZNS (Zalo)', render:sInvite },
-  { id:'shop-permission',      group:'Onboarding',  title:'Cấp quyền Zalo', render:sPermission },
+  { id:'shop-invite',          group:'Onboarding',  title:'Lời mời ZNS (Zalo OA)', render:sInvite },
+  { id:'shop-terms',           group:'Onboarding',  title:'Đồng ý điều khoản', render:sShopTerms },
+  { id:'shop-permission',      group:'Onboarding',  title:'Cấp quyền Zalo (3 quyền)', render:sPermission },
   { id:'shop-home',            group:'Trang chủ',   title:'Trang chủ', render:sHome },
   { id:'shop-scan',            group:'Quét QR',     title:'Quét QR (camera Zalo)', render:sScan },
   { id:'shop-scan-success',    group:'Quét QR',     title:'Quét thành công', render:sScanSuccess },
@@ -2926,47 +3292,85 @@ function PermCheckbox({checked}) {
 }
 
 function sPermissionHiFi() {
-  const [name, setName] = useState(false);
-  const [phone, setPhone] = useState(false);
-  const enabled = name && phone;
+  const [perm, setPerm] = useState({ name:true, phone:true, location:true });
+  const allOn = perm.name && perm.phone && perm.location;
+  const toggle = (k) => setPerm(p => ({...p, [k]: !p[k]}));
+
+  const PhoneIcon = (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#0F172A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/>
+    </svg>
+  );
+  const PinIcon = (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#0F172A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/>
+      <circle cx="12" cy="10" r="3"/>
+    </svg>
+  );
+
   return (
     <div className="c g16" style={{alignItems:'center'}}>
+      <Note style={{maxWidth:420}}><Pin n="3"/> Modal native của Zalo xin <b>tên/avatar, SĐT, vị trí</b>. Sau khi "Cho phép", shop vào Mini App Loyalty Idemitsu.</Note>
       <Phone>
         <Screen scroll={false}>
-          <ZaloBar title="Loyalty Idemitsu" />
-          <div className="w-screen-body" style={{display:'flex', flexDirection:'column', justifyContent:'flex-end'}}>
-            <div className="grow" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
-              <div className="c g10" style={{alignItems:'center'}}>
-                <span style={{width:64, height:64, borderRadius:16, background:'linear-gradient(135deg, #FF8A3D, #C8102E)', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 8px 20px rgba(200,16,46,.28)'}}>
-                  <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/>
-                    <path d="M9 12l2 2 4-4"/>
-                  </svg>
+          <div className="zperm-screen">
+            <div className="zperm-poster">
+              <div className="c g8" style={{alignItems:'center', marginTop:60}}>
+                <div className="pg">P&G</div>
+                <div className="luc-vang">LỘC VÀNG ĐẦU NĂM<br/>CẢ NĂM PHÁT TÀI</div>
+                <div className="luc-date">23/02/2026 — 31/03/2026</div>
+              </div>
+              <div className="miniapp-bar">
+                <span style={{background:'#E53935', color:'#fff', fontWeight:700, fontSize:12, padding:'5px 14px', borderRadius:999}}>Trang chủ</span>
+                <span style={{background:'#E53935', color:'#fff', fontWeight:700, fontSize:12, padding:'5px 10px', borderRadius:999}}>Zalo</span>
+                <span style={{marginLeft:'auto', display:'flex', gap:8, alignItems:'center'}}>
+                  <span style={{border:'1px solid #94A3B8', borderRadius:14, padding:'2px 10px', fontSize:13, color:'#475569'}}>···</span>
+                  <span style={{border:'1px solid #94A3B8', borderRadius:14, width:24, height:24, display:'flex', alignItems:'center', justifyContent:'center', color:'#475569'}}>✕</span>
                 </span>
-                <div className="h3" style={{marginTop:4}}>Loyalty Idemitsu</div>
-                <span className="t11 muted">Phiên bản 1.0 · Got It</span>
               </div>
             </div>
-            <div className="w-card" style={{borderRadius:'18px 18px 0 0', padding:20, boxShadow:'0 -4px 24px rgba(0,0,0,.10)'}}>
-              <div className="h3" style={{marginBottom:6}}>Cho phép truy cập</div>
-              <div className="t12 muted" style={{marginBottom:16}}>Mini App muốn sử dụng thông tin Zalo của bạn:</div>
-              <div className="c g12" style={{marginBottom:18}}>
-                <label className="r g12" style={{cursor:'pointer', alignItems:'center', userSelect:'none'}}
-                       onClick={() => setName(v => !v)}>
-                  <PermCheckbox checked={name} />
-                  <span className="t13" style={{color:'#0F172A'}}>Tên hiển thị Zalo</span>
-                </label>
-                <label className="r g12" style={{cursor:'pointer', alignItems:'center', userSelect:'none'}}
-                       onClick={() => setPhone(v => !v)}>
-                  <PermCheckbox checked={phone} />
-                  <span className="t13" style={{color:'#0F172A'}}>Số điện thoại</span>
-                </label>
+            <div className="zperm-modal">
+              <div className="zperm-info-btn">i</div>
+              <div className="zperm-logo">
+                <span className="mark"/>
+                <span className="name">idemitsu</span>
               </div>
-              <div className="c g10">
-                {enabled
-                  ? <Btn block to="shop-home">Đồng ý &amp; tiếp tục</Btn>
-                  : <Btn block disabled>Đồng ý &amp; tiếp tục</Btn>}
-                <Btn block ghost>Từ chối</Btn>
+              <div className="zperm-title">Cho phép Idemitsu nhận<br/>các thông tin của bạn</div>
+              <div className="zperm-desc">
+                ZaUI Components cần truy cập các thông tin dưới đây từ tài khoản Zalo của bạn để phục vụ bạn trong quá trình sử dụng <span className="link">Tìm hiểu thêm</span>
+              </div>
+
+              <div className="zperm-row" onClick={() => toggle('name')} style={{cursor:'pointer'}}>
+                <span className="ico avatar"/>
+                <div className="info">
+                  <span className="name">Ngoc Ho</span>
+                  <span className="desc">Tên, ảnh đại diện Zalo</span>
+                </div>
+                <span className={cx('ios-toggle', perm.name && 'on')}/>
+              </div>
+
+              <div className="zperm-row" onClick={() => toggle('phone')} style={{cursor:'pointer'}}>
+                <span className="ico">{PhoneIcon}</span>
+                <div className="info"><span className="name">Số điện thoại liên kết với Zalo</span></div>
+                <span className={cx('ios-toggle', perm.phone && 'on')}/>
+              </div>
+
+              <div className="zperm-row" onClick={() => toggle('location')} style={{cursor:'pointer'}}>
+                <span className="ico">{PinIcon}</span>
+                <div className="info"><span className="name">Vị trí</span></div>
+                <span className={cx('ios-toggle', perm.location && 'on')}/>
+              </div>
+
+              <div className="zperm-footer-text">
+                Bằng cách nhấn "Cho phép", tôi đồng ý với <span className="link">điều khoản sử dụng của Zalo</span>
+              </div>
+
+              <div className="zperm-actions">
+                <button className="deny" onClick={() => WF.go('shop-invite')}>Từ chối</button>
+                <button className="allow" disabled={!allOn}
+                        onClick={() => allOn && WF.go('shop-home')}>
+                  Cho phép
+                </button>
               </div>
             </div>
           </div>
